@@ -31,3 +31,9 @@ class HotelRoom(models.Model):
     hotelId = HotelName.pk
     category = models.CharField(max_length = 10)
     count = models.IntegerField()
+
+class Availability(models.Model):
+    roomId = HotelRoom.pk
+    date = models.DateField()
+    available = models.CharField(max_length = 1)
+    custId = Customer.pk
