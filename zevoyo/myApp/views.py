@@ -3,6 +3,8 @@ from .forms import NewUserForm
 from django.contrib.auth import login,authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from .models import Employee
+from django.http import HttpResponse
 
 def register_request(request):
     if request.method=="POST":
@@ -33,3 +35,12 @@ def login_request(request):
             messages.error(request,"Invalid username or password.")
     form=AuthenticationForm()
     return render(request=request,template_name="myApp/login.html", context={"login_form":form})
+
+# Create your views here.
+def get_id(request,id):
+    s='Student id is %d' %id
+    return HttpResponse(s)
+
+def get_name(request,empName):
+    s='Employee name is %s' %empName
+    return HttpResponse(s)
