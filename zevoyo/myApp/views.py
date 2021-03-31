@@ -36,6 +36,7 @@ def login_request(request):
     form=AuthenticationForm()
     return render(request=request,template_name="myApp/login.html", context={"login_form":form})
 
+<<<<<<< HEAD
 # Create your views here.
 def get_id(request,id):
     s='Student id is %d' %id
@@ -44,3 +45,10 @@ def get_id(request,id):
 def get_name(request,empName):
     s='Employee name is %s' %empName
     return HttpResponse(s)
+=======
+def homePage(request):
+    return render(request, 'myApp/home.html')
+
+def hotelDescription(request):
+    return render(request, 'myApp/hotelDescription.html')
+>>>>>>> 1d77a6a (hotel description page)
