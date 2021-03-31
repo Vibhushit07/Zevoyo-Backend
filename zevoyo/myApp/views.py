@@ -1,8 +1,20 @@
 from django.shortcuts import render
+from .models import Employee
+from django.http import HttpResponse
 from .forms import NewUserForm
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+
+# Create your views here.
+
+def get_id(request,id):
+    s='Student id is %d' %id
+    return HttpResponse(s)
+
+def get_name(request,empName):
+    s='Employee name is %s' %empName
+    return HttpResponse(s)
 
 def register_request(request):
     if request.method=="POST":
@@ -36,3 +48,10 @@ def login_request(request):
 
 def x(request):
     return render(request, 'myApp/x.html')
+
+def homePage(request):
+    return render(request, 'myApp/home.html')
+
+def hotelDescription(request):
+    return render(request, 'myApp/hotelDescription.html')
+
