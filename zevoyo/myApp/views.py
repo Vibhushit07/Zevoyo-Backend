@@ -48,3 +48,6 @@ def login_request(request):
 
 def homePage(request):
     return render(request, 'myApp/home.html')
+
+def hotelDescription(request):
+    return render(request, 'myApp/hotelDescription.html')
