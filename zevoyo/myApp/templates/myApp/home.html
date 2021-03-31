@@ -1,16 +1,40 @@
+{% load static %}
 <html>
 
 <head>
     <title>Zevoyo</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myApp/home.css'%}">
 </head>
 
 <body>
-    <div>
-        ZEVOYO
-        <a href="login.html">Login</a>
-        <a href="register.html">Signup</a>
-        <input type="text" placeholder="City">
-        <input type="date" placeholder="From">
+    <div class="container">
+        <ul>
+            <li class="logo">
+                ZEVOYO
+            </li>
+            <li class="account"><a href="/myApp/login">Login</a></li>
+            <li class="account"><a href="/myApp/register">Signup</a></li>
+        </ul>
+        <form action="/action_page.php">
+            <div class="background">
+
+                <label for="city"><b>City</b></label>
+                <input type="text" placeholder="Enter City" name="city" id="city" class="input" required>
+
+                <label for="arrival"><b>Arrival Date</b></label>
+                <input type="date" placeholder="Enter Arrival Date" name="arrival" id="arrival" class="input" required>
+
+                <label for="departure"><b>Departue Date</b></label>
+                <input type="date" placeholder="Enter Departue Date" name="departure" id="departure" class="input" required>
+
+                <label for="rooms"><b>Number of rooms required</b></label>
+                <input type="number" placeholder="Enter Number of rooms" name="rooms" id="rooms" class="input" required>
+                <hr>
+
+                <button type="submit" class="search-btn">Search</button>
+
+            </div>
+        </form>
     </div>
 </body>
 

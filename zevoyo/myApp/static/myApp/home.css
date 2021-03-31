@@ -1,0 +1,67 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    background-color: #d11450;
+}
+
+.account {
+    float: right;
+    border-right: 1px solid #bbb;
+}
+
+.logo {
+    color: white;
+    padding: 10px 0 5px 5px;
+    text-align: center;
+    float: left;
+    font-size: xx-large;
+}
+
+li:last-child {
+    border-right: none;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 20 20px 20px 20px;
+    text-decoration: none;
+}
+
+.background {
+    padding: 16px 550px 16px 550px;
+    background-image: url("header.jpg");
+    height: 87%;
+    /* opacity: .7; */
+}
+
+.input {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+.input:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.search-btn {
+    background-color: #df293a;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+b {
+    font-size: larger;
+}
