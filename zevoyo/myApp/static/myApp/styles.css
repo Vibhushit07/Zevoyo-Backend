@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+}
+
+input {
+    border: 0ch;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+.tabs {
+    border: 1px solid rgb(158, 155, 155);
+
+}
+
+.radii {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.makeRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
