@@ -46,8 +46,12 @@ def login_request(request):
     form=AuthenticationForm()
     return render(request=request,template_name="myApp/login.html", context={"login_form":form})
 
+def x(request):
+    return render(request, 'myApp/x.html')
+
 def homePage(request):
     return render(request, 'myApp/home.html')
 
 def hotelDescription(request):
     return render(request, 'myApp/hotelDescription.html')
+

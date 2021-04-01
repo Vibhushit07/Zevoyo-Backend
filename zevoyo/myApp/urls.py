@@ -8,5 +8,8 @@ urlpatterns = [
     path('getName/<str:empName>',views.get_name),
     path('register/',views.register_request,name="register"),
     path('login/',views.login_request,name="login"),
+ 
+    path('x/',views.x,name="x"),
+
     path('hotelDescription/', views.hotelDescription)
 ]
