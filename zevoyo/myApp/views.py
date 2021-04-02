@@ -1,35 +1,58 @@
-from django.shortcuts import render
-from .forms import NewUserForm
-from django.contrib.auth import login,authenticate
+from django.shortcuts import render,redirect
+from .models import Employee
+from django.http import HttpResponse
+from .forms import UserRegisterForm
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 
+# Create your views here.
+
+def get_id(request,id):
+    s='Student id is %d' %id
+    return HttpResponse(s)
+
+def get_name(request,empName):
+    s='Employee name is %s' %empName
+    return HttpResponse(s)
+
 def register_request(request):
     if request.method=="POST":
-        form=NewUserForm(request.POST)
-        if form.is_valid:
-            user=form.save()
+        form=UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user=authenticate(username=username,password=password)
             login(request,user)
             messages.success(request,"Registeration successfull")
-            return redirect("myApp:homepage")
-        messages.error(request,"Unsuccessful registration. Invalid information.")
-    form=NewUserForm()
-    return render(request=request,template_name="myApp/register.html",context={"register_form":form})
+            return redirect("home")
+        else:
+            return render(request=request,template_name="myApp/register.html",context={"register_form":form})
+            # messages.error(request,"Unsuccessful registration. Invalid information.")
+    else:
+        form=UserRegisterForm()
+        return render(request=request,template_name="myApp/register.html",context={"register_form":form})
 
 def login_request(request):
     if request.method=="POST":
-        form=AuthenticationForm(request,data=request.POST)
-        if form.is_valid():
-            username=form.cleaned_data.get('username')
-            password=form.cleaned_data.get('password')
-            user=authenticate(username=username, password=password)
-            if user is not None:
-                login(request,user)
-                messages.info(request,f"You are now logged in as {username}.")
-                return redirect("myApp:homepage")
-            else:
-                messages.error(request,"Invalid username or password.")
+        username = request.POST['username']
+        password = request.POST['password']
+        user=authenticate(request,username=username, password=password)
+        if user is not None:
+            form=login(request,user)
+            messages.success(request,f"You are now logged in as {username}.")
+            return redirect("home")
         else:
-            messages.error(request,"Invalid username or password.")
-    form=AuthenticationForm()
-    return render(request=request,template_name="myApp/login.html", context={"login_form":form})
+            form = AuthenticationForm(request.POST)
+            messages.info(request, f'account done not exit plz sign in')
+            return render(request,"myApp/login.html", context={"login_form":form})
+    else:
+        form=AuthenticationForm()
+         return render(request,"myApp/login.html", context={"login_form":form})
+
+def homePage(request):
+    return render(request, 'myApp/home.html',{'title':'home'})
+
+def hotelDescription(request):
+    return render(request, 'myApp/hotelDescription.html')
