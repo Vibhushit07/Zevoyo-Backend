@@ -27,3 +27,76 @@ input {
 .cursorPointer {
     cursor: pointer;
 }
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.Container {
+    height: 80px;
+}
+
+.hotelNameWrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(170, 168, 168);
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.bottomWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 70px;
+}
+.desc {
+    display: flex;
+    margin: 50px 70px;
+    
+}
+
+.descText {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.hotelName {
+    font-weight: bold;
+    font-size: 30px;
+
+}
+
+p {
+    margin: 0
+}
+
+.bescTextBodyWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.priceText {
+    color: red;
+    font-weight: bolder;
+    font-size: 25px;
+}
+
+.perRoomText {
+    color: rgb(138, 136, 136);
+}
+
+.bottomButtonContent {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.btnWrapper {
+    align-self: flex-end;
+}
