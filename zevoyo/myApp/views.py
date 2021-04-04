@@ -1,4 +1,4 @@
-from .forms import NewUserForm
+from .forms import CreateUserForm
 from django.contrib.auth import login,authenticate
 from django.shortcuts import render,redirect
 from .models import Employee
