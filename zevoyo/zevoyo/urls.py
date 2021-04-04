@@ -17,11 +17,8 @@
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-<<<<<<< HEAD
-=======
 from django.urls import path,include
 # from myApp import views as v
->>>>>>> 1086fd732f79bc5f8e6453329af92aab368e0950
 
 urlpatterns = [
     path('admin/', admin.site.urls),
