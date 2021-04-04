@@ -13,14 +13,14 @@ from django.http import HttpResponse
 
 def register_request(request):
     if request.method=="POST":
-        form=NewUserForm(request.POST)
+        form=CreateUserForm(request.POST)
         if form.is_valid:
             user=form.save()
             login(request,user)
             messages.success(request,"Registeration successfull")
             return redirect("myApp:homepage")
         messages.error(request,"Unsuccessful registration. Invalid information.")
-    form=NewUserForm()
+    form=CreateUserForm()
     return render(request=request,template_name="myApp/register.html",context={"register_form":form})
 
 def login_request(request):
