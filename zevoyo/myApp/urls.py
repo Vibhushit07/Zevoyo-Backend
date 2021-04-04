@@ -11,5 +11,5 @@ urlpatterns = [
     path('getID/<int:id>',views.get_id),
     path('getName/<str:empName>',views.get_name),
     path('logout/', views.logoutUser, name="logout"),
-    path('hotelDescription/', views.hotelDescription)
+    path('hotelDescription/', views.hotelDescription),
 ]
