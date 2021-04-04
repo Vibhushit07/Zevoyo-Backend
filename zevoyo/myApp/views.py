@@ -61,6 +61,32 @@ def get_id(request,id):
     # context={'form':form}
     # return render(request,"myApp/register.html",{})
 
+# Create your views here.
+
+def get_id(request,id):
+    s='Student id is %d' %id
+    return HttpResponse(s)
+
+def get_name(request,empName):
+    s='Employee name is %s' %empName
+    return HttpResponse(s)
+
+def register_request(request):
+    # if request.user.is_authenticated:
+    #     return redirect("../")
+    # else:
+        form=CreateUserForm()
+        if request.method=="POST":
+            form=CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request,"Account was created for"+user)
+                return redirect("login")
+            
+        context={'form':form}
+        return render(request,"myApp/register.html",{})
+
 def login_request(request):
     # if request.user.is_authenticated:
     #     return redirect('homePage')
