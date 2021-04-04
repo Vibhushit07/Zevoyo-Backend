@@ -44,6 +44,7 @@ def login_request(request):
 # Create your views here.
 def get_id(request,id):
     s='Student id is %d' %id
+    print('Hello')
     return HttpResponse(s)
     # if request.user.is_authenticated:
     #     return redirect("../")
