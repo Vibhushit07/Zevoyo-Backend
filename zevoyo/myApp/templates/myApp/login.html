@@ -93,11 +93,14 @@
 							</div>
 							<input type="text" name="username" placeholder="Username..." class="form-control">
 						</div>
-						<div class="input-group mb-2">
+						<div class="input-group mb-3">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-								<input type="password" name="password" placeholder="Password..." class="form-control" >
+							<div class="input-group-append">
+								<input type="password" id="txtPassword" name="password" placeholder="Password..." class="form-control" >
+								<span class="input-group-text" id="toggle_pwd" ><i class="fa fa-fw fa-eye field_icon"></i></span>
+							</div>
 						</div>
 
 							<div class="d-flex justify-content-center mt-3 login_container">
@@ -118,6 +121,15 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+        $(function () {
+            $("#toggle_pwd").click(function () {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+               var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
+                $("#txtPassword").attr("type", type);
+            });
+        });
+    </script>
 </body>
 
 </html>
