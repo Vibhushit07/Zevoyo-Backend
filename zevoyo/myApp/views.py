@@ -52,8 +52,12 @@ def logoutUser(request):
     logout(request)
     return redirect('myApp/login.html')
 
+def x(request):
+    return render(request, 'myApp/x.html')
+
 def homePage(request):
     return render(request, 'myApp/home.html')
 
 def hotelDescription(request):
     return render(request, 'myApp/hotelDescription.html')
+
