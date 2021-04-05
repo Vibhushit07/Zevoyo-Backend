@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -25,15 +26,15 @@ class HotelEmployee(models.Model):
     userName = models.CharField(max_length = 10)
     password = models.CharField(max_length = 20)
     phoneNumber = models.IntegerField()
-    hotelId = HotelName.pk
+    hotelId = models.ForeignKey(HotelName, blank = False, null =  False, on_delete = models.CASCADE)
 
 class HotelRoom(models.Model):
-    hotelId = HotelName.pk
+    hotelId = models.ForeignKey(HotelName, blank = False, null =  False, on_delete = models.CASCADE)
     category = models.CharField(max_length = 10)
     count = models.IntegerField()
 
 class Availability(models.Model):
-    roomId = HotelRoom.pk
+    roomId = models.ForeignKey(HotelRoom, blank = False, null =  False, on_delete = models.CASCADE)
     date = models.DateField()
     available = models.CharField(max_length = 1)
-    custId = Customer.pk
+    custId = models.ForeignKey(Customer, blank = False, null =  False, on_delete = models.CASCADE)
