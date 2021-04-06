@@ -61,3 +61,5 @@ def homePage(request):
 def hotelDescription(request):
     return render(request, 'myApp/hotelDescription.html')
 
+def h(request):
+    return render(request, 'myApp/h.html')

@@ -10,5 +10,6 @@ urlpatterns = [
     path('login/',views.login_request,name="login"), 
     path('x/',views.x,name="x"),
     path('logout/', views.logoutUser, name="logout"),
-    path('hotelDescription/', views.hotelDescription)
+    path('hotelDescription/', views.hotelDescription),
+    path('h/', views.h)
 ]
