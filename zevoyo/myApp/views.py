@@ -27,7 +27,7 @@ def register_request(request):
             if form.is_valid():
                 form.save()
                 user = form.cleaned_data.get('username')
-                messages.success(request,"Account was created for"+user)
+                messages.success(request,"Account was created for "+user)
                 return redirect("login")
             
         context={'form':form}
@@ -52,8 +52,14 @@ def logoutUser(request):
     logout(request)
     return redirect('myApp/login.html')
 
+def x(request):
+    return render(request, 'myApp/x.html')
+
 def homePage(request):
     return render(request, 'myApp/home.html')
 
 def hotelDescription(request):
     return render(request, 'myApp/hotelDescription.html')
+
+def h(request):
+    return render(request, 'myApp/h.html')
