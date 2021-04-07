@@ -1,0 +1,90 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'myApp/style/x.css'%}">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="navbar px-4 py-1 navbar-expand-xl bg-light navbar-light">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'myApp/images/logo.png'%}" alt="Logo" style="width:90px; height: 50px;">
+        </a>
+        <div class=" row col-lg-8  ml-5 mr-1">
+            <div class="col-lg-5 tabs py-0 px-1 radii makeRow" style="background-color:white;">
+                <input value="Goa, India" />
+                <img src="{% static 'myApp/images/nearMe.png'%}" alt="near me" style="width:70px; height: 30px;" />
+            </div>
+            <div class="col-lg py-0 px-1 tabs" style="background-color:white;">
+                <input class="cursorPointer" value="Wed, 31 Mar - Thu, 1 April" />
+            </div>
+            <div class="col-lg py-0 px-1 tabs" style="background-color:white;">
+                <input class="cursorPointer" value="1 Room, 2 Guests" />
+            </div>
+            <button type="button" class="btn btn-success btn-md px-5">Search</button>
+        </div>
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><img src="{% static 'myApp/images/languageIcon.png'%}" alt="near me"
+                        style="width:50px; height: 30px;" /></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><img src="{% static 'myApp/images/profile.png'%}" alt="near me"
+                        style="width:110px; height: 30px;" /></a>
+            </li>
+        </ul>
+    </nav>
+    <div class="bottomWrapper">
+        <div class="Container">
+            <div class="hotelNameWrapper">162 ZEVOYOs in Goa, India</div>
+        </div>
+        <div class="desc">
+            <img src="{% static 'myApp/images/room.png'%}" height="300" width="450" />
+            <div class="descText">
+                <div class="bescTextBodyWrapper">
+                    <div>
+                        <p class="hotelName">Hotel Ambience Residency</p>
+                        <p>Goa, India</p>
+                    </div>
+                    <div>
+                        <div style="display: flex;">
+                            <img src="{% static 'myApp/images/parkingFacilityIcon.png'%}" height="30" width="30" />
+                            <p style="align-self: center;">Parking Facility</p>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1.5; display: flex; ">
+                    <div class="bottomButtonContent">
+                        <div style="align-self: flex-end;">
+                            <p class="priceText">
+                                ₹6,969
+                            </p>
+                            <p class="perRoomText">per room per night</p>
+                        </div>
+                        <div class="btnWrapper">
+                            <button type="button" class="btn btn-outline-dark btn-md px-5">View Details</button>
+                            <button type="button" class="btn btn-success btn-md px-5">BOOK NOW</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

@@ -3,31 +3,30 @@
 
 <head>
     <title>Zevoyo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'myApp/style/home.css'%}">
 </head>
 
 <body>
     <div class="container">
-        <ul>
-            <li class="logo">
-                ZEVOYO
-            </li>
+        <ul class="header-part">
+            <img src="{% static 'myApp/images/logo1.jpeg' %}" alt="Logo" class="header-logo" style="width:100px; height: 50px; background-color: #d11450; padding-top: 3px;">
             <li class="account"><a href="/myApp/login">Login</a></li>
             <li class="account"><a href="/myApp/register">Signup</a></li>
         </ul>
-        <form action="/action_page.php">
+        <form action="/myApp/x" class="body-part">
             <div class="background">
 
-                <label for="city"><b>City</b></label>
+                <label for="city" class="label"><b>City</b></label>
                 <input type="text" placeholder="Enter City" name="city" id="city" class="input" required>
 
-                <label for="arrival"><b>Arrival Date</b></label>
+                <label for="arrival" class="label"><b>Arrival Date</b></label>
                 <input type="date" placeholder="Enter Arrival Date" name="arrival" id="arrival" class="input" required>
 
-                <label for="departure"><b>Departue Date</b></label>
+                <label for="departure" class="label"><b>Departue Date</b></label>
                 <input type="date" placeholder="Enter Departue Date" name="departure" id="departure" class="input" required>
 
-                <label for="rooms"><b>Number of rooms required</b></label>
+                <label for="rooms" class="label"><b>Required rooms</b></label>
                 <input type="number" placeholder="Enter Number of rooms" name="rooms" id="rooms" class="input" required>
                 <hr>
 

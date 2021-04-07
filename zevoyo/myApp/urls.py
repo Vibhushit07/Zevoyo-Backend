@@ -7,7 +7,9 @@ urlpatterns = [
     path('getID/<int:id>',views.get_id),
     path('getName/<str:empName>',views.get_name),
     path('register/',views.register_request,name="register"),
-    path('login/',views.login_request,name="login"),
+    path('login/',views.login_request,name="login"), 
+    path('x/',views.x,name="x"),
     path('logout/', views.logoutUser, name="logout"),
-    path('hotelDescription/', views.hotelDescription)
+    path('hotelDescription/', views.hotelDescription),
+    path('h/', views.h)
 ]
