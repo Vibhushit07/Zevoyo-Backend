@@ -21,17 +21,17 @@ def register_request(request):
     # if request.user.is_authenticated:
     #     return redirect("../")
     # else:
-        form=CreateUserForm()
+        # form=CreateUserForm()
         if request.method=="POST":
             form=CreateUserForm(request.POST)
             if form.is_valid():
-                form.save()
                 user = form.cleaned_data.get('username')
+                form.save()
                 messages.success(request,"Account was created for "+user)
                 return redirect("login")
-            
-        context={'form':form}
-        return render(request,"myApp/register.html",{})
+        else:
+            form=CreateUserForm()
+        return render(request,"myApp/register.html",{'form':form})
 
 def login_request(request):
     # if request.user.is_authenticated:
