@@ -1,8 +1,23 @@
+body {
+    margin: 0;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.header-logo {
+    width: 90px;
+    height: 50px;
+    background-color: #b32806;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
     overflow: hidden;
-    background-color: #d11450;
+    background-color: #b32806;
 }
 
 .account {
@@ -31,14 +46,14 @@ li a {
 }
 
 .background {
-    padding: 16px 550px 16px 550px;
+    padding: 10vh 50vw 10vh 35vw;
     background-image: url("../images/header.jpg");
-    height: 87%;
-    /* opacity: .7; */
+    background-repeat: no-repeat;
+    height: 72vh;
 }
 
 .input {
-    width: 100%;
+    width: 25vw;
     padding: 15px;
     margin: 5px 0 22px 0;
     display: inline-block;
@@ -51,14 +66,18 @@ li a {
     outline: none;
 }
 
+hr {
+    width: 25vw;
+}
+
 .search-btn {
-    background-color: #df293a;
+    background-color: #b32806;
     color: white;
     padding: 16px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 25vw;
     opacity: 0.9;
 }
 
