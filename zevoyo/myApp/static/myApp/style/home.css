@@ -1,17 +1,26 @@
 body {
     margin: 0;
 }
-.body-part{
-    height:calc(100% - 3em);
+
+.container {
+    width: 100vw;
+    height: 100vh;
 }
+
+.body-part {
+    height: calc(100% - 3em);
+}
+
 .container {
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
 }
-.header-part{
-    height:3em;
+
+.header-part {
+    height: 3em;
 }
+
 .header-logo {
     width: 90px;
     height: 50px;
@@ -24,11 +33,12 @@ ul {
     overflow: hidden;
     background-color: #d11450;
 }
-.dropdown-content
-      {
-top: 53px !important;
-width:190px !important;
-      }
+
+.dropdown-content {
+    top: 53px !important;
+    width: 190px !important;
+}
+
 .account {
     float: right;
     border-right: 1px solid #bbb;
@@ -93,5 +103,3 @@ hr {
 b {
     font-size: larger;
 }
-
-
