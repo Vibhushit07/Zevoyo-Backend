@@ -7,6 +7,20 @@ body {
     height: 100vh;
 }
 
+.body-part {
+    height: calc(100% - 3em);
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.header-part {
+    height: 3em;
+}
+
 .header-logo {
     width: 90px;
     height: 50px;
@@ -18,6 +32,11 @@ ul {
     margin: 0;
     overflow: hidden;
     background-color: #d11450;
+}
+
+.dropdown-content {
+    top: 53px !important;
+    width: 190px !important;
 }
 
 .account {
