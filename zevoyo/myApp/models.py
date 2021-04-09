@@ -71,3 +71,26 @@ class Hotels(models.Model):
 
     def __str__(self):
         return self.name
+
+class Rooms(models.Model):
+    ROOM_STATUS = (
+        ('1', 'Available'),
+        ('2', 'Not Available')
+    )
+
+    RoOM_TYPE = (
+        ('1', 'Premimum'),
+        ('2', 'Deluxe'),
+        ('3', 'Basic')
+    )
+
+    roomType = models.CharField(max_length = 50, choices = RoOM_TYPE)
+    capacity = models.IntegerField()
+    price = models.IntegerField()
+    size = models.IntegerField()
+    hotel = models.ForeignKey(Hotels, on_delete = models.CASCADE)
+    status = models.CharField(choices = ROOM_STATUS, max_length = 15)
+    roomNumber = models.IntegerField()
+
+    def __str__(self):
+        return self.hotel.name
