@@ -9,8 +9,9 @@ urlpatterns = [
     path('getName/<str:empName>',views.get_name),
     path('register/', views.register_request, name = "register"),
     path('login/', views.login_request, name = "login"), 
-    path('x/', views.x, name = "x"),
     path('logout/', views.logoutUser, name = "logout"),
-    path('hotelDescription/', views.hotelDescription),
+    path('x/', views.x, name = "x"),
+    path('hotelDescription/', views.hotelDescription, name = "hotelDescription"),
     path('staff/', views.staffSignup, name="staffsignup"),
+    path('staff/login/', views.staffLogin, name = "stafflogin")
 ]

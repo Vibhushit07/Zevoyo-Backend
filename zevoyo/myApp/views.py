@@ -88,4 +88,18 @@ def staffSignup(request):
         return redirect('stafflogin')
     else:
         return render(request, 'staff/login.html')
-        # return HttpResponse('Access Denied')
+
+def staffLogin(request):
+    if request.method == 'POST':
+        userName = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username = userName, password = password)
+
+        if user.is_staff:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.success('Incorrect username or password')
+            return redirect('stafflogin')
+    return render(request, 'staff/login.html')

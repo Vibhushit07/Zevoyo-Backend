@@ -28,7 +28,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12 col-lg-12 col-xlg-12">
-                                    <form action="/staff/login" method="post">
+                                    <form method="post" action="/myApp/staff/login/">
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <label for="username">Username: </label>
@@ -55,7 +55,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12 col-lg-12 col-xlg-12">
-                                    <form action="/staff/signup" method="POST">
+                                    <form action="/myApp/staff/signup/" method="POST">
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <label for="username">Username:</label>
