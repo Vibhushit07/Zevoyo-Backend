@@ -47,7 +47,7 @@
                         <a class="nav-link text-bold" href="/staff/panel">Dashboard</a>
                     </li>
 
-                    {% elif !user.is_staff and user.is_authenticated %}
+                    {% elif user.is_staff == False and user.is_authenticated %}
                     <li class="nav-item active">
                         <a class="nav-link text-bold" href="/user/bookings">My Bookings</a>
                     </li>

@@ -87,4 +87,4 @@ def staffSignup(request):
 
         return redirect('stafflogin')
     else:
-        return HttpResponse('Access Denied')
+        return render(request, 'staff/login.html')
