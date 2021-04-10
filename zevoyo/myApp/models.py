@@ -60,3 +60,14 @@ class Availability(models.Model):
     date = models.DateField()
     available = models.CharField(max_length = 1)
     custId = models.ForeignKey(Customer, blank = False, null =  False, on_delete = models.CASCADE)
+
+class Hotels(models.Model):
+    name = models.CharField(max_length = 30)
+    owner = models.CharField(max_length = 30)
+    location = models.CharField(max_length = 50)
+    city = models.CharField(max_length = 20)
+    state = models.CharField(max_length = 15)
+    country = models.CharField(max_length = 20)
+
+    def __str__(self):
+        return self.name
