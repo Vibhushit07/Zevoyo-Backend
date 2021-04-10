@@ -52,7 +52,7 @@ def login_request(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('myApp/login.html')
+    return redirect('/myApp/staff')
 
 def x(request):
     return render(request, 'myApp/x.html')
@@ -103,3 +103,4 @@ def staffLogin(request):
             messages.success('Incorrect username or password')
             return redirect('stafflogin')
     return render(request, 'staff/login.html')
+
