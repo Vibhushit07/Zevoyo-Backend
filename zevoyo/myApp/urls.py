@@ -4,13 +4,13 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.homePage,name="home"),
+    path('', views.homePage, name = "home"),
     path('getID/<int:id>',views.get_id),
     path('getName/<str:empName>',views.get_name),
-    path('register/',views.register_request,name="register"),
-    path('login/',views.login_request,name="login"), 
-    path('x/',views.x,name="x"),
-    path('logout/', views.logoutUser, name="logout"),
+    path('register/', views.register_request, name = "register"),
+    path('login/', views.login_request, name = "login"), 
+    path('x/', views.x, name = "x"),
+    path('logout/', views.logoutUser, name = "logout"),
     path('hotelDescription/', views.hotelDescription),
-    path('h/', views.h)
+    path('staff/signup', views.staffSignup, name="staffsignup"),
 ]
