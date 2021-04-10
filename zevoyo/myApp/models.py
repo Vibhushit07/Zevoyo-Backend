@@ -94,3 +94,13 @@ class Rooms(models.Model):
 
     def __str__(self):
         return self.hotel.name
+
+class Reservation(models.Model):
+    checkIn = models.DateField(auto_now = False)
+    checkOut = models.DateField()
+    room = models.ForeignKey(Rooms, on_delete = models.CASCADE)
+    guest = models.ForeignKey(User, on_delete = models.CASCADE)
+    bookingId = models.CharField(max_length = 100, default = 'null')
+
+    def __str__(self):
+        return self.guest.username
