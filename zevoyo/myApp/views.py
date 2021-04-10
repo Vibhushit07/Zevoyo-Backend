@@ -1,11 +1,13 @@
-from django.shortcuts import render,redirect
-from .models import Employee
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate,login,logout
-from .forms import  CreateUserForm
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
+
+from .models import Employee
+from .forms import  CreateUserForm
 
 # Create your views here.
 
@@ -50,7 +52,7 @@ def login_request(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('myApp/login.html')
+    return redirect('/myApp/staff')
 
 def x(request):
     return render(request, 'myApp/x.html')
@@ -61,5 +63,44 @@ def homePage(request):
 def hotelDescription(request):
     return render(request, 'myApp/hotelDescription.html')
 
-def h(request):
-    return render(request, 'myApp/h.html')
+def staffSignup(request):
+    if request.method == 'POST':
+        userName = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        if password1 != password2:
+            messages.success(request, "Password didn't match")
+            return redirect('stafflogin')
+        try:
+            if User.objects.all().get(username = userName):
+                messages.warning(request, "Username already exist")
+                return redirect('stafflogin')
+        except:
+            pass
+            
+        newUser = User.objects.create(username = userName, password = password1)
+        newUser.is_superuser = False
+        newUser.is_staff = True
+        newUser.save()
+        messages.success(request, 'Staff Registration Successfull')
+
+        return redirect('stafflogin')
+    else:
+        return render(request, 'staff/login.html')
+
+def staffLogin(request):
+    if request.method == 'POST':
+        userName = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username = userName, password = password)
+
+        if user.is_staff:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.success('Incorrect username or password')
+            return redirect('stafflogin')
+    return render(request, 'staff/login.html')
+
