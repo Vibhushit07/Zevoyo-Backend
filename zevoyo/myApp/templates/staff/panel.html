@@ -65,7 +65,7 @@
                             <span class="progress-bar border-primary "></span>
                         </span>
                         <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center ">
-                            <div class="font-weight-bold">{{ unavailable }}</div>
+                            <div class="h2 font-weight-bold">{{ unavailable }}</div>
                         </div>
                     </div>
                     <!-- End -->
@@ -101,4 +101,33 @@
 <h2 class="text-center pb-2"> Room Details </h2>
 
 <button class="btn-group btn-primary" data-toggle="modal" data-target="#new-room">Add New Room</button>
-<button class="btn-group btn-primary" data-toggle="modal" data-target="#new-location">Add New Location</button> {% endblock body %}
+<button class="btn-group btn-primary" data-toggle="modal" data-target="#new-location">Add New Location</button>
+
+<table class="table table-striped">
+    <thead>
+        <th>Room Number</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Price</th>
+        <th>Capacity</th>
+        <th>Size</th>
+        <!-- <th colspan="2">Actions</th> -->
+    </thead>
+
+    {% if rooms %} {% for room in rooms %}
+    <tr>
+        <td> {{ room.roomNumber }} </td>
+        <td> {{ room.roomType }} </td>
+        <td> {{ room.status }} </td>
+        <td> {{ room.price }} </td>
+        <td> {{ room.capacity }} </td>
+        <td> {{ room.size }} </td>
+
+    </tr>
+
+    {% endfor %} {% endif %}
+</table>
+
+
+
+{% endblock body %}
