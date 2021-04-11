@@ -1,7 +1,8 @@
+from django.contrib.messages.api import success
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, get_permission_codename, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test 
@@ -150,4 +151,31 @@ def addNewLocation(request):
         return redirect("dashboard")
 
     else:
-        return HttpResponse("Not Allowed")
+        return HttpResponse("Access Denied")
+
+@login_required(login_url = "/staff")
+def addNewRoom(request):
+    if request.method == "POST" and request.user.is_staff:
+        totalRooms = len(Rooms.objects.all())
+        newRoom = Rooms()
+        hotel = Hotels.objects.all().get(id = int(request.POST['hotel']))
+
+        print("id={hotel.id}")
+        print("name={hotel.name}")
+
+        newRoom.roomNumber = totalRooms + 1
+        newRoom.roomType = request.POST["roomtype"]
+        newRoom.capacity = request.POST["capacity"]
+        newRoom.size = request.POST["size"]
+        newRoom.status = request.POST["status"]
+        newRoom.price = request.POST["price"]
+        newRoom.hotel = hotel
+
+        newRoom.save()
+
+        messages.success(request, "New Room added successfully")
+    
+        return redirect("dashboard")
+    
+    else:
+        return HttpResponse("Access Denied")
