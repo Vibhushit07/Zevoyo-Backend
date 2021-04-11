@@ -30,7 +30,7 @@
     <div class="container-fluid px-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary font-weight-bold">
             <a class="navbar-brand text-bold bg-black">
-                <i class="fas fa-hotel text-warning"></i><b>ZEVOYO</b>
+                <b>ZEVOYO</b>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -38,13 +38,13 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <!-- <li class="nav-item active">
                         <a class="nav-link text-bold" href="/home">Home</a>
-                    </li>
+                    </li> -->
 
                     {% if user.is_staff %}
                     <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/staff/panel">Dashboard</a>
+                        <a class="nav-link text-bold" href="/myApp/staff/dashboard">Dashboard</a>
                     </li>
 
                     {% elif user.is_staff == False and user.is_authenticated %}
@@ -54,16 +54,16 @@
 
                     {% endif %} {% if user.is_staff %}
                     <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/staff/allbookings">All Bookings</a>
+                        <!-- <a class="nav-link text-bold" href="/staff/allbookings">All Bookings</a> -->
                     </li>
                     {% endif %}
 
-                    <li class="nav-item active">
+                    <!-- <li class="nav-item active">
                         <a class="nav-link text-bold" href="/about">About</a>
-                    </li>
-                    <li class="nav-item active">
+                    </li> -->
+                    <!-- <li class="nav-item active">
                         <a class="nav-link text-bold" href="/contact">Contact</a>
-                    </li>
+                    </li> -->
                 </ul>
 
                 {% if user.is_authenticated %}
@@ -93,14 +93,16 @@
         </nav>
     </div>
 
-    {% for message in messages %}
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert   ">
-        {{message}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    {% for message in messages %} {% if message.tags == error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {% else %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+            {% endif %} {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-    </div>
-    {% endfor %} {% block body %} {% endblock body %}
+        </div>
+        {% endfor %} {% block body %} {% endblock body %}
 </body>
 
 {% block js %} {% endblock js %}

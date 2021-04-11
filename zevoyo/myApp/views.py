@@ -1,12 +1,13 @@
+from django.contrib.messages.api import success
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, get_permission_codename, login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required, user_passes_test 
 
-from .models import Employee
+from .models import Employee, Hotels, Reservation, Rooms
 from .forms import  CreateUserForm
 
 # Create your views here.
@@ -79,7 +80,7 @@ def staffSignup(request):
         except:
             pass
             
-        newUser = User.objects.create(username = userName, password = password1)
+        newUser = User.objects.create_user(username = userName, password = password1)
         newUser.is_superuser = False
         newUser.is_staff = True
         newUser.save()
@@ -94,13 +95,87 @@ def staffLogin(request):
         userName = request.POST['username']
         password = request.POST['password']
 
-        user = authenticate(username = userName, password = password)
+        user = authenticate(request, username = userName, password = password)
 
-        if user.is_staff:
+        if user is not None and user.is_staff == True:
             login(request, user)
             return redirect('home')
+        elif user is not None and user.is_staff == False:
+            messages.success(request, 'User is not a staff member')
+            return redirect('stafflogin')
         else:
-            messages.success('Incorrect username or password')
+            messages.error(request, 'Incorrect username or password')
             return redirect('stafflogin')
     return render(request, 'staff/login.html')
 
+# staff panel page
+@login_required(login_url = "/staff")
+def dashboard(request):
+
+    if request.user.is_staff == False:
+        return HttpResponse("Access Denied")
+
+    rooms = Rooms.objects.all()
+    totalRooms = len(rooms)
+    availableRooms = len(rooms.filter(status = '1'))
+    unavailableRooms = len(rooms.filter(status = '2'))
+    reserved = len(Reservation.objects.all())
+
+    hotel = Hotels.objects.values_list('location', 'id').distinct().order_by()
+
+    response = render(request, 'staff/panel.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
+    return HttpResponse(response)
+
+@login_required(login_url = "/staff")
+def addNewLocation(request):
+    if request.method == "POST" and request.user.is_staff:
+        owner = request.POST['owner']
+        location = request.POST['city']
+        state = request.POST['state']
+        country = request.POST['country']
+
+        hotels = Hotels.objects.all().filter(location = location, state = state)
+
+        if hotels:
+            messages.warning(request, "Sorry city at this location already exist")
+        else:
+            hotel = Hotels()
+            hotel.owner = owner
+            hotel.location = location
+            hotel.state = state
+            hotel.country = country
+            hotel.save()
+
+            messages.success(request, "New Location added successfully")
+
+        return redirect("dashboard")
+
+    else:
+        return HttpResponse("Access Denied")
+
+@login_required(login_url = "/staff")
+def addNewRoom(request):
+    if request.method == "POST" and request.user.is_staff:
+        totalRooms = len(Rooms.objects.all())
+        newRoom = Rooms()
+        hotel = Hotels.objects.all().get(id = int(request.POST['hotel']))
+
+        print("id={hotel.id}")
+        print("name={hotel.name}")
+
+        newRoom.roomNumber = totalRooms + 1
+        newRoom.roomType = request.POST["roomtype"]
+        newRoom.capacity = request.POST["capacity"]
+        newRoom.size = request.POST["size"]
+        newRoom.status = request.POST["status"]
+        newRoom.price = request.POST["price"]
+        newRoom.hotel = hotel
+
+        newRoom.save()
+
+        messages.success(request, "New Room added successfully")
+    
+        return redirect("dashboard")
+    
+    else:
+        return HttpResponse("Access Denied")
