@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required 
 
-from .models import Employee
+from .models import Employee, Hotels, Reservation, Rooms
 from .forms import  CreateUserForm
 
 # Create your views here.
@@ -107,3 +107,20 @@ def staffLogin(request):
             return redirect('stafflogin')
     return render(request, 'staff/login.html')
 
+# staff panel page
+@login_required(login_url = "/staff")
+def dashboard(request):
+
+    if request.user.is_staff == False:
+        return HttpResponse("Access Denied")
+
+    rooms = Rooms.objects.all()
+    totalRooms = len(rooms)
+    availableRooms = len(rooms.filter(status = '1'))
+    unavailableRooms = len(rooms.filter(status = '2'))
+    reserved = len(Reservation.objects.all())
+
+    hotel = Hotels.objects.values_list('location', 'id').distinct().order_by()
+
+    response = render(request, 'staff/panel.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
+    return HttpResponse(response)
