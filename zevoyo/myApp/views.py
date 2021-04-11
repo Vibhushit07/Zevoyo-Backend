@@ -79,7 +79,7 @@ def staffSignup(request):
         except:
             pass
             
-        newUser = User.objects.create(username = userName, password = password1)
+        newUser = User.objects.create_user(username = userName, password = password1)
         newUser.is_superuser = False
         newUser.is_staff = True
         newUser.save()
@@ -94,13 +94,16 @@ def staffLogin(request):
         userName = request.POST['username']
         password = request.POST['password']
 
-        user = authenticate(username = userName, password = password)
+        user = authenticate(request, username = userName, password = password)
 
-        if user.is_staff:
+        if user is not None and user.is_staff == True:
             login(request, user)
             return redirect('home')
+        elif user is not None and user.is_staff == False:
+            messages.success(request, 'User is not a staff member')
+            return redirect('stafflogin')
         else:
-            messages.success('Incorrect username or password')
+            messages.error(request, 'Incorrect username or password')
             return redirect('stafflogin')
     return render(request, 'staff/login.html')
 
