@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required 
+from django.contrib.auth.decorators import login_required, user_passes_test 
 
 from .models import Employee, Hotels, Reservation, Rooms
 from .forms import  CreateUserForm
@@ -124,3 +124,30 @@ def dashboard(request):
 
     response = render(request, 'staff/panel.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
+
+@login_required(login_url = "/staff")
+def addNewLocation(request):
+    if request.method == "POST" and request.user.is_staff:
+        owner = request.POST['owner']
+        location = request.POST['city']
+        state = request.POST['state']
+        country = request.POST['country']
+
+        hotels = Hotels.objects.all().filter(location = location, state = state)
+
+        if hotels:
+            messages.warning(request, "Sorry city at this location already exist")
+        else:
+            hotel = Hotels()
+            hotel.owner = owner
+            hotel.location = location
+            hotel.state = state
+            hotel.country = country
+            hotel.save()
+
+            messages.success(request, "New Location added successfully")
+
+        return redirect("dashboard")
+
+    else:
+        return HttpResponse("Not Allowed")
