@@ -11,7 +11,10 @@ from .models import Employee, Hotels, Reservation, Rooms
 from .forms import  CreateUserForm
 
 # Create your views here.
-
+#contact page
+def contactpage(request):
+    return HttpResponse(render(request,'contact.html'))
+    
 def get_id(request,id):
     s='Student id is %d' %id
     return HttpResponse(s)
