@@ -182,3 +182,56 @@ def addNewRoom(request):
     
     else:
         return HttpResponse("Access Denied")
+
+
+def user_sign_up(request):
+    if request.method=="POST":
+        userName=request.method['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if password1 != password2:
+            messages.warning(request,"Password didn't matched")
+            return redirect('userlogin')
+        try:
+            if User.objects.all().get(username=userName):
+                messages.warning(request,"Username Not Available")
+                return redirect('userlogin')
+        except:
+            pass
+        new_user = User.objects.create_user(username=userName,password=password1)
+        new_user.is_superuser=False
+        new_user.is_staff=False
+        new_user.save()
+        messages.success(request,"Registration Successfull")
+        return redirect("userlogin")
+    else:
+        return render(request,'user/login.html')
+    # return HttpResponse('Access Denied')
+
+def user_log_sign_page(request):
+    if request.method == 'POST':
+        userName = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request,username=userName,password=password)
+        try:
+            if user.is_staff:
+                
+                messages.error(request,"Incorrect username or Password")
+                return redirect('stafflogin')
+        except:
+            pass
+        
+        if user is not None:
+            login(request,user)
+            messages.success(request,"successful logged in")
+            print("Login successfull")
+            return redirect('home')
+        else:
+            messages.warning(request,"Incorrect username or password")
+            return redirect('userlogin')
+    
+    return render(request,'user/login.html')
+    # response = render(request,'user/login.html')
+    # return HttpResponse(response)
+            
