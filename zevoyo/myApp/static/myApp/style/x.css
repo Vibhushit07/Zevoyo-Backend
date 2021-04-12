@@ -27,20 +27,21 @@ input {
 .cursorPointer {
     cursor: pointer;
 }
+
 body {
     display: flex;
     flex-direction: column;
 }
 
 .Container {
-    height: 80px;
+    height: 70px;
 }
 
 .hotelNameWrapper {
     height: 100%;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgb(170, 168, 168);
+    border-bottom: 1px solid rgb(221, 218, 218);
     font-weight: bold;
     font-size: 25px;
 }
@@ -50,9 +51,10 @@ body {
     flex-direction: column;
     padding: 0px 70px;
 }
+
 .desc {
     display: flex;
-    margin: 50px 70px;
+    flex-wrap:wrap;
     
 }
 
@@ -66,7 +68,7 @@ body {
 
 .hotelName {
     font-weight: bold;
-    font-size: 30px;
+    font-size: larger;
 
 }
 
@@ -94,13 +96,25 @@ p {
 .bottomButtonContent {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     flex: 1;
 }
 
 .btnWrapper {
     align-self: flex-end;
 }
+.mainImage{
+    width: 30%;
+}
 
-.IconR {
-    float: right;
+@media screen and (max-width: 768px) {
+    .mainImage{
+        width: 100%;
+    }
+    .navbar-nav{
+        flex-direction: row;
+    }
+    .nav-item{
+        margin: 0px 10px;
+    }
 }
