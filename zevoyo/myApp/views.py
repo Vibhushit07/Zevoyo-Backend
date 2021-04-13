@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test 
 
-from .models import Employee, Hotels, Reservation, Rooms
+from .models import Hotels, Reservation, Rooms
 from .forms import  CreateUserForm
 
 # Create your views here.
