@@ -67,7 +67,7 @@ class Hotels(models.Model):
     location = models.CharField(max_length = 50)
     city = models.CharField(max_length = 20)
     state = models.CharField(max_length = 15)
-    country = models.CharField(max_length = 20)
+    country = models.CharField(max_length = 20,default="India")
 
     def __str__(self):
         return self.name

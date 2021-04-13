@@ -65,9 +65,9 @@
                     <!-- <li class="nav-item active">
                         <a class="nav-link text-bold" href="/about">About</a>
                     </li> -->
-                    <!-- <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/contact">Contact</a>
-                    </li> -->
+                    <li class="nav-item active">
+                        <a class="nav-link text-bold" href="/myApp/contact">Contact</a>
+                    </li>
                 </ul>
 
                 {% if user.is_authenticated %}
@@ -82,7 +82,7 @@
                 </button>
 
                 {% else %}
-                <a href="/myApp/login/" class="nav-link">
+                <a href="/myApp/user/" class="nav-link">
                     <button class="btn btn-group bg-warning font-weight-bold" data-toggle="modal" data-target="#forlogin">
                         User Login
                     </button>
