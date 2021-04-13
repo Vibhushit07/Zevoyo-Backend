@@ -155,8 +155,6 @@ def get_name(request,empName):
 def homePage(request):
     return render(request, 'myApp/home.html')
 
-
-
 def hotelDescription(request):
     return render(request, 'myApp/hotelDescription.html')
 
@@ -279,7 +277,7 @@ def addNewRoom(request):
 
 def user_sign_up(request):
     if request.method=="POST":
-        userName=request.method['username']
+        userName=request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         if password1 != password2:
