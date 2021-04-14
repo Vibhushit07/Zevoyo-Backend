@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-lg-2">
                     <label for="">Check Out</label>
-                    <input class="form-control mr-sm-2" type="date" placeholder="Check out" name="cout" min={%tommorow%} max={% max_date%} aria-label="Search" required="True">
+                    <input class="form-control mr-sm-2" type="date" placeholder="Check out" name="cout" min={%tomorrow%} max={% max_date%} aria-label="Search" required="True">
                 </div>
                 <div class="col-lg-2">
                     <label for="">Person</label>
@@ -57,7 +57,7 @@
         </thead>
         {% for r in rooms %}
         <tr class="">
-            <td>{{ r.get_room_type_display }}</td>
+            <td>{{ r.roomType }}</td>
             <td>{{ r.hotel.location }}</td>
             <td>{{ r.capacity }}</td>
             <td>{{ r.price }}</td>

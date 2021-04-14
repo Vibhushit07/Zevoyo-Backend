@@ -330,7 +330,7 @@ def user_log_sign_page(request):
 
 @login_required(login_url= "/user")
 def bookRoomPage(request):
-    room = Rooms.objects.all().get(id = int(request.GET['roomId']))
+    room = Rooms.objects.all().get(id = int(request.GET['roomid']))
     return HttpResponse(render(request, "user/bookRoom.html", {"room": room}))
 
 @login_required(login_url = '/user')
