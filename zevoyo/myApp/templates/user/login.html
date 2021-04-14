@@ -1,7 +1,4 @@
-{% extends 'basic.html' %}
-{% block title %}login
-{% endblock title %}
-{% block body %}
+{% extends 'basic.html' %} {% block title %}login {% endblock title %} {% block body %}
 <!--Cards starts here-->
 <div class="container py-5">
 
@@ -40,15 +37,15 @@
                             <div class="row">
                                 <div class="col-md-12 col-lg-12 col-xlg-12 col-sm-12">
 
-                                    <form action="/user/login"  method="post">
+                                    <form action="/myApp/user/login/" method="post">
                                         {%csrf_token%}
                                         <div class="form-group">
-                                            <label for="email">Username:</label>
-                                            <input type="text" class="form-control " id="email" placeholder="Enter email" name="email">
+                                            <label for="username">Username:</label>
+                                            <input type="text" class="form-control " id="username" placeholder="Enter email" name="username">
                                         </div>
                                         <div class="form-group">
                                             <label for="pwd">Password:</label>
-                                            <input type="password" class="form-control " id="pwd" placeholder="Enter password" name="pswd">
+                                            <input type="password" class="form-control " id="password" placeholder="Enter password" name="password">
                                         </div>
                                         <div class="form-group form-check">
                                             <label class="form-check-label">
@@ -69,7 +66,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-lg-12 col-xlg-12 col-sm-12">
 
-                                    <form action="/user/signup" method="post">
+                                    <form action="/myApp/user/signup/" method="post">
                                         <div class="form-group">
                                             {%csrf_token%}
                                             <label for="username">Username:</label>
@@ -101,4 +98,4 @@
     </div>
 
     <!--Cards ends here-->
-{% endblock body %}
+    {% endblock body %}

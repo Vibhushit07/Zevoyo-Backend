@@ -1,5 +1,5 @@
+from django.shortcuts import render,redirect
 from django.contrib.messages.api import success
-from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_permission_codename, login, logout
@@ -9,6 +9,58 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 from .models import Hotels, Reservation, Rooms
 from .forms import  CreateUserForm
+
+
+def register_request(request):
+    if request.method=="POST":
+        form=CreateUserForm(request.POST)
+        if form.is_valid:
+            user=form.save()
+            login(request,user)
+            messages.success(request,"Registeration successfull")
+            return redirect("myApp:homepage")
+        messages.error(request,"Unsuccessful registration. Invalid information.")
+    form=CreateUserForm()
+    return render(request=request,template_name="myApp/register.html",context={"register_form":form})
+
+def login_request(request):
+    if request.method=="POST":
+        form=AuthenticationForm(request,data=request.POST)
+        if form.is_valid():
+            username=form.cleaned_data.get('username')
+            password=form.cleaned_data.get('password')
+            user=authenticate(username=username, password=password)
+            if user is not None:
+                login(request,user)
+                messages.info(request,f"You are now logged in as {username}.")
+                return redirect("myApp:homepage")
+            else:
+                messages.error(request,"Invalid username or password.")
+        else:
+            messages.error(request,"Invalid username or password.")
+    form=AuthenticationForm()
+    return render(request=request,template_name="myApp/login.html", context={"login_form":form})
+
+# Create your views here.
+def get_id(request,id):
+    s='Student id is %d' %id
+    print('Hello')
+    return HttpResponse(s)
+    # if request.user.is_authenticated:
+    #     return redirect("../")
+    # else:
+    # form=CreateUserForm()
+    # if request.method=="POST":
+    #     form=CreateUserForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         user = form.cleaned_data.get('username')
+    #         messages.success(request,"Account was created for"+user)
+    #         return redirect("login")
+        
+    # context={'form':form}
+    # return render(request,"myApp/register.html",{})
+
 
 # Create your views here.
 #contact page
@@ -96,10 +148,12 @@ def logoutUser(request):
 def x(request):
     return render(request, 'myApp/x.html')
 
+def get_name(request,empName):
+    s='Employee name is %s' %empName
+    return HttpResponse(s)
+
 def homePage(request):
     return render(request, 'myApp/home.html')
-
-
 
 def hotelDescription(request):
     return render(request, 'myApp/hotelDescription.html')
@@ -223,7 +277,7 @@ def addNewRoom(request):
 
 def user_sign_up(request):
     if request.method=="POST":
-        userName=request.method['username']
+        userName=request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         if password1 != password2:
