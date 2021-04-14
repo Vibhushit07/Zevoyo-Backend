@@ -327,7 +327,12 @@ def user_log_sign_page(request):
     return render(request,'user/login.html')
     # response = render(request,'user/login.html')
     # return HttpResponse(response)
-            
+
+@login_required(login_url= "/user")
+def bookRoomPage(request):
+    room = Rooms.objects.all().get(id = int(request.GET['roomId']))
+    return HttpResponse(render(request, "user/bookRoom.html", {"room": room}))
+
 @login_required(login_url = '/user')
 def bookRoom(request):
     if request.method == 'POST':
@@ -346,9 +351,9 @@ def bookRoom(request):
             
         user = request.user
         totalPerson = int(request.POST['person'])
-        bookingId = str(roomId) + str(datetime.now())
+        bookingId = str(roomId) + str(datetime.datetime.now())
 
-        print(bookingId)
+        print(str(datetime.datetime.now()))
 
         messages.success(request, "Congratulations! Booking Successfull")
 
