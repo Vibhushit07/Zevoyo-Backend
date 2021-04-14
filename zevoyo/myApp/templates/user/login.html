@@ -67,10 +67,15 @@
                                 <div class="col-md-12 col-lg-12 col-xlg-12 col-sm-12">
 
                                     <form action="/myApp/user/signup/" method="post">
+                                        {%csrf_token%}
                                         <div class="form-group">
-                                            {%csrf_token%}
                                             <label for="username">Username:</label>
                                             <input type="text" class="form-control " id="username" placeholder="Username" name="username">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="contact-number">Contact Number:</label>
+                                            <input type="text" class="form-control " id="contact-number" placeholder="Contact Number" name="contactNumber">
                                         </div>
 
                                         <div class="form-group">
