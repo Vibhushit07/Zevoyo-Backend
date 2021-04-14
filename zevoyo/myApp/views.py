@@ -279,9 +279,11 @@ def addNewRoom(request):
 
 def user_sign_up(request):
     if request.method=="POST":
-        userName=request.POST['username']
+        userName = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
+        contactNumber = request.POST['contactNumber']
+
         if password1 != password2:
             messages.warning(request,"Password didn't matched")
             return redirect('userlogin')
@@ -291,15 +293,14 @@ def user_sign_up(request):
                 return redirect('userlogin')
         except:
             pass
-        new_user = User.objects.create_user(username=userName,password=password1)
+        new_user = User.objects.create_user(username = userName, password = password1, contactNumber = contactNumber)
         new_user.is_superuser=False
         new_user.is_staff=False
         new_user.save()
         messages.success(request,"Registration Successfull")
         return redirect("userlogin")
     else:
-        return render(request,'user/login.html')
-    # return HttpResponse('Access Denied')
+        return render(request, 'user/login.html')
 
 def user_log_sign_page(request):
     if request.method == 'POST':
