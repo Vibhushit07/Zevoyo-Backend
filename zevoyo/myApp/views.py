@@ -347,13 +347,20 @@ def bookRoom(request):
                 pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
-                return redirect("home")
+                return redirect("homePage")
             
-        user = request.user
-        totalPerson = int(request.POST['person'])
-        bookingId = str(roomId) + str(datetime.datetime.now())
+        reservation = Reservation()
+        room.status = '2'
 
-        print(str(datetime.datetime.now()))
+        user = User.objects.all().get(username = request.user)
+
+        reservation.guest = user
+        reservation.room = room
+        reservation.checkIn = request.POST["checkIn"]
+        reservation.checkOut = request.POST["checkOut"]
+        reservation.bookingId = str(roomId) + str(datetime.datetime.now())
+
+        reservation.save()
 
         messages.success(request, "Congratulations! Booking Successfull")
 
