@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Hotels, Reservation, Rooms
 from .forms import  CreateUserForm
 
+import datetime
+
 
 def register_request(request):
     if request.method=="POST":
@@ -326,3 +328,30 @@ def user_log_sign_page(request):
     # response = render(request,'user/login.html')
     # return HttpResponse(response)
             
+@login_required(login_url = '/user')
+def bookRoom(request):
+    if request.method == 'POST':
+        roomId = request.POST['roomId']
+        room = Rooms.objects.all().get(id = roomId)
+
+        # for finding the reserved rooms on this time period for excluding from the query set
+        for reservation in Reservation.objects.all().filter(room = room):
+            if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']):
+                pass
+            if str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']):
+                pass
+            else:
+                messages.warning(request, "Sorry this Room is unavailable for booking")
+                return redirect("home")
+            
+        user = request.user
+        totalPerson = int(request.POST['person'])
+        bookingId = str(roomId) + str(datetime.now())
+
+        print(bookingId)
+
+        messages.success(request, "Congratulations! Booking Successfull")
+
+        return redirect("homepage")
+    else:
+        return HttpResponse("Access Denied")
