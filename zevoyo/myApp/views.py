@@ -42,6 +42,9 @@ def homePage(request):
 def contactpage(request):
     return HttpResponse(render(request,'contact.html'))
 
+def aboutpage(request):
+    return HttpResponse(render(request,'about.html'))
+
 def logoutUser(request):
     logout(request)
     return redirect('/myApp/staff')
