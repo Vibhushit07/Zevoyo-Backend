@@ -19,9 +19,9 @@ def homePage(request):
             
             #for finding the reserved rooms on this time period for excluding from the query set
             for each_reservation in Reservation.objects.all():
-                if str(each_reservation.check_in) < str(request.POST['cin']) and str(each_reservation.check_out) < str(request.POST['cout']):
+                if str(each_reservation.checkIn) < str(request.POST['cin']) and str(each_reservation.checkOut) < str(request.POST['cout']):
                     pass
-                elif str(each_reservation.check_in) > str(request.POST['cin']) and str(each_reservation.check_out) > str(request.POST['cout']):
+                elif str(each_reservation.checkIn) > str(request.POST['cin']) and str(each_reservation.checkOut) > str(request.POST['cout']):
                     pass
                 else:
                     rr.append(each_reservation.room.id)
@@ -174,7 +174,7 @@ def user_bookings(request):
     bookings = Reservation.objects.all().filter(guest=user)
     if not bookings:
         messages.warning(request,"No Bookings Found")
-    return HttpResponse(render(request,'user/mybookings.html',{'bookings':bookings}))
+    return HttpResponse(render(request,'user/mybookings.html', {'bookings': bookings}))
 
 
 def user_sign_up(request):

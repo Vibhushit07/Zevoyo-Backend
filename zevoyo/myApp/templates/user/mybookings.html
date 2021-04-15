@@ -1,5 +1,4 @@
-{% extends 'basic.html' %} {% block title %}Dashboard {% endblock title %} {% block body %}
-{% load app_tags %}
+{% extends 'basic.html' %} {% block title %}Dashboard {% endblock title %} {% block body %} {% load app_tags %}
 <h3 class="text-center  text-success">My Bookings </h3>
 <table class="table">
     <thead>
@@ -17,8 +16,8 @@
         <td>{{each_booking.room.roomnumber}}</td>
         <td>{{each_booking.room.hotel.location}}</td>
         <td>{{each_booking.room.capacity}}</td>
-        <td>{{each_booking.check_in}}</td>
-        <td>{{each_booking.check_out}}</td>
+        <td>{{each_booking.checkIn}}</td>
+        <td>{{each_booking.checkOut}}</td>
         <td>{{each_booking.room.price}}</td>
     </tr>
     {% endfor %}
