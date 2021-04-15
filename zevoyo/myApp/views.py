@@ -81,7 +81,7 @@ def staffLogin(request):
 
         if user is not None and user.is_staff == True:
             login(request, user)
-            return redirect('home')
+            return redirect('homePage')
         elif user is not None and user.is_staff == False:
             messages.success(request, 'User is not a staff member')
             return redirect('stafflogin')
