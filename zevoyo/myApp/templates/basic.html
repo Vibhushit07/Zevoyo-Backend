@@ -46,6 +46,9 @@
                         <a class="nav-link text-bold" href="/myApp/">Home</a>
                     </li>
 
+                    <li class="nav-item active">
+                        <a class="nav-link text-bold" href="/myApp/about">About</a>
+                    </li>
                     {% if user.is_staff %}
                     <li class="nav-item active">
                         <a class="nav-link text-bold" href="/myApp/staff/dashboard">Dashboard</a>
@@ -53,7 +56,7 @@
 
                     {% elif user.is_staff == False and user.is_authenticated %}
                     <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/user/bookings">My Bookings</a>
+                        <a class="nav-link text-bold" href="/myApp/user/bookings">My Bookings</a>
                     </li>
 
                     {% endif %} {% if user.is_staff %}
