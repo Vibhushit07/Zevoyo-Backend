@@ -162,6 +162,17 @@ def addNewRoom(request):
     else:
         return HttpResponse("Access Denied")
 
+@login_required(login_url='/user')
+def user_bookings(request):
+    if request.user.is_authenticated==False:
+        return redirect('userlogin')
+    user=User.objects.all().get(id=request.user.id)
+    print(f"request user id ={request.user.id}")
+    bookings = Reservation.objects.all().filter(guest=user)
+    if not bookings:
+        messages.warning(request,"No Bookings Found")
+    return HttpResponse(render(request,'user/mybookings.html',{'bookings':bookings}))
+
 
 def user_sign_up(request):
     if request.method=="POST":
@@ -206,7 +217,7 @@ def user_log_sign_page(request):
             login(request,user)
             messages.success(request,"successful logged in")
             print("Login successfull")
-            return redirect('home')
+            return redirect('homePage')
         else:
             messages.warning(request,"Incorrect username or password")
             return redirect('userlogin')
@@ -234,21 +245,27 @@ def bookRoom(request):
                 messages.warning(request, "Sorry this Room is unavailable for booking")
                 return redirect("homePage")
             
+        # current_user = request.user
+        # total_person = int( request.POST['person'])
+        # booking_id = str(room_id) + str(datetime.datetime.now())
+
         reservation = Reservation()
+        # room = Rooms.objects.all().get(id=room_id)
         room.status = '2'
 
         user = User.objects.all().get(username = request.user)
 
         reservation.guest = user
         reservation.room = room
+        # person = total_person
         reservation.checkIn = request.POST["checkIn"]
         reservation.checkOut = request.POST["checkOut"]
-        reservation.bookingId = str(roomId) + str(datetime.datetime.now())
+        # reservation.bookingId = str(roomId) + str(datetime.datetime.now())
 
         reservation.save()
 
         messages.success(request, "Congratulations! Booking Successfull")
 
-        return redirect("homepage")
+        return redirect("homePage")
     else:
         return HttpResponse("Access Denied")
