@@ -1,4 +1,5 @@
-{% extends 'basic.html' %} {% block title %} staff panel {% endblock title %} {% block body %}
+{% extends 'basic.html' %} {% block title %} staff panel {% endblock title %} {% block body %} {% load static %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/css/panel.css'%}"> {% endblock css %}
 
 <!--Staff section -->
 
@@ -100,8 +101,8 @@
 
 <h2 class="text-center pb-2"> Room Details </h2>
 
-<button class="btn-group btn-primary" data-toggle="modal" data-target="#new-room">Add New Room</button>
-<button class="btn-group btn-primary" data-toggle="modal" data-target="#new-location">Add New Location</button>
+<button class="btn btn-group btn-primary" data-toggle="modal" data-target="#new-room">Add New Room</button>
+<button class="btn btn-group btn-primary" data-toggle="modal" data-target="#new-location">Add New Location</button>
 
 <table class="table table-striped">
     <thead>
