@@ -1,4 +1,4 @@
-{% extends 'basic.html' %} {% block title %} staff panel {% endblock title %} {% block body %} {% load static %} {% block css %}
+{% extends 'basic.html' %} {% block title %} staff panel {% endblock title %} {% load static %} {% block body %} {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'myApp/css/panel.css'%}"> {% endblock css %}
 
 <!--Staff section -->
@@ -6,7 +6,7 @@
 <!--Room Stats section starts here-->
 
 <section class="my-5">
-    {% load mathfilters %}
+    {% load app_tags %}
     <h2 class="text-center text-primary">
         Room Stats
     </h2>
@@ -18,7 +18,7 @@
                     <h2 class="h6 font-weight-bold text-center mb-4">Total Rooms</h2>
 
                     <!-- Progress Bar 1 -->
-                    <div class="progress mx-auto" data-value="{{ totalRooms }}">
+                    <div class="progress mx-auto" data-value={{ totalRooms|percentage:totalRooms }}>
                         <span class="progress-left ">
                             <span class="progress-bar border-primary "></span>
                         </span>
@@ -26,7 +26,7 @@
                             <span class="progress-bar border-primary "></span>
                         </span>
                         <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center ">
-                            <div class="font-weight-bold ">{{ totalRooms }}</div>
+                            <div class="h2 font-weight-bold ">{{ totalRooms }}</div>
                         </div>
                     </div>
                     <!-- End -->
@@ -38,15 +38,15 @@
                     <h2 class="h6 font-weight-bold text-center mb-4">Available Rooms</h2>
 
                     <!-- Progress Bar 2 -->
-                    <div class="progress mx-auto" data-value="{{ available }}">
+                    <div class="progress mx-auto" data-value={{ available|percentage:totalRooms }}>
                         <span class="progress-left ">
-                            <span class="progress-bar border-primary "></span>
+                            <span class="progress-bar border-success"></span>
                         </span>
                         <span class="progress-right ">
-                            <span class="progress-bar border-primary "></span>
+                            <span class="progress-bar border-success"></span>
                         </span>
                         <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center ">
-                            <div class=" font-weight-bold ">{{ available }}</div>
+                            <div class="h2 font-weight-bold ">{{ available }}</div>
                         </div>
                     </div>
                     <!-- End -->
@@ -58,15 +58,15 @@
                     <h2 class="h6 font-weight-bold text-center mb-4">Not Available</h2>
 
                     <!-- Progress Bar 3 -->
-                    <div class="progress mx-auto" data-value="{{ unavailable }}">
+                    <div class="progress mx-auto" data-value={{ unavailable|percentage:totalRooms }}>
                         <span class="progress-left ">
-                            <span class="progress-bar border-primary "></span>
+                            <span class="progress-bar border-danger"></span>
                         </span>
                         <span class="progress-right ">
-                            <span class="progress-bar border-primary "></span>
+                            <span class="progress-bar border-danger"></span>
                         </span>
                         <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center ">
-                            <div class="font-weight-bold">{{ unavailable }}</div>
+                            <div class="h2 font-weight-bold">{{ unavailable }}</div>
                         </div>
                     </div>
                     <!-- End -->
@@ -78,15 +78,15 @@
                     <h2 class="h6 font-weight-bold text-center mb-4">Total Reservation</h2>
 
                     <!-- Progress Bar 4 -->
-                    <div class="progress mx-auto" data-value="{{ reserved }}">
+                    <div class="progress mx-auto" data-value={{ reserved|percentage:totalRooms }}>
                         <span class="progress-left ">
-                            <span class="progress-bar border-primary "></span>
+                            <span class="progress-bar border-warning"></span>
                         </span>
                         <span class="progress-right ">
-                            <span class="progress-bar border-primary "></span>
+                            <span class="progress-bar border-warning"></span>
                         </span>
                         <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center ">
-                            <div class="font-weight-bold ">{{ reserved }}</div>
+                            <div class="h2 font-weight-bold ">{{ reserved }}</div>
                         </div>
                     </div>
                     <!-- End -->
