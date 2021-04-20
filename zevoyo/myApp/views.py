@@ -108,7 +108,7 @@ def dashboard(request):
 
     hotel = Hotels.objects.values_list('location', 'id').distinct().order_by()
 
-    response = render(request, 'staff/panel.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
+    response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
 
 @login_required(login_url = "/staff")
