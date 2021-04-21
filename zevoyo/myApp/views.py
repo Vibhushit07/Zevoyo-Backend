@@ -1,68 +1,53 @@
-from django.contrib.messages.api import success
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-from django.contrib.auth import authenticate, get_permission_codename, login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required, user_passes_test 
+from django.contrib.auth.decorators import login_required
 
-from .models import Employee, Hotels, Reservation, Rooms
-from .forms import  CreateUserForm
+from .models import Hotels, Reservation, Rooms
 
-# Create your views here.
+import datetime
 
-def get_id(request,id):
-    s='Student id is %d' %id
-    return HttpResponse(s)
+def homePage(request):
+    all_location = Hotels.objects.values_list('location','id').distinct().order_by()
+    if request.method =="POST":
+        try:
+            print(request.POST)
+            hotel = Hotels.objects.all().get(id=int(request.POST['search_location']))
+            rr = []
+            
+            #for finding the reserved rooms on this time period for excluding from the query set
+            for each_reservation in Reservation.objects.all():
+                if str(each_reservation.checkIn) < str(request.POST['cin']) and str(each_reservation.checkOut) < str(request.POST['cout']):
+                    pass
+                elif str(each_reservation.checkIn) > str(request.POST['cin']) and str(each_reservation.checkOut) > str(request.POST['cout']):
+                    pass
+                else:
+                    rr.append(each_reservation.room.id)
+                
+            room = Rooms.objects.all().filter(hotel=hotel,capacity__gte = int(request.POST['capacity'])).exclude(id__in=rr)
+            if len(room) == 0:
+                messages.warning(request,"Sorry No Rooms Are Available on this time period")
+            data = {'rooms':room,'all_location':all_location,'flag':True}
+            response = render(request,'index.html',data)
+        except Exception as e:
+            messages.error(request,e)
+            response = render(request,'index.html',{'all_location':all_location})
+    else:
+        data = {'all_location':all_location}
+        response = render(request,'index.html',data)
+    return HttpResponse(response)
 
-def get_name(request,empName):
-    s='Employee name is %s' %empName
-    return HttpResponse(s)
+def contactpage(request):
+    return HttpResponse(render(request,'contact.html'))
 
-def register_request(request):
-    # if request.user.is_authenticated:
-    #     return redirect("../")
-    # else:
-        # form=CreateUserForm()
-        if request.method=="POST":
-            form=CreateUserForm(request.POST)
-            if form.is_valid():
-                user = form.cleaned_data.get('username')
-                form.save()
-                messages.success(request,"Account was created for "+user)
-                return redirect("login")
-        else:
-            form=CreateUserForm()
-        return render(request,"myApp/register.html",{'form':form})
-
-def login_request(request):
-    # if request.user.is_authenticated:
-    #     return redirect('homePage')
-    # else:
-        if request.method=='POST':
-            username = request.POST['username']
-            password = request.POST['password']
-            user=authenticate(request,username=username, password=password)
-            if user is not None:
-                login(request,user)
-                return redirect('../')
-            else:
-                messages.info(request,'Username OR password is incorrect')
-        return render(request,"myApp/login.html", context={})
+def aboutpage(request):
+    return HttpResponse(render(request,'about.html'))
 
 def logoutUser(request):
     logout(request)
     return redirect('/myApp/staff')
-
-def x(request):
-    return render(request, 'myApp/x.html')
-
-def homePage(request):
-    return render(request, 'myApp/home.html')
-
-def hotelDescription(request):
-    return render(request, 'myApp/hotelDescription.html')
 
 def staffSignup(request):
     if request.method == 'POST':
@@ -99,7 +84,7 @@ def staffLogin(request):
 
         if user is not None and user.is_staff == True:
             login(request, user)
-            return redirect('home')
+            return redirect('homePage')
         elif user is not None and user.is_staff == False:
             messages.success(request, 'User is not a staff member')
             return redirect('stafflogin')
@@ -177,5 +162,113 @@ def addNewRoom(request):
     
         return redirect("dashboard")
     
+    else:
+        return HttpResponse("Access Denied")
+
+@login_required(login_url='/user')
+def user_bookings(request):
+    if request.user.is_authenticated==False:
+        return redirect('userlogin')
+    user=User.objects.all().get(id=request.user.id)
+    print(f"request user id ={request.user.id}")
+    bookings = Reservation.objects.all().filter(guest=user)
+    if not bookings:
+        messages.warning(request,"No Bookings Found")
+    return HttpResponse(render(request,'user/mybookings.html', {'bookings': bookings}))
+
+
+def user_sign_up(request):
+    if request.method=="POST":
+        userName = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        contactNumber = request.POST['contactNumber']
+
+        if password1 != password2:
+            messages.warning(request,"Password didn't matched")
+            return redirect('userlogin')
+        try:
+            if User.objects.all().get(username=userName):
+                messages.warning(request,"Username Not Available")
+                return redirect('userlogin')
+        except:
+            pass
+        new_user = User.objects.create_user(username = userName, password = password1, contactNumber = contactNumber)
+        new_user.is_superuser=False
+        new_user.is_staff=False
+        new_user.save()
+        messages.success(request,"Registration Successfull")
+        return redirect("userlogin")
+    else:
+        return render(request, 'user/login.html')
+
+def user_log_sign_page(request):
+    if request.method == 'POST':
+        userName = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request,username=userName,password=password)
+        try:
+            if user.is_staff:
+                
+                messages.error(request,"Incorrect username or Password")
+                return redirect('stafflogin')
+        except:
+            pass
+        
+        if user is not None:
+            login(request,user)
+            messages.success(request,"successful logged in")
+            print("Login successfull")
+            return redirect('homePage')
+        else:
+            messages.warning(request,"Incorrect username or password")
+            return redirect('userlogin')
+    
+    return render(request,'user/login.html')
+
+@login_required(login_url= "/user")
+def bookRoomPage(request):
+    room = Rooms.objects.all().get(id = int(request.GET['roomid']))
+    return HttpResponse(render(request, "user/bookRoom.html", {"room": room}))
+
+@login_required(login_url = '/user')
+def bookRoom(request):
+    if request.method == 'POST':
+        roomId = request.POST['roomId']
+        room = Rooms.objects.all().get(id = roomId)
+
+        # for finding the reserved rooms on this time period for excluding from the query set
+        for reservation in Reservation.objects.all().filter(room = room):
+            if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']):
+                pass
+            if str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']):
+                pass
+            else:
+                messages.warning(request, "Sorry this Room is unavailable for booking")
+                return redirect("homePage")
+            
+        # current_user = request.user
+        # total_person = int( request.POST['person'])
+        # booking_id = str(room_id) + str(datetime.datetime.now())
+
+        reservation = Reservation()
+        # room = Rooms.objects.all().get(id=room_id)
+        room.status = '2'
+
+        user = User.objects.all().get(username = request.user)
+
+        reservation.guest = user
+        reservation.room = room
+        # person = total_person
+        reservation.checkIn = request.POST["checkIn"]
+        reservation.checkOut = request.POST["checkOut"]
+        # reservation.bookingId = str(roomId) + str(datetime.datetime.now())
+
+        reservation.save()
+
+        messages.success(request, "Congratulations! Booking Successfull")
+
+        return redirect("homePage")
     else:
         return HttpResponse("Access Denied")

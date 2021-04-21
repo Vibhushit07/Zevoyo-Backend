@@ -23,12 +23,16 @@
         a {
             text-decoration: none;
         }
+        
+        nav {
+            background-color: #d11450;
+        }
     </style>
 </head>
 
 <body>
     <div class="container-fluid px-0">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary font-weight-bold">
+        <nav class="navbar navbar-expand-lg navbar-dark font-weight-bold">
             <a class="navbar-brand text-bold bg-black">
                 <b>ZEVOYO</b>
             </a>
@@ -38,10 +42,13 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <!-- <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/home">Home</a>
-                    </li> -->
+                    <li class="nav-item active">
+                        <a class="nav-link text-bold" href="/myApp/">Home</a>
+                    </li>
 
+                    <li class="nav-item active">
+                        <a class="nav-link text-bold" href="/myApp/about">About</a>
+                    </li>
                     {% if user.is_staff %}
                     <li class="nav-item active">
                         <a class="nav-link text-bold" href="/myApp/staff/dashboard">Dashboard</a>
@@ -49,7 +56,7 @@
 
                     {% elif user.is_staff == False and user.is_authenticated %}
                     <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/user/bookings">My Bookings</a>
+                        <a class="nav-link text-bold" href="/myApp/user/bookings">My Bookings</a>
                     </li>
 
                     {% endif %} {% if user.is_staff %}
@@ -61,9 +68,9 @@
                     <!-- <li class="nav-item active">
                         <a class="nav-link text-bold" href="/about">About</a>
                     </li> -->
-                    <!-- <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/contact">Contact</a>
-                    </li> -->
+                    <li class="nav-item active">
+                        <a class="nav-link text-bold" href="/myApp/contact">Contact</a>
+                    </li>
                 </ul>
 
                 {% if user.is_authenticated %}
@@ -78,7 +85,7 @@
                 </button>
 
                 {% else %}
-                <a href="/myApp/login/" class="nav-link">
+                <a href="/myApp/user/login" class="nav-link">
                     <button class="btn btn-group bg-warning font-weight-bold" data-toggle="modal" data-target="#forlogin">
                         User Login
                     </button>
