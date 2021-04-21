@@ -57,7 +57,7 @@
         </thead>
         {% for r in rooms %}
         <tr class="">
-            <td>{{ r.roomType }}</td>
+            <td>{{ r.get_roomType_display }}</td>
             <td>{{ r.hotel.location }}</td>
             <td>{{ r.capacity }}</td>
             <td>{{ r.price }}</td>

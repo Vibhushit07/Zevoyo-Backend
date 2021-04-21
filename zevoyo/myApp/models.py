@@ -6,11 +6,11 @@ from django.conf import settings
 # Create your models here.
 
 class Hotels(models.Model):
-    name = models.CharField(max_length = 30)
+    name = models.CharField(max_length = 30,default="Zevoyo")
     owner = models.CharField(max_length = 30)
     location = models.CharField(max_length = 50)
     city = models.CharField(max_length = 20)
-    state = models.CharField(max_length = 15)
+    state = models.CharField(max_length = 15,default="Punjab")
     country = models.CharField(max_length = 20,default="India")
 
     def __str__(self):
