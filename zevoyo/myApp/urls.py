@@ -21,5 +21,7 @@ urlpatterns = [
     path('staff/dashboard/add-new-location/', views.addNewLocation, name='addNewLocation'),
     path('staff/dashboard/add-new-room/', views.addNewRoom, name='addNewRoom'),
 
+    # path('staff/dashboard/edit-room', views.),
+
     path('logout/', views.logoutUser, name = "logout"),
 ]

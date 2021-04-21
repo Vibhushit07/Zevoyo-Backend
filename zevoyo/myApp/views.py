@@ -106,7 +106,7 @@ def dashboard(request):
     unavailableRooms = len(rooms.filter(status = '2'))
     reserved = len(Reservation.objects.all())
 
-    hotel = Hotels.objects.values_list('location', 'id').distinct().order_by()
+    hotel = Hotels.objects.values_list('location', 'name').distinct().order_by()
 
     response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
@@ -114,6 +114,7 @@ def dashboard(request):
 @login_required(login_url = "/staff")
 def addNewLocation(request):
     if request.method == "POST" and request.user.is_staff:
+        name = request.POST['hotelName']
         owner = request.POST['owner']
         location = request.POST['city']
         state = request.POST['state']
@@ -125,6 +126,7 @@ def addNewLocation(request):
             messages.warning(request, "Sorry city at this location already exist")
         else:
             hotel = Hotels()
+            hotel.name = name
             hotel.owner = owner
             hotel.location = location
             hotel.state = state
@@ -143,7 +145,8 @@ def addNewRoom(request):
     if request.method == "POST" and request.user.is_staff:
         totalRooms = len(Rooms.objects.all())
         newRoom = Rooms()
-        hotel = Hotels.objects.all().get(id = int(request.POST['hotel']))
+        print(request.POST['hotel'])
+        hotel = Hotels.objects.all().get(name = request.POST['hotel'])
 
         print("id={hotel.id}")
         print("name={hotel.name}")
@@ -272,3 +275,7 @@ def bookRoom(request):
         return redirect("homePage")
     else:
         return HttpResponse("Access Denied")
+
+# @login_required(login_url='/staff')
+# def editRoom(request):
+    
