@@ -106,24 +106,29 @@
 
 <table class="table table-striped">
     <thead>
+        <th>Hotel</th>
         <th>Room Number</th>
         <th>Type</th>
         <th>Status</th>
         <th>Price</th>
         <th>Capacity</th>
         <th>Size</th>
-        <!-- <th colspan="2">Actions</th> -->
+        <th colspan="2">Actions</th>
     </thead>
 
     {% if rooms %} {% for room in rooms %}
     <tr>
+        <td> {{ room.hotel.name }} </td>
         <td> {{ room.roomNumber }} </td>
         <td> {{ room.roomType }} </td>
         <td> {{ room.status }} </td>
         <td> {{ room.price }} </td>
         <td> {{ room.capacity }} </td>
         <td> {{ room.size }} </td>
+        <td colspan="2">
+            <a href="/myApp/staff/dashboard/edit-room?roomid={{room.id}}"><button class="btn btn-danger">Edit</button></a>
 
+        </td>
     </tr>
 
     {% endfor %} {% endif %}
@@ -264,4 +269,6 @@
     </div>
 </div>
 
-{% endblock body %}
+{% endblock body %} {% block js %}
+<script src="{% static '/myApp/js/panel.js' %}"></script>
+{% endblock js %}

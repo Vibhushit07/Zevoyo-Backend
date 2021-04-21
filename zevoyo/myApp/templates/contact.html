@@ -9,11 +9,18 @@
     <link rel="stylesheet" type="text/css" href="{% static 'myApp/css/style.css'%}">
     <!-- <link rel="stylesheet" href="{% static 'myApp/css/font-awesome.min.css'%}"> -->
     <script src="{% static 'myApp/js/jquery.min.js'%}"></script>
-    <link href="{% static 'myApp/css/google-font.css'%}" rel="stylesheet" type="text/css">
-    {#    <style type="text/css" style="display: none !important;"></style>#}
+    <link href="{% static 'myApp/css/google-font.css'%}" rel="stylesheet" type="text/css"> {#
+    <style type="text/css" style="display: none !important;"></style>#}
 
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
-     </script>
+    <script type="application/x-javascript">
+        addEventListener("load", function() {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
 
     <title>
         {% block title %} {% endblock title %}
@@ -36,6 +43,7 @@
         a {
             text-decoration: none;
         }
+        
         nav {
             background-color: #d11450;
         }
@@ -58,8 +66,8 @@
                         <a class="nav-link text-bold" href="/myApp/">Home</a>
                     </li>
                     <li class="nav-item active">
-                      <a class="nav-link text-bold" href="/myApp/about">About</a>
-                  </li>
+                        <a class="nav-link text-bold" href="/myApp/about">About</a>
+                    </li>
                     {% if user.is_staff %}
                     <li class="nav-item active">
                         <a class="nav-link text-bold" href="/myApp/staff/dashboard">Dashboard</a>
@@ -84,7 +92,7 @@
                     </li>
                 </ul>
 
-                
+
                 {% if user.is_authenticated %}
                 <button class="btn btn-group bg-light" data-toggle="modal" data-target="#forlogin">
                         Hello, {{request.user}}
@@ -97,7 +105,7 @@
                 </button>
 
                 {% else %}
-                <a href="/myApp/login/" class="nav-link">
+                <a href="/myApp/user/" class="nav-link">
                     <button class="btn btn-group bg-warning font-weight-bold" data-toggle="modal" data-target="#forlogin">
                         User Login
                     </button>
@@ -108,55 +116,55 @@
                     </button>
                 </a>
                 {% endif %}
-               </div>
+            </div>
         </nav>
         <div class="about">
-          <div class="container">
-            <section class="title-section">
-              <h1 class="title-header">Contact Us</h1>
-            </section>
-          </div>
+            <div class="container">
+                <section class="title-section">
+                    <h1 class="title-header">Contact Us</h1>
+                </section>
+            </div>
         </div>
 
         <div class="contact">
-          <div class="container">
-            <div class="row contact_top">
-              <div class="col-md-4 contact_details">
-                <h5>Mailing address:</h5>
-                <div class="contact_address">321 Awesome Street, New York, NY 17022</div>
-              </div>
-              <div class="col-md-4 contact_details">
-                <h5>Call us:</h5>
-                <div class="contact_address"> +1 800 123 1234<br>
+            <div class="container">
+                <div class="row contact_top">
+                    <div class="col-md-4 contact_details">
+                        <h5>Mailing address:</h5>
+                        <div class="contact_address">321 Awesome Street, New York, NY 17022</div>
+                    </div>
+                    <div class="col-md-4 contact_details">
+                        <h5>Call us:</h5>
+                        <div class="contact_address"> +1 800 123 1234<br>
+                        </div>
+                    </div>
+                    <div class="col-md-4 contact_details">
+                        <h5>Email us:</h5>
+                        <div class="contact_mail"> info@Zevoyo.com</div>
+                    </div>
                 </div>
-              </div>
-              <div class="col-md-4 contact_details">
-                <h5>Email us:</h5>
-                <div class="contact_mail"> info@Zevoyo.com</div>
-              </div>
             </div>
-          </div>
         </div>
         <div class="footer">
-          <div class="footer_bottom">
-            <div class="follow-us"> 
-              <a class="fa fa-facebook social-icon" href="contact.html#"></a> 
-              <a class="fa fa-twitter social-icon" href="#"></a>
-               <a class="fa fa-linkedin social-icon" href="#"></a>
-                <a class="fa fa-google social-icon" href="#"></a>
-                <a class="fa fa-youtube social-icon" href="#"></a>
-              </div>
-            <div class="copy">
-              <p>Copyright © ZEVOYO. Design by <a href="" rel="nofollow">One</a></p>
+            <div class="footer_bottom">
+                <div class="follow-us">
+                    <a class="fa fa-facebook social-icon" href="contact.html#"></a>
+                    <a class="fa fa-twitter social-icon" href="#"></a>
+                    <a class="fa fa-linkedin social-icon" href="#"></a>
+                    <a class="fa fa-google social-icon" href="#"></a>
+                    <a class="fa fa-youtube social-icon" href="#"></a>
+                </div>
+                <div class="copy">
+                    <p>Copyright © ZEVOYO. Design by <a href="" rel="nofollow">One</a></p>
+                </div>
             </div>
-          </div>
         </div>
         <script src="{% static 'myApp/js/bootstrap.min.js'%}"></script>
         <script src="{% static 'myApp/js/jquery.flexslider.js'%}"></script>
-        
 
-</div>
-    
+
+    </div>
+
 
 
 </body>
