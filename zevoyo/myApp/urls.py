@@ -23,6 +23,7 @@ urlpatterns = [
     path('staff/dashboard/edit-room/', views.editRoom, name = "editRoom"),
     path('staff/dashboard/edit-room/edit/', views.editRoom, name = "editRoom"),
     path('staff/dashboard/view-room/', views.viewRoom, name = 'viewRoom'),
+    path('staff/allbookings/', views.allBookings, name = 'allBookings'),
 
     path('logout/', views.logoutUser, name = "logout"),
 ]
