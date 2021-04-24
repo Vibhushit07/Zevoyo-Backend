@@ -310,3 +310,12 @@ def viewRoom(request):
     reservations = Reservation.objects.all().filter(room = room)
 
     return HttpResponse(render(request, 'staff/viewRoom.html', {'room': room, 'reservations': reservations}))
+
+@login_required(login_url = '/staff')
+def allBookings(request):
+    bookings = Reservation.objects.all()
+
+    if not bookings:
+        messages.warning(request, "No bookings found")
+
+    return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
