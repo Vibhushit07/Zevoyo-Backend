@@ -17,11 +17,10 @@ urlpatterns = [
     path('staff/', views.staffSignup, name="staff"),
     path('staff/login/', views.staffLogin, name = "stafflogin"),
     path('staff/signup/', views.staffSignup, name="staffsignup"),
-    path('staff/dashboard/', views.dashboard, name = 'dashboard'),
+    path('staff/dashboard/', views.dashboard, name = 'staffDashboard'),
     path('staff/dashboard/add-new-location/', views.addNewLocation, name='addNewLocation'),
     path('staff/dashboard/add-new-room/', views.addNewRoom, name='addNewRoom'),
-
-    # path('staff/dashboard/edit-room', views.),
+    path('staff/dashboard/edit-room', views.editRoom, name = "editRoom"),
 
     path('logout/', views.logoutUser, name = "logout"),
 ]
