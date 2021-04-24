@@ -282,6 +282,8 @@ def editRoom(request):
         return HttpResponse("Access Denied")
     
     if request.method == "POST" and request.user.is_staff:
+
+        print(request.POST)
         room = Rooms.objects.all().get(id = int(request.POST['roomId']))
         hotel = Hotels.objects.all().get(id = int(request.POST['hotel']))
         
@@ -289,7 +291,7 @@ def editRoom(request):
         room.capacity = int(request.POST['capacity'])
         room.price = int(request.POST['price'])
         room.size = int(request.POST['size'])
-        room.roomNumber = int(request.POST['roomNumber'])
+        room.roomNumber = request.POST['roomNumber']
         room.status = request.POST['status']
         room.hotel = hotel
 

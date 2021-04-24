@@ -12,8 +12,9 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="room-number">Room Number:</label>
-                    <input type="number" class="form-control" id="room-number" name="roomNumber" value="{{room.roomNumber}}" disabled>
+                    <input type="number" class="form-control" id="room-number" name="roomnumber" value="{{room.roomNumber}}" disabled>
                 </div>
+
                 <div class="form-group">
                     <label for="room-type">Room Type:</label>
                     <select class="form-control" id="room-type" name="roomType">
@@ -22,6 +23,39 @@
                         <option value="3">Basic</option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="capacity">Capacity:</label>
+                    <input type="number" class="form-control" id="capacity" name="capacity" value="{{room.capacity}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" class="form-control" id="price" name="price" value="{{room.price}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="size">Size:</label>
+                    <input type="number" class="form-control" id="size" name="size" value="{{room.size}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select class="form-control" id="status" name="status">
+                        <option value="1">Available</option>
+                        <option value="2">Not Available</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" class="form-control" id="location" name="location" value="{{room.hotel.location}}" disabled>
+                </div>
+
+                <button type="submit" class="btn btn-danger">Save</button>
+                <input type="hidden" name="roomId" value="{{room.id}}">
+                <input type="hidden" name="hotel" value="{{room.hotel.id}}">
+                <input type="hidden" class="form-control" id="roomnumber" name="roomNumber" value="{{room.roomNumber}}">
             </form>
         </div>
     </div>
