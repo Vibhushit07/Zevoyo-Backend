@@ -283,7 +283,6 @@ def editRoom(request):
     
     if request.method == "POST" and request.user.is_staff:
 
-        print(request.POST)
         room = Rooms.objects.all().get(id = int(request.POST['roomId']))
         hotel = Hotels.objects.all().get(id = int(request.POST['hotel']))
         
