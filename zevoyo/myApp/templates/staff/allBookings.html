@@ -1,0 +1,28 @@
+{% extends 'basic.html' %} {% block title %} All Bookings {% endblock title %} {% block body %}
+
+<h3 class="text-center text-success">All Bookings</h3>
+
+<table class="table">
+    <thead>
+        <th>User</th>
+        <th>Room</th>
+        <th>Location</th>
+        <th>Person</th>
+        <th>Check In</th>
+        <th>Check Out</th>
+        <th>Price</th>
+    </thead>
+
+    {% for booking in bookings %}
+    <tr>
+        <td> {{ booking.guest.username }} </td>
+        <td> {{ booking.room.roomNumber }} </td>
+        <td> {{ booking.room.hotel.location }} </td>
+        <td> {{ booking.room.capacity }} </td>
+        <td> {{ booking.checkIn }} </td>
+        <td> {{ booking.checkOut }} </td>
+        <td> {{ booking.room.price }} </td>
+    </tr>
+</table>
+
+{% endblock body %}
