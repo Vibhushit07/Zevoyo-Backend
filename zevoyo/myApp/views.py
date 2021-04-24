@@ -303,3 +303,10 @@ def editRoom(request):
     else:
         room = Rooms.objects.all().get(id = request.GET['roomid'])
         return HttpResponse(render(request, 'staff/editRoom.html', {'room': room}))
+
+@login_required(login_url = '/staff')
+def viewRoom(request):
+    room = Rooms.objects.all().get(id = request.GET['roomid'])
+    reservations = Reservation.objects.all().filter(room = room)
+
+    return HttpResponse(render(request, 'staff/viewRoom.html', {'room': room, 'reservations': reservations}))
