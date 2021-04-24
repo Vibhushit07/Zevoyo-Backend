@@ -1,6 +1,4 @@
-{% extends 'basic.html' %} {% load static %} {% block title %}Edit Room {% endblock title %} {% block css %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'myApp/css/editRoom.css'%}"> {% endblock css %}{% block body %}
+{% extends 'basic.html' %} {% load static %} {% block title %}Edit Room {% endblock title %} {% block body %}
 
 <h1 class="text-center bg-warning my-0">Edit Room</h1>
 <!--Staff Section-->
@@ -61,8 +59,4 @@
     </div>
 </div>
 
-{% endblock body %} {% block js %}
-
-<script src="{% static 'js/editRoom.js' %}"></script>
-
-{% endblock js %}
+{% endblock body %}
