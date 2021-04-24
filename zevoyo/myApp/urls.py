@@ -20,7 +20,8 @@ urlpatterns = [
     path('staff/dashboard/', views.dashboard, name = 'staffDashboard'),
     path('staff/dashboard/add-new-location/', views.addNewLocation, name='addNewLocation'),
     path('staff/dashboard/add-new-room/', views.addNewRoom, name='addNewRoom'),
-    path('staff/dashboard/edit-room', views.editRoom, name = "editRoom"),
+    path('staff/dashboard/edit-room/', views.editRoom, name = "editRoom"),
+    path('staff/dashboard/edit-room/edit/', views.editRoom, name = "editRoom"),
 
     path('logout/', views.logoutUser, name = "logout"),
 ]
