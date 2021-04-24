@@ -55,14 +55,14 @@
             <th>price</th>
             <th>Action</th>
         </thead>
-        {% for r in rooms %}
+        {% for room in rooms %}
         <tr class="">
-            <td>{{ r.get_roomType_display }}</td>
-            <td>{{ r.hotel.location }}</td>
-            <td>{{ r.capacity }}</td>
-            <td>{{ r.price }}</td>
+            <td>{{ room.get_roomType_display }}</td>
+            <td>{{ room.hotel.location }}</td>
+            <td>{{ room.capacity }}</td>
+            <td>{{ room.price }}</td>
 
-            <td><a href="/myApp/user/book-room?roomid={{r.id}}"><button class="btn btn-warning">Book Now</button></a></td>
+            <td><a href="/myApp/user/book-room?roomid={{room.id}}"><button class="btn btn-warning">Book Now</button></a></td>
         </tr>
         {% endfor %}
 
@@ -88,7 +88,7 @@
             <tr>
                 <td class="text-center">
                     <!--Room details-->
-                    <h1>Budget</h1>
+                    <h1>Basic</h1>
                     <p>Price:$55/day</p>
 
                     <p>Size :30 ft</p>

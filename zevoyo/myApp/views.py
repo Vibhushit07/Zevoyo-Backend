@@ -276,6 +276,46 @@ def bookRoom(request):
     else:
         return HttpResponse("Access Denied")
 
-# @login_required(login_url='/staff')
-# def editRoom(request):
+@login_required(login_url='/staff')
+def editRoom(request):
+    if request.user.is_staff == False:
+        return HttpResponse("Access Denied")
     
+    if request.method == "POST" and request.user.is_staff:
+
+        room = Rooms.objects.all().get(id = int(request.POST['roomId']))
+        hotel = Hotels.objects.all().get(id = int(request.POST['hotel']))
+        
+        room.roomType = request.POST['roomType']
+        room.capacity = int(request.POST['capacity'])
+        room.price = int(request.POST['price'])
+        room.size = int(request.POST['size'])
+        room.roomNumber = request.POST['roomNumber']
+        room.status = request.POST['status']
+        room.hotel = hotel
+
+        room.save()
+
+        messages.success(request, "Room details updated successfully")
+
+        return redirect('staffDashboard')
+
+    else:
+        room = Rooms.objects.all().get(id = request.GET['roomid'])
+        return HttpResponse(render(request, 'staff/editRoom.html', {'room': room}))
+
+@login_required(login_url = '/staff')
+def viewRoom(request):
+    room = Rooms.objects.all().get(id = request.GET['roomid'])
+    reservations = Reservation.objects.all().filter(room = room)
+
+    return HttpResponse(render(request, 'staff/viewRoom.html', {'room': room, 'reservations': reservations}))
+
+@login_required(login_url = '/staff')
+def allBookings(request):
+    bookings = Reservation.objects.all()
+
+    if not bookings:
+        messages.warning(request, "No bookings found")
+
+    return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))

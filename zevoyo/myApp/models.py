@@ -22,13 +22,13 @@ class Rooms(models.Model):
         ('2', 'Not Available')
     )
 
-    RoOM_TYPE = (
+    ROOM_TYPE = (
         ('1', 'Premimum'),
         ('2', 'Deluxe'),
         ('3', 'Basic')
     )
 
-    roomType = models.CharField(max_length = 50, choices = RoOM_TYPE)
+    roomType = models.CharField(max_length = 50, choices = ROOM_TYPE)
     capacity = models.IntegerField()
     price = models.IntegerField()
     size = models.IntegerField()

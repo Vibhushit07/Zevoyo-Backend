@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.homePage, name = "homePage"),
-    path('home', views.homePage,name="homepage"),
+    path('home/', views.homePage,name="homepage"),
     path('contact/', views.contactpage, name = "contactpage"),
     path('about/', views.aboutpage, name = "aboutpage"),      
     path('user/', views.user_log_sign_page, name = "userlogin"),
@@ -17,11 +17,13 @@ urlpatterns = [
     path('staff/', views.staffSignup, name="staff"),
     path('staff/login/', views.staffLogin, name = "stafflogin"),
     path('staff/signup/', views.staffSignup, name="staffsignup"),
-    path('staff/dashboard/', views.dashboard, name = 'dashboard'),
+    path('staff/dashboard/', views.dashboard, name = 'staffDashboard'),
     path('staff/dashboard/add-new-location/', views.addNewLocation, name='addNewLocation'),
     path('staff/dashboard/add-new-room/', views.addNewRoom, name='addNewRoom'),
-
-    # path('staff/dashboard/edit-room', views.),
+    path('staff/dashboard/edit-room/', views.editRoom, name = "editRoom"),
+    path('staff/dashboard/edit-room/edit/', views.editRoom, name = "editRoom"),
+    path('staff/dashboard/view-room/', views.viewRoom, name = 'viewRoom'),
+    path('staff/allbookings/', views.allBookings, name = 'allBookings'),
 
     path('logout/', views.logoutUser, name = "logout"),
 ]
