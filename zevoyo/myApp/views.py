@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -296,6 +297,8 @@ def editRoom(request):
 
         room.save()
 
+        sendEmail(request.POST['email'])
+
         messages.success(request, "Room details updated successfully")
 
         return redirect('staffDashboard')
@@ -319,3 +322,9 @@ def allBookings(request):
         messages.warning(request, "No bookings found")
 
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
+
+def sendEmail(request, mailTo):
+    msg1 = ('subject 1', 'message 1', 'vibhushitsinghal80@gmail.com', [mailTo])
+    res = send_mail((msg1), fail_silently = False)
+    
+    return HttpResponse('%s'%res)
