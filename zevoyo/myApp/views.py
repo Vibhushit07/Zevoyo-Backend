@@ -338,8 +338,8 @@ def sendEmail(request, mailTo):
     
     # return HttpResponse(res)
 
-    subject = 'Welcome to DataFlair'
-    message = 'Hope you are enjoying your Django Tutorials'
+    subject = 'Trial'
+    message = 'Email'
     recepient = request.POST['email']
     send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
     return HttpResponse('Success email send')
