@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from zevoyo.settings import EMAIL_HOST_USER
 
 from .models import Hotels, Reservation, Rooms
 
@@ -242,6 +243,10 @@ def bookRoom(request):
         roomId = request.POST['roomId']
         room = Rooms.objects.all().get(id = roomId)
 
+        print('Mail id is', request.POST['email'])
+
+        sendEmail(request, request.POST['email'])
+
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
             if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']):
@@ -271,6 +276,10 @@ def bookRoom(request):
 
         reservation.save()
 
+        # print('Mail id is', request.POST['email'])
+
+        # sendEmail(request, request.POST['email'])
+
         messages.success(request, "Congratulations! Booking Successfull")
 
         return redirect("homePage")
@@ -297,8 +306,6 @@ def editRoom(request):
 
         room.save()
 
-        sendEmail(request.POST['email'])
-
         messages.success(request, "Room details updated successfully")
 
         return redirect('staffDashboard')
@@ -324,7 +331,15 @@ def allBookings(request):
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
 def sendEmail(request, mailTo):
-    msg1 = ('subject 1', 'message 1', 'vibhushitsinghal80@gmail.com', [mailTo])
-    res = send_mail((msg1), fail_silently = False)
+    print("Email function called")
+    print('Email id', mailTo)
+    # msg1 = ('subject 1', 'message 1', 'vibhushitsinghal80@gmail.com', [mailTo])
+    # res = send_mail('subject 1', 'message 1', 'vibhushitsinghal80@gmail.com', [mailTo])
     
-    return HttpResponse('%s'%res)
+    # return HttpResponse(res)
+
+    subject = 'Welcome to DataFlair'
+    message = 'Hope you are enjoying your Django Tutorials'
+    recepient = request.POST['email']
+    send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
+    return HttpResponse('Success email send')
