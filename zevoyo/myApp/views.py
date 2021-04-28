@@ -64,7 +64,7 @@ def staffSignup(request):
             pass
             
         newUser = User.objects.create_user(username = userName, password = password1)
-        newUser.is_superuser = False
+        newUser.is_superuser = True
         newUser.is_staff = True
         newUser.save()
         messages.success(request, 'Staff Registration Successfull')
@@ -223,9 +223,11 @@ def addNewRoom(request):
 def user_bookings(request):
     if request.user.is_authenticated==False:
         return redirect('userlogin')
+
     user=User.objects.all().get(id=request.user.id)
     
     bookings = Reservation.objects.all().filter(guest=user)
+
     if not bookings:
         messages.warning(request,"No Bookings Found")
     return HttpResponse(render(request,'user/mybookings.html', {'bookings': bookings}))
@@ -241,9 +243,9 @@ def bookRoom(request):
         roomId = request.POST['roomId']
         room = Rooms.objects.all().get(id = roomId)
 
-        print('Mail id is', request.POST['email'])
+        # print('Mail id is', re)
 
-        sendEmail(request, request.POST['email'])
+        sendEmail(request)
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
@@ -328,13 +330,9 @@ def allBookings(request):
 
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
-def sendEmail(request, mailTo):
+def sendEmail(request):
     print("Email function called")
-    print('Email id', mailTo)
-    # msg1 = ('subject 1', 'message 1', 'vibhushitsinghal80@gmail.com', [mailTo])
-    # res = send_mail('subject 1', 'message 1', 'vibhushitsinghal80@gmail.com', [mailTo])
-    
-    # return HttpResponse(res)
+    # print('Email id', mailTo)
 
     subject = 'Trial'
     message = 'Email'
