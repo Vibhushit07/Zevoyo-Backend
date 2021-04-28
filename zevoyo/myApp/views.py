@@ -32,7 +32,7 @@ def homePage(request):
             if len(room) == 0:
                 messages.warning(request,"Sorry No Rooms Are Available on this time period")
             data = {'rooms':room,'all_location':all_location,'flag':True}
-            response = render(request,'index.html',data)
+            response = render(request,'index.html', data)
         except Exception as e:
             messages.error(request,e)
             response = render(request,'index.html',{'all_location':all_location})
@@ -46,10 +46,6 @@ def contactpage(request):
 
 def aboutpage(request):
     return HttpResponse(render(request,'about.html'))
-
-def logoutUser(request):
-    logout(request)
-    return redirect('/myApp/staff')
 
 def staffSignup(request):
     if request.method == 'POST':
@@ -95,7 +91,60 @@ def staffLogin(request):
             return redirect('stafflogin')
     return render(request, 'staff/login.html')
 
-# staff panel page
+def user_sign_up(request):
+    if request.method=="POST":
+        userName = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        contactNumber = request.POST['contactNumber']
+
+        if password1 != password2:
+            messages.warning(request,"Password didn't matched")
+            return redirect('userlogin')
+        try:
+            if User.objects.all().get(username=userName):
+                messages.warning(request,"Username Not Available")
+                return redirect('userlogin')
+        except:
+            pass
+        new_user = User.objects.create_user(username = userName, password = password1, contactNumber = contactNumber)
+        new_user.is_superuser=False
+        new_user.is_staff=False
+        new_user.save()
+        messages.success(request,"Registration Successfull")
+        return redirect("userlogin")
+    else:
+        return render(request, 'user/login.html')
+
+def user_log_sign_page(request):
+    if request.method == 'POST':
+        userName = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request,username=userName,password=password)
+        try:
+            if user.is_staff:
+                
+                messages.error(request,"Incorrect username or Password")
+                return redirect('stafflogin')
+        except:
+            pass
+        
+        if user is not None:
+            login(request,user)
+            messages.success(request,"successful logged in")
+            print("Login successfull")
+            return redirect('homePage')
+        else:
+            messages.warning(request,"Incorrect username or password")
+            return redirect('userlogin')
+    
+    return render(request,'user/login.html')
+
+def logoutUser(request):
+    logout(request)
+    return redirect('/myApp/user/')
+
 @login_required(login_url = "/staff")
 def dashboard(request):
 
@@ -175,62 +224,11 @@ def user_bookings(request):
     if request.user.is_authenticated==False:
         return redirect('userlogin')
     user=User.objects.all().get(id=request.user.id)
-    print(f"request user id ={request.user.id}")
+    
     bookings = Reservation.objects.all().filter(guest=user)
     if not bookings:
         messages.warning(request,"No Bookings Found")
     return HttpResponse(render(request,'user/mybookings.html', {'bookings': bookings}))
-
-
-def user_sign_up(request):
-    if request.method=="POST":
-        userName = request.POST['username']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        contactNumber = request.POST['contactNumber']
-
-        if password1 != password2:
-            messages.warning(request,"Password didn't matched")
-            return redirect('userlogin')
-        try:
-            if User.objects.all().get(username=userName):
-                messages.warning(request,"Username Not Available")
-                return redirect('userlogin')
-        except:
-            pass
-        new_user = User.objects.create_user(username = userName, password = password1, contactNumber = contactNumber)
-        new_user.is_superuser=False
-        new_user.is_staff=False
-        new_user.save()
-        messages.success(request,"Registration Successfull")
-        return redirect("userlogin")
-    else:
-        return render(request, 'user/login.html')
-
-def user_log_sign_page(request):
-    if request.method == 'POST':
-        userName = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(request,username=userName,password=password)
-        try:
-            if user.is_staff:
-                
-                messages.error(request,"Incorrect username or Password")
-                return redirect('stafflogin')
-        except:
-            pass
-        
-        if user is not None:
-            login(request,user)
-            messages.success(request,"successful logged in")
-            print("Login successfull")
-            return redirect('homePage')
-        else:
-            messages.warning(request,"Incorrect username or password")
-            return redirect('userlogin')
-    
-    return render(request,'user/login.html')
 
 @login_required(login_url= "/user")
 def bookRoomPage(request):
