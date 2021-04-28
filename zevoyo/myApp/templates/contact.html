@@ -9,8 +9,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'myApp/css/style.css'%}">
     <!-- <link rel="stylesheet" href="{% static 'myApp/css/font-awesome.min.css'%}"> -->
     <script src="{% static 'myApp/js/jquery.min.js'%}"></script>
-    <link href="{% static 'myApp/css/google-font.css'%}" rel="stylesheet" type="text/css"> {#
-    <style type="text/css" style="display: none !important;"></style>#}
+    <link href="{% static 'myApp/css/google-font.css'%}" rel="stylesheet" type="text/css"> 
+    
+    <!-- {#
+    <style type="text/css" style="display: none !important;"></style>#} -->
 
     <script type="application/x-javascript">
         addEventListener("load", function() {
@@ -80,7 +82,7 @@
 
                     {% endif %} {% if user.is_staff %}
                     <li class="nav-item active">
-                        <!-- <a class="nav-link text-bold" href="/staff/allbookings">All Bookings</a> -->
+                        <a class="nav-link text-bold" href="/staff/allbookings">All Bookings</a>
                     </li>
                     {% endif %}
 
