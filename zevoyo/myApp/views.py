@@ -96,7 +96,7 @@ def user_sign_up(request):
         userName = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-        contactNumber = request.POST['contactNumber']
+       # contactNumber = request.POST['contactNumber']
 
         if password1 != password2:
             messages.warning(request,"Password didn't matched")
@@ -107,7 +107,7 @@ def user_sign_up(request):
                 return redirect('userlogin')
         except:
             pass
-        new_user = User.objects.create_user(username = userName, password = password1, contactNumber = contactNumber)
+        new_user = User.objects.create_user(username = userName, password = password1)
         new_user.is_superuser=False
         new_user.is_staff=False
         new_user.save()
