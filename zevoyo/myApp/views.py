@@ -245,7 +245,7 @@ def bookRoom(request):
 
         # print('Mail id is', re)
 
-        sendEmail(request)
+        #sendEmail(request)
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
