@@ -1,5 +1,5 @@
 {% extends 'basic.html' %} {% block title %} staff panel {% endblock title %} {% load static %} {% block body %} {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'myApp/css/panel.css'%}"> {% endblock css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/dashboard.css'%}"> {% endblock css %}
 
 <!--Staff section -->
 
@@ -120,14 +120,14 @@
     <tr>
         <td> {{ room.hotel.name }} </td>
         <td> {{ room.roomNumber }} </td>
-        <td> {{ room.roomType }} </td>
+        <td> {{ room.get_roomType_display }} </td>
         <td> {{ room.status }} </td>
         <td> {{ room.price }} </td>
         <td> {{ room.capacity }} </td>
         <td> {{ room.size }} </td>
         <td colspan="2">
             <a href="/myApp/staff/dashboard/edit-room?roomid={{room.id}}"><button class="btn btn-danger">Edit</button></a>
-
+            <a href="/myApp/staff/dashboard/view-room?roomid={{room.id}}"><button class="btn btn-primary">View</button></a>
         </td>
     </tr>
 
@@ -270,5 +270,5 @@
 </div>
 
 {% endblock body %} {% block js %}
-<script src="{% static '/myApp/js/panel.js' %}"></script>
+<script src="{% static '/myApp/script/dashboard.js' %}"></script>
 {% endblock js %}
