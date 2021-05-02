@@ -15,18 +15,18 @@ def homePage(request):
     all_location = Hotels.objects.values_list('location','id').distinct().order_by()
     if request.method =="POST":
         try:
-            print(request.POST)
+            
             hotel = Hotels.objects.all().get(id=int(request.POST['search_location']))
             rr = []
             
             #for finding the reserved rooms on this time period for excluding from the query set
-            for each_reservation in Reservation.objects.all():
-                if str(each_reservation.checkIn) < str(request.POST['cin']) and str(each_reservation.checkOut) < str(request.POST['cout']):
+            for reservation in Reservation.objects.all():
+                if str(reservation.checkIn) < str(request.POST['cin']) and str(reservation.checkOut) < str(request.POST['cout']):
                     pass
-                elif str(each_reservation.checkIn) > str(request.POST['cin']) and str(each_reservation.checkOut) > str(request.POST['cout']):
+                elif str(reservation.checkIn) > str(request.POST['cin']) and str(reservation.checkOut) > str(request.POST['cout']):
                     pass
                 else:
-                    rr.append(each_reservation.room.id)
+                    rr.append(reservation.room.id)
                 
             room = Rooms.objects.all().filter(hotel=hotel,capacity__gte = int(request.POST['capacity'])).exclude(id__in=rr)
             if len(room) == 0:
@@ -133,7 +133,6 @@ def user_log_sign_page(request):
         if user is not None:
             login(request,user)
             messages.success(request,"successful logged in")
-            print("Login successfull")
             return redirect('homePage')
         else:
             messages.warning(request,"Incorrect username or password")
@@ -196,11 +195,8 @@ def addNewRoom(request):
     if request.method == "POST" and request.user.is_staff:
         totalRooms = len(Rooms.objects.all())
         newRoom = Rooms()
-        print(request.POST['hotel'])
+        
         hotel = Hotels.objects.all().get(name = request.POST['hotel'])
-
-        print("id={hotel.id}")
-        print("name={hotel.name}")
 
         newRoom.roomNumber = totalRooms + 1
         newRoom.roomType = request.POST["roomtype"]
@@ -243,40 +239,36 @@ def bookRoom(request):
         roomId = request.POST['roomId']
         room = Rooms.objects.all().get(id = roomId)
 
-        # print('Mail id is', re)
-
-        #sendEmail(request)
+        # sendEmail(request)
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
             if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']):
+                print('reservation.checkIn 1', reservation.checkIn)
+                print('reservation.checkOut 1', reservation.checkOut)
                 pass
-            if str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']):
+            
+            elif str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']):
+                print('reservation.checkIn 2', reservation.checkIn)
+                print('reservation.checkOut 2', reservation.checkOut)
                 pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
                 return redirect("homePage")
             
-        # current_user = request.user
-        # total_person = int( request.POST['person'])
-        # booking_id = str(room_id) + str(datetime.datetime.now())
-
         reservation = Reservation()
-        # room = Rooms.objects.all().get(id=room_id)
+
         room.status = '2'
 
         user = User.objects.all().get(username = request.user)
 
         reservation.guest = user
         reservation.room = room
-        # person = total_person
         reservation.checkIn = request.POST["checkIn"]
         reservation.checkOut = request.POST["checkOut"]
-        # reservation.bookingId = str(roomId) + str(datetime.datetime.now())
+        reservation.bookingId = str(roomId) + str(datetime.datetime.now())
 
         reservation.save()
-
-        # print('Mail id is', request.POST['email'])
 
         # sendEmail(request, request.POST['email'])
 
@@ -331,8 +323,6 @@ def allBookings(request):
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
 def sendEmail(request):
-    print("Email function called")
-    # print('Email id', mailTo)
 
     subject = 'Trial'
     message = 'Email'
