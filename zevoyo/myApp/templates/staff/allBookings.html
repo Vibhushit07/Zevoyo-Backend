@@ -5,7 +5,7 @@
 <table class="table">
     <thead>
         <th>User</th>
-        <th>Room</th>
+        <th>Room Number</th>
         <th>Location</th>
         <th>Person</th>
         <th>Check In</th>
@@ -21,7 +21,7 @@
         <td> {{ booking.room.capacity }} </td>
         <td> {{ booking.checkIn }} </td>
         <td> {{ booking.checkOut }} </td>
-        <td> {{ booking.room.price }} </td>
+        <td>Rs. {{ booking.room.price }} </td>
     </tr>
     {% endfor %}
 </table>
