@@ -185,7 +185,7 @@ def addNewLocation(request):
 
             messages.success(request, "New Location added successfully")
 
-        return redirect("dashboard")
+        return redirect("staffDashboard")
 
     else:
         return HttpResponse("Access Denied")
@@ -210,7 +210,7 @@ def addNewRoom(request):
 
         messages.success(request, "New Room added successfully")
     
-        return redirect("dashboard")
+        return redirect("staffDashboard")
     
     else:
         return HttpResponse("Access Denied")
