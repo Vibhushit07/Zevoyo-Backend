@@ -324,8 +324,8 @@ def allBookings(request):
 
 def sendEmail(request):
 
-    subject = 'Trial'
-    message = 'Email'
+    subject = 'Welcome'
+    message = 'Thankyou for registering.'
     recepient = request.POST['email']
     send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
     return HttpResponse('Success email send')
