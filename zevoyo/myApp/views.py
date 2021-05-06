@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from zevoyo.settings import EMAIL_HOST_USER
+import json
 
 from .models import Hotels, Reservation, Rooms
 
@@ -157,7 +158,38 @@ def dashboard(request):
     reserved = len(Reservation.objects.all())
 
     hotel = Hotels.objects.values_list('location', 'name').distinct().order_by()
+    city = request.GET.get('city', None)
+      
+    response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
+    return HttpResponse(response)
 
+@login_required(login_url = "/staff")
+def searchDashboard(request):
+
+    if request.user.is_staff == False:
+        return HttpResponse("Access Denied")
+
+    rooms = Rooms.objects.all()
+    totalRooms = len(rooms)
+    availableRooms = len(rooms.filter(status = '1'))
+    unavailableRooms = len(rooms.filter(status = '2'))
+    reserved = len(Reservation.objects.all())
+
+   
+    city = request.GET.get('city', None)
+    print(city, "xxx")
+    hotel = Hotels.objects.values_list('location', 'name').distinct().order_by()
+    records = Hotels.objects.filter(location = city)
+    json_res = [] 
+    for record in records: 
+        json_obj = dict( name = record.name, ) 
+        json_res.append(json_obj)
+    print(json_res)
+
+
+    responseData = { 'idx': json_res, 'roles' : ['Admin','User'] } 
+    return HttpResponse(json.dumps(json_res), content_type="application/json")
+      
     response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
 
@@ -170,7 +202,7 @@ def addNewLocation(request):
         state = request.POST['state']
         country = request.POST['country']
 
-        hotels = Hotels.objects.all().filter(location = location, state = state)
+        hotels = Hotels.objects.all().filter(name = name)
 
         if hotels:
             messages.warning(request, "Sorry city at this location already exist")

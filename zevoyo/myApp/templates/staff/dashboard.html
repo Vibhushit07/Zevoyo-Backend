@@ -1,5 +1,41 @@
 {% extends 'basic.html' %} {% block title %} staff panel {% endblock title %} {% load static %} {% block body %} {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'myApp/style/dashboard.css'%}"> {% endblock css %}
+<script>
+    var abc=""
+ function getid() {
+    var a = "{{location}}";
+    var e=document.getElementById('hotel');
+    abc = e.options[e.selectedIndex].text;
+    console.log(a);
+    let parent = document.getElementById("hotelx");
+    parent.innerHTML="";
+
+    $.ajax({
+        url: '/myApp/staff/searchDashboard/',
+        data: {
+          'city': abc
+        },
+        dataType: 'json',
+        success: function (res) {
+            console.log(res);
+            let cities=res;
+            console.log(cities)
+            let parent = document.getElementById("hotelx");
+            for(let i =0; i<cities.length;i++){
+                console.log(cities[i].name)
+                let child = document.createElement("option");
+                child.innerHTML=cities[i].name;
+                parent.appendChild(child)
+            }
+          
+        }
+      });
+ }
+ function getx(){
+     return abc;
+ }
+ 
+</script>
 
 <!--Staff section -->
 
@@ -252,10 +288,17 @@
 
                                 <div class="form-group">
                                     <label for="hotel">Location:</label>
-                                    <select class="form-control" id="hotel" name="hotel">
+                                    <select  class="form-control" id="hotel" name="hotel" onchange="getid()">
                                         {% for eachLocation, id in location %}
                                         <option value="{{id}}"> {{ eachLocation }} </option>
                                         {% endfor %}
+                                        
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="hotel">Hotel Name:</label>
+                                    <select class="form-control" id="hotelx" name="hotel">
                                     </select>
                                 </div>
 
