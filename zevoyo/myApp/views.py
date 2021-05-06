@@ -217,7 +217,7 @@ def addNewLocation(request):
 
             messages.success(request, "New Location added successfully")
 
-        return redirect("dashboard")
+        return redirect("staffDashboard")
 
     else:
         return HttpResponse("Access Denied")
@@ -242,7 +242,7 @@ def addNewRoom(request):
 
         messages.success(request, "New Room added successfully")
     
-        return redirect("dashboard")
+        return redirect("staffDashboard")
     
     else:
         return HttpResponse("Access Denied")
@@ -356,8 +356,8 @@ def allBookings(request):
 
 def sendEmail(request):
 
-    subject = 'Trial'
-    message = 'Email'
+    subject = 'Welcome'
+    message = 'Thankyou for registering.'
     recepient = request.POST['email']
     send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
     return HttpResponse('Success email send')

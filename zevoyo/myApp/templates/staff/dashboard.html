@@ -144,7 +144,7 @@
     <thead>
         <th>Hotel</th>
         <th>Room Number</th>
-        <th>Type</th>
+        <th>Room Type</th>
         <th>Status</th>
         <th>Price</th>
         <th>Capacity</th>
@@ -157,10 +157,10 @@
         <td> {{ room.hotel.name }} </td>
         <td> {{ room.roomNumber }} </td>
         <td> {{ room.get_roomType_display }} </td>
-        <td> {{ room.status }} </td>
-        <td> {{ room.price }} </td>
-        <td> {{ room.capacity }} </td>
-        <td> {{ room.size }} </td>
+        <td> {{ room.get_status_display }} </td>
+        <td>Rs. {{ room.price }} </td>
+        <td> {{ room.capacity }} person </td>
+        <td> {{ room.size }} ft </td>
         <td colspan="2">
             <a href="/myApp/staff/dashboard/edit-room?roomid={{room.id}}"><button class="btn btn-danger">Edit</button></a>
             <a href="/myApp/staff/dashboard/view-room?roomid={{room.id}}"><button class="btn btn-primary">View</button></a>
