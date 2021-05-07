@@ -6,14 +6,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from zevoyo.settings import EMAIL_HOST_USER
-import json
 
 from .models import Hotels, Reservation, Rooms
 
 import datetime
+import json
 
 def homePage(request):
-    all_location = Hotels.objects.values_list('location','id').distinct().order_by()
+    all_location = Hotels.objects.values_list('city','id').distinct().order_by()
     if request.method =="POST":
         try:
             
@@ -157,10 +157,11 @@ def dashboard(request):
     unavailableRooms = len(rooms.filter(status = '2'))
     reserved = len(Reservation.objects.all())
 
-    hotel = Hotels.objects.values_list('location', 'name').distinct().order_by()
-    city = request.GET.get('city', None)
+    cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
+
+    print(cities)
       
-    response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
+    response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
 
 @login_required(login_url = "/staff")
@@ -169,50 +170,37 @@ def searchDashboard(request):
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
 
-    rooms = Rooms.objects.all()
-    totalRooms = len(rooms)
-    availableRooms = len(rooms.filter(status = '1'))
-    unavailableRooms = len(rooms.filter(status = '2'))
-    reserved = len(Reservation.objects.all())
-
-   
     city = request.GET.get('city', None)
-    print(city, "xxx")
-    hotel = Hotels.objects.values_list('location', 'name').distinct().order_by()
-    records = Hotels.objects.filter(location = city)
+    
+    records = Hotels.objects.filter(city = city)
     json_res = [] 
+
     for record in records: 
-        json_obj = dict( name = record.name, ) 
+        json_obj = dict( name = record.name) 
         json_res.append(json_obj)
+
     print(json_res)
 
-
-    responseData = { 'idx': json_res, 'roles' : ['Admin','User'] } 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
-      
-    response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
-    return HttpResponse(response)
 
 @login_required(login_url = "/staff")
 def addNewLocation(request):
     if request.method == "POST" and request.user.is_staff:
         name = request.POST['hotelName']
-        owner = request.POST['owner']
-        location = request.POST['city']
-        state = request.POST['state']
-        country = request.POST['country']
 
         hotels = Hotels.objects.all().filter(name = name)
 
         if hotels:
-            messages.warning(request, "Sorry city at this location already exist")
+            messages.warning(request, "Sorry this hotel at this city already exist")
         else:
             hotel = Hotels()
             hotel.name = name
-            hotel.owner = owner
-            hotel.location = location
-            hotel.state = state
-            hotel.country = country
+            hotel.owner = request.POST['owner']
+            hotel.address = request.POST['address']
+            hotel.city = request.POST['city']
+            hotel.state = request.POST['state']
+            hotel.country = request.POST['country']
+            hotel.pincode = request.POST['pincode']
             hotel.save()
 
             messages.success(request, "New Location added successfully")
