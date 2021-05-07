@@ -18,7 +18,6 @@ urlpatterns = [
     path('staff/login/', views.staffLogin, name = "stafflogin"),
     path('staff/signup/', views.staffSignup, name="staffsignup"),
     path('staff/dashboard/', views.dashboard, name = 'staffDashboard'),
-    path('staff/searchDashboard/', views.searchDashboard, name = 'searchDashboard'),
     path('staff/dashboard/add-new-location/', views.addNewLocation, name='addNewLocation'),
     path('staff/dashboard/add-new-room/', views.addNewRoom, name='addNewRoom'),
     path('staff/dashboard/edit-room/', views.editRoom, name = "editRoom"),

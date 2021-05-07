@@ -158,37 +158,6 @@ def dashboard(request):
     reserved = len(Reservation.objects.all())
 
     hotel = Hotels.objects.values_list('location', 'name').distinct().order_by()
-    city = request.GET.get('city', None)
-      
-    response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
-    return HttpResponse(response)
-
-@login_required(login_url = "/staff")
-def searchDashboard(request):
-
-    if request.user.is_staff == False:
-        return HttpResponse("Access Denied")
-
-    rooms = Rooms.objects.all()
-    totalRooms = len(rooms)
-    availableRooms = len(rooms.filter(status = '1'))
-    unavailableRooms = len(rooms.filter(status = '2'))
-    reserved = len(Reservation.objects.all())
-
-   
-    city = request.GET.get('city', None)
-    print(city, "xxx")
-    hotel = Hotels.objects.values_list('location', 'name').distinct().order_by()
-    records = Hotels.objects.filter(location = city)
-    json_res = [] 
-    for record in records: 
-        json_obj = dict( name = record.name, ) 
-        json_res.append(json_obj)
-    print(json_res)
-
-
-    responseData = { 'idx': json_res, 'roles' : ['Admin','User'] } 
-    return HttpResponse(json.dumps(json_res), content_type="application/json")
       
     response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
@@ -197,10 +166,6 @@ def searchDashboard(request):
 def addNewLocation(request):
     if request.method == "POST" and request.user.is_staff:
         name = request.POST['hotelName']
-        owner = request.POST['owner']
-        location = request.POST['city']
-        state = request.POST['state']
-        country = request.POST['country']
 
         hotels = Hotels.objects.all().filter(name = name)
 
@@ -209,10 +174,12 @@ def addNewLocation(request):
         else:
             hotel = Hotels()
             hotel.name = name
-            hotel.owner = owner
-            hotel.location = location
-            hotel.state = state
-            hotel.country = country
+            hotel.owner = request.POST['owner']
+            hotel.address = request.POST['address']
+            hotel.city = request.POST['city']
+            hotel.state = request.POST['state']
+            hotel.country = request.POST['country']
+            hotel.pincode = request.POST['pincode']
             hotel.save()
 
             messages.success(request, "New Location added successfully")
