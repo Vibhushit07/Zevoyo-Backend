@@ -174,8 +174,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="city">City:</label>
-                                    <input type="text" class="form-control" id="city" name="city">
+                                    <label for="city-1">City:</label>
+                                    <input type="text" class="form-control" id="city-1" name="city">
                                 </div>
 
                                 <div class="form-group">
@@ -261,18 +261,17 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="hotel">Location:</label>
-                                    <select class="form-control" id="hotel" name="hotel" onchange="getid()">
-                                        {% for eachLocation, id in location %}
-                                        <option value="{{id}}"> {{ eachLocation }} </option>
+                                    <label for="city-2">City:</label>
+                                    <select class="form-control" id="city-2" name="city-2" onclick="getid()">
+                                        {% for city, name in location %}
+                                            <option value="{{city}}"> {{ city }} </option>
                                         {% endfor %}
-                                        
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="hotel">Hotel Name:</label>
-                                    <select class="form-control" id="hotelx" name="hotel">
+                                    <select class="form-control" id="hotel" name="hotel">
                                     </select>
                                 </div>
 
@@ -288,4 +287,5 @@
 
 {% endblock body %} {% block js %}
 <script src="{% static '/myApp/script/dashboard.js' %}"></script>
+<script src="{% static '/myApp/script/filter.js' %}"></script>
 {% endblock js %}

@@ -6,11 +6,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from zevoyo.settings import EMAIL_HOST_USER
-import json
 
 from .models import Hotels, Reservation, Rooms
 
 import datetime
+import json
 
 def homePage(request):
     all_location = Hotels.objects.values_list('city','id').distinct().order_by()
@@ -161,6 +161,23 @@ def dashboard(request):
       
     response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
+
+@login_required(login_url = "/staff")
+def searchDashboard(request):
+
+    if request.user.is_staff == False:
+        return HttpResponse("Access Denied")
+
+    city = request.GET.get('city', None)
+    
+    records = Hotels.objects.filter(city = city).distinct()
+    json_res = [] 
+    for record in records: 
+        json_obj = dict( name = record.name, ) 
+        json_res.append(json_obj)
+    print(json_res)
+
+    return HttpResponse(json.dumps(json_res), content_type="application/json")
 
 @login_required(login_url = "/staff")
 def addNewLocation(request):
