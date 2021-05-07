@@ -1,6 +1,6 @@
-function getid() {
-
-    var a = "{{location}}";
+function getHotel(c) {
+    console.log("Hello")
+    console.log(c)
     var city = document.getElementById('city-2').value;
 
     $.ajax({
@@ -13,6 +13,7 @@ function getid() {
 
             let cities = res;
             let parent = document.getElementById("hotel");
+            parent.innerHTML = "";
 
             for (let i = 0; i < cities.length; i++) {
 

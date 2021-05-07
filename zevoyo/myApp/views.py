@@ -157,9 +157,11 @@ def dashboard(request):
     unavailableRooms = len(rooms.filter(status = '2'))
     reserved = len(Reservation.objects.all())
 
-    hotel = Hotels.objects.values_list('city', 'name').distinct().order_by()
+    cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
+
+    print(cities)
       
-    response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
+    response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
 
 @login_required(login_url = "/staff")
@@ -170,11 +172,13 @@ def searchDashboard(request):
 
     city = request.GET.get('city', None)
     
-    records = Hotels.objects.filter(city = city).distinct()
+    records = Hotels.objects.filter(city = city)
     json_res = [] 
+
     for record in records: 
-        json_obj = dict( name = record.name, ) 
+        json_obj = dict( name = record.name) 
         json_res.append(json_obj)
+
     print(json_res)
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")

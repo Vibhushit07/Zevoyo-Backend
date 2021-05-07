@@ -262,8 +262,8 @@
 
                                 <div class="form-group">
                                     <label for="city-2">City:</label>
-                                    <select class="form-control" id="city-2" name="city-2" onclick="getid()">
-                                        {% for city, name in location %}
+                                    <select class="form-control" id="city-2" name="city-2" onclick="getHotel(this);">
+                                        {% for city in cities %}
                                             <option value="{{city}}"> {{ city }} </option>
                                         {% endfor %}
                                     </select>
