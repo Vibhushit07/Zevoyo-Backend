@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.validators import MinLengthValidator
-from django.conf import settings
-
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 
 # Create your models here.
 
@@ -13,7 +11,7 @@ class Hotels(models.Model):
     city = models.CharField(max_length = 20)
     state = models.CharField(max_length = 15)
     country = models.CharField(max_length = 20)
-    pincode = models.IntegerField(max_length = 6, validators=[MinLengthValidator(6)])
+    pincode = models.IntegerField(validators=[MaxLengthValidator(6),MinLengthValidator(6)])
 
     def __str__(self):
         return self.name

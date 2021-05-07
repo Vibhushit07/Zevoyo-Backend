@@ -13,7 +13,7 @@ from .models import Hotels, Reservation, Rooms
 import datetime
 
 def homePage(request):
-    all_location = Hotels.objects.values_list('location','id').distinct().order_by()
+    all_location = Hotels.objects.values_list('city','id').distinct().order_by()
     if request.method =="POST":
         try:
             
@@ -157,7 +157,7 @@ def dashboard(request):
     unavailableRooms = len(rooms.filter(status = '2'))
     reserved = len(Reservation.objects.all())
 
-    hotel = Hotels.objects.values_list('location', 'name').distinct().order_by()
+    hotel = Hotels.objects.values_list('city', 'name').distinct().order_by()
       
     response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
@@ -170,7 +170,7 @@ def addNewLocation(request):
         hotels = Hotels.objects.all().filter(name = name)
 
         if hotels:
-            messages.warning(request, "Sorry city at this location already exist")
+            messages.warning(request, "Sorry this hotel at this city already exist")
         else:
             hotel = Hotels()
             hotel.name = name
