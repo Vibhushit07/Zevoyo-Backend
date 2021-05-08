@@ -10,9 +10,9 @@
                     <select class="form-control" name="search_location" id="roomstatus">
                     <!--Hotel id and location-->
                     <option>Location</option>
-                    {% for each_location,each_hotel_id in all_location %}
+                    {% for each_location, id in all_location %}
                         
-                        <option value={{each_hotel_id}}>{{each_location}}</option>
+                        <option value={{id}}>{{each_location}}</option>
                     {% endfor %}    
                         
                 </select>
