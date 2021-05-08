@@ -53,7 +53,7 @@
             <th>Location</th>
             <th>Person</th>
             <th>price</th>
-            <th>Action</th>
+            <th colspan="2">Action</th>
         </thead>
         {% for room in rooms %}
         <tr class="">
@@ -62,7 +62,10 @@
             <td>{{ room.capacity }}</td>
             <td>{{ room.price }}</td>
 
-            <td><a href="/myApp/user/book-room?roomid={{room.id}}"><button class="btn btn-warning">Book Now</button></a></td>
+            <td colspan="2">
+                <a href="/myApp/user/book-room?roomid={{room.id}}"><button class="btn btn-warning">Book Now</button></a>
+                <a href="/location/"><button class="btn btn-warning">Location</button></a>
+            </td>
         </tr>
         {% endfor %}
 
