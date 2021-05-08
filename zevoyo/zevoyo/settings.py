@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myApp.apps.MyappConfig',
+    'location.apps.LocationConfig',
     
     # third party
     'crispy_forms',
