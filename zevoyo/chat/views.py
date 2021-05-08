@@ -8,18 +8,8 @@ from django.utils import timezone
 
 # Create your views here.
 
-
-class ChatCreateView(LoginRequiredMixin, CreateView):
-    login_url = 'myApp:login'
-    form_class = ChatForm
-    model = Chat
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.user = self.request.user
-        self.object.save()
-        return super().form_valid(form)
-
+def newChat(request):
+    return HttpResponse(render(request, 'chat.html', { 'form': ChatForm }))
 
 def chatList(request):
     chat = Chat.objects.filter(posted_at__lte=timezone.now()).order_by('posted_at')

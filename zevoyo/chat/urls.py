@@ -5,5 +5,5 @@ from . import views as v
 
 urlpatterns = [
     path('all/', v.chatList, name='all'),
-    path('new/', v.ChatCreateView.as_view(), name='new'),
+    path('new/', v.newChat, name='new'),
 ]
