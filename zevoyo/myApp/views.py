@@ -33,6 +33,7 @@ def homePage(request):
             if len(room) == 0:
                 messages.warning(request,"Sorry No Rooms Are Available on this time period")
             data = {'rooms':room,'all_location':all_location,'flag':True}
+            print(room)
             response = render(request,'index.html', data)
         except Exception as e:
             messages.error(request,e)
@@ -233,12 +234,14 @@ def addNewRoom(request):
         newRoom.balcony = request.POST["balcony"]
         newRoom.description = request.POST["description"]
         
-        parking = False
+        print(request.POST["parking"])
+
+        park = False
 
         if request.POST["parking"] == "Yes":
-            parking = True
+            park = True
         
-        newRoom.parking = parking
+        newRoom.parking = park
 
         newRoom.hotel = hotel
 
@@ -323,7 +326,7 @@ def editRoom(request):
 
         room = Rooms.objects.all().get(id = int(request.POST['roomId']))
         hotel = Hotels.objects.all().get(id = int(request.POST['hotel']))
-        
+
         room.roomType = request.POST['roomType']
         room.capacity = int(request.POST['capacity'])
         room.price = int(request.POST['price'])
