@@ -33,6 +33,7 @@ def homePage(request):
             if len(room) == 0:
                 messages.warning(request,"Sorry No Rooms Are Available on this time period")
             data = {'rooms':room,'all_location':all_location,'flag':True}
+            print(room)
             response = render(request,'index.html', data)
         except Exception as e:
             messages.error(request,e)
@@ -196,6 +197,8 @@ def addNewLocation(request):
             hotel = Hotels()
             hotel.name = name
             hotel.owner = request.POST['owner']
+            hotel.contactNumber = request.POST['contactNumber']
+            hotel.type = request.POST['type']
             hotel.address = request.POST['address']
             hotel.city = request.POST['city']
             hotel.state = request.POST['state']
@@ -224,6 +227,22 @@ def addNewRoom(request):
         newRoom.size = request.POST["size"]
         newRoom.status = request.POST["status"]
         newRoom.price = request.POST["price"]
+        newRoom.bedType = request.POST["bedType"] 
+        newRoom.tv = request.POST["tv"]
+        newRoom.refrigerator = request.POST["refrigerator"]
+        newRoom.ac = request.POST["ac"]
+        newRoom.balcony = request.POST["balcony"]
+        newRoom.description = request.POST["description"]
+        
+        print(request.POST["parking"])
+
+        park = False
+
+        if request.POST["parking"] == "Yes":
+            park = True
+        
+        newRoom.parking = park
+
         newRoom.hotel = hotel
 
         newRoom.save()
@@ -307,7 +326,7 @@ def editRoom(request):
 
         room = Rooms.objects.all().get(id = int(request.POST['roomId']))
         hotel = Hotels.objects.all().get(id = int(request.POST['hotel']))
-        
+
         room.roomType = request.POST['roomType']
         room.capacity = int(request.POST['capacity'])
         room.price = int(request.POST['price'])
