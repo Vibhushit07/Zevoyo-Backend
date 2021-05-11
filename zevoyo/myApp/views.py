@@ -196,6 +196,8 @@ def addNewLocation(request):
             hotel = Hotels()
             hotel.name = name
             hotel.owner = request.POST['owner']
+            hotel.contactNumber = request.POST['contactNumber']
+            hotel.type = request.POST['type']
             hotel.address = request.POST['address']
             hotel.city = request.POST['city']
             hotel.state = request.POST['state']
@@ -224,6 +226,20 @@ def addNewRoom(request):
         newRoom.size = request.POST["size"]
         newRoom.status = request.POST["status"]
         newRoom.price = request.POST["price"]
+        newRoom.bedType = request.POST["bedType"] 
+        newRoom.tv = request.POST["tv"]
+        newRoom.refrigerator = request.POST["refrigerator"]
+        newRoom.ac = request.POST["ac"]
+        newRoom.balcony = request.POST["balcony"]
+        newRoom.description = request.POST["description"]
+        
+        parking = False
+
+        if request.POST["parking"] == "Yes":
+            parking = True
+        
+        newRoom.parking = parking
+
         newRoom.hotel = hotel
 
         newRoom.save()
