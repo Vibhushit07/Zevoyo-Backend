@@ -26,5 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('myApp/',include('myApp.urls')),
     path('location/', include('location.urls')),
+
     # path('chat/',include('chat.urls')),
 ]

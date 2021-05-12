@@ -26,14 +26,14 @@ class ChatListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Chat.objects.filter(posted_at__lte=timezone.now()).order_by('posted_at')
 
-    def chatApp(request):
-    # if this is a POST request we need to process the form data
-        if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-            form = ChatForm(request.POST)
+    # def chatApp(request):
+    # # if this is a POST request we need to process the form data
+    #     if request.method == 'POST':
+    #     # create a form instance and populate it with data from the request:
+    #         form = ChatForm(request.POST)
         
-        # if a GET (or any other method) we'll create a blank form
-        else:
-            form = ChatForm()
+    #     # if a GET (or any other method) we'll create a blank form
+    #     else:
+    #         form = ChatForm()
 
-        return render(request, 'chat.html', {'form': form})
+    #     return render(request, 'chatAll.html', {'form': form})
