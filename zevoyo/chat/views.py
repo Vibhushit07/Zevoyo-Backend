@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, ListView
+from django.http import HttpResponse
 from .forms import ChatForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Chat
@@ -20,20 +21,7 @@ class ChatCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ChatListView(LoginRequiredMixin, ListView):
-    model = Chat
+def chatList(request):
+    chat = Chat.objects.filter(posted_at__lte=timezone.now()).order_by('posted_at')
 
-    def get_queryset(self):
-        return Chat.objects.filter(posted_at__lte=timezone.now()).order_by('posted_at')
-
-    # def chatApp(request):
-    # # if this is a POST request we need to process the form data
-    #     if request.method == 'POST':
-    #     # create a form instance and populate it with data from the request:
-    #         form = ChatForm(request.POST)
-        
-    #     # if a GET (or any other method) we'll create a blank form
-    #     else:
-    #         form = ChatForm()
-
-    #     return render(request, 'chatAll.html', {'form': form})
+    return HttpResponse(render(request, 'chatAll.html', { 'chatAll': chat }))
