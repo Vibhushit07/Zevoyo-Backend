@@ -278,8 +278,6 @@ def bookRoom(request):
         roomId = request.POST['roomId']
         room = Rooms.objects.all().get(id = roomId)
 
-        # sendEmail(request)
-
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
             if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']):
@@ -309,7 +307,7 @@ def bookRoom(request):
 
         reservation.save()
 
-        # sendEmail(request, request.POST['email'])
+        # sendEmail(request)
 
         messages.success(request, "Congratulations! Booking Successfull")
 

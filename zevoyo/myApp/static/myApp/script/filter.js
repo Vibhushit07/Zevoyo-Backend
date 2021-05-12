@@ -1,6 +1,5 @@
 function getHotel(c) {
-    console.log("Hello")
-    console.log(c)
+
     var city = document.getElementById('city-2').value;
 
     $.ajax({
