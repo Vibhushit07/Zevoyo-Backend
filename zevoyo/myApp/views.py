@@ -172,15 +172,13 @@ def searchDashboard(request):
         return HttpResponse("Access Denied")
 
     city = request.GET.get('city', None)
-    
+
     records = Hotels.objects.filter(city = city)
     json_res = [] 
 
     for record in records: 
         json_obj = dict( name = record.name) 
         json_res.append(json_obj)
-
-    print(json_res)
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
