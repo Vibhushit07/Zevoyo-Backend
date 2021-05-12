@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myApp.apps.MyappConfig',
     'location.apps.LocationConfig',
+    'chat.apps.ChatConfig',
     
     # third party
     'crispy_forms',
