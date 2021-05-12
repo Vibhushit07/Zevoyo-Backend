@@ -1,7 +1,9 @@
 from django.urls import path,include
 
 from . import views
+
 from chat import urls as chat_urls
+
 urlpatterns = [
     path('', views.homePage, name = "homePage"),
     path('home/', views.homePage,name="homepage"),
@@ -13,7 +15,7 @@ urlpatterns = [
     path('user/book-room/', views.bookRoomPage, name = "bookRoomPage"),
     path('user/book-room/book/', views.bookRoom, name = "bookRoom"),
     path('user/bookings/', views.user_bookings,name="dashboard"),
-    path('chat/',include(chat_urls)),
+
     path('staff/', views.staffSignup, name="staff"),
     path('staff/login/', views.staffLogin, name = "stafflogin"),
     path('staff/signup/', views.staffSignup, name="staffsignup"),
@@ -27,4 +29,6 @@ urlpatterns = [
     path('staff/allbookings/', views.allBookings, name = 'allBookings'),
 
     path('logout/', views.logoutUser, name = "logout"),
+
+    path('chat/', include(chat_urls)),
 ]

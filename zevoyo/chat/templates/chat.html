@@ -1,0 +1,10 @@
+{%extends 'basic.html' %}{% block title %} Chat {% endblock title %} {% block body %}
+
+<div>
+    <form action="" method="post">
+        {% csrf_token %} {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+{% endblock body %}

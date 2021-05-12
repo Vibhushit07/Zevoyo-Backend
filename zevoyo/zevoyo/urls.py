@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from django.urls import path,include
-from chat import urls as chat_urls
+# from ..chat import urls as chat_urls
 
 # from myApp import views as v
 
