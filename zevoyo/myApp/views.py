@@ -329,6 +329,20 @@ def editRoom(request):
         room.status = request.POST['status']
         room.hotel = hotel
 
+        room.bedType = request.POST["bedType"] 
+        room.tv = request.POST["tv"]
+        room.refrigerator = request.POST["refrigerator"]
+        room.ac = request.POST["ac"]
+        room.balcony = request.POST["balcony"]
+        room.description = request.POST["description"]
+
+        park = False
+
+        if request.POST["parking"] == "Yes":
+            park = True
+        
+        room.parking = park
+
         room.save()
 
         messages.success(request, "Room details updated successfully")
