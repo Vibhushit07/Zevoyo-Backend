@@ -172,15 +172,13 @@ def searchDashboard(request):
         return HttpResponse("Access Denied")
 
     city = request.GET.get('city', None)
-    
+
     records = Hotels.objects.filter(city = city)
     json_res = [] 
 
     for record in records: 
         json_obj = dict( name = record.name) 
         json_res.append(json_obj)
-
-    print(json_res)
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
@@ -278,8 +276,6 @@ def bookRoom(request):
         roomId = request.POST['roomId']
         room = Rooms.objects.all().get(id = roomId)
 
-        # sendEmail(request)
-
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
             if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']):
@@ -309,7 +305,7 @@ def bookRoom(request):
 
         reservation.save()
 
-        # sendEmail(request, request.POST['email'])
+        # sendEmail(request)
 
         messages.success(request, "Congratulations! Booking Successfull")
 
