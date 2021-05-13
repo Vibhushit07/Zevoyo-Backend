@@ -43,6 +43,44 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="bed-type">Bed:</label>
+                    <input type="text" class="form-control" id="bed-type" name="bedType" value="{{room.bedType}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="tv">TV:</label>
+                    <input type="text" class="form-control" id="tv" name="tv" value="{{room.tv}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="refrigerator">Refrigerator:</label>
+                    <input type="text" class="form-control" id="refrigerator" name="refrigerator" value="{{room.refrigerator}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="ac">AC:</label>
+                    <input type="text" class="form-control" id="ac" name="ac" value="{{room.ac}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="balcony">Balcony:</label>
+                    <input type="text" class="form-control" id="balcony" name="balcony" value="{{room.balcony}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="parking">Parking:</label>
+                    <select class="form-control" name="parking" id="parking">
+                        <option value="True">Yes</option>
+                        <option value="False">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" id="description" name="description" cols="5">{{room.description}}</textarea>
+                </div>
+
+                <div class="form-group">
                     <label for="status">Status:</label>
                     <select class="form-control" id="status" name="status">
                         <option value="1">Available</option>
@@ -51,8 +89,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="location">Location:</label>
-                    <input type="text" class="form-control" id="location" name="location" value="{{room.hotel.location}}" disabled>
+                    <label for="location">City:</label>
+                    <input type="text" class="form-control" id="location" name="location" value="{{room.hotel.city}}" disabled>
                 </div>
 
                 <button type="submit" class="btn btn-danger">Save</button>
