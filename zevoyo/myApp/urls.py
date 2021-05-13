@@ -3,6 +3,7 @@ from django.urls import path,include
 from . import views
 
 from chat import urls as chat_urls
+from location import urls as location_urls
 
 urlpatterns = [
     path('', views.homePage, name = "homePage"),
@@ -27,8 +28,10 @@ urlpatterns = [
     path('staff/dashboard/edit-room/edit/', views.editRoom, name = "editRoom"),
     path('staff/dashboard/view-room/', views.viewRoom, name = 'viewRoom'),
     path('staff/allbookings/', views.allBookings, name = 'allBookings'),
+    path('staff/allbookings/filter/', views.filter, name = 'allBookingsFilter'),
 
     path('logout/', views.logoutUser, name = "logout"),
 
     path('chat/', include(chat_urls)),
+    path('location/', include(location_urls)),
 ]

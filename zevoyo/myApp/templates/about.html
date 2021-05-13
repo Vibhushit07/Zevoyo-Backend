@@ -78,12 +78,12 @@
                         <a class="nav-link text-bold" href="/myApp/user/bookings">My Bookings</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link text-bold" href="{% url 'chat:all' %}">Chat</a>
+                        <a class="nav-link text-bold" href="/myApp/chat/all">Chat</a>
                     </li>
 
                     {% endif %} {% if user.is_staff %}
                     <li class="nav-item active">
-                         <a class="nav-link text-bold" href="/myApp/staff/allbookings">All Bookings</a> 
+                        <a class="nav-link text-bold" href="/myApp/staff/allbookings">All Bookings</a>
                     </li>
                     {% endif %}
 
@@ -118,26 +118,30 @@
                 {% endif %}
             </div>
         </nav>
-        
+
         <style>
-            body{
+            body {
                 background-image: url(./bg.jpeg);
                 background-size: cover;
                 backdrop-filter: blur(10px);
             }
-            .container{
+            
+            .container {
                 width: 80%;
                 margin: auto;
             }
-            .flexbox{
+            
+            .flexbox {
                 display: flex;
                 flex-direction: row;
             }
-            .heading{
+            
+            .heading {
                 text-align: center;
                 font-size: 24px;
             }
-            .box{
+            
+            .box {
                 width: 50%;
                 text-align: center;
                 margin: 30px;
@@ -146,101 +150,107 @@
                 border-radius: 10px;
                 opacity: .6;
             }
+            
             .box p {
                 font-size: 24px;
             }
-            .box h2{
+            
+            .box h2 {
                 font-size: 30px;
             }
-            .bigbox{
+            
+            .bigbox {
                 text-align: center;
                 font-size: 20px;
             }
-            .bigbox h2{
+            
+            .bigbox h2 {
                 color: rgb(218, 54, 42);
             }
-            .bigbox p{
+            
+            .bigbox p {
                 color: rgb(206, 43, 43);
             }
-            .footerbox{
+            
+            .footerbox {
                 color: white;
                 text-align: center;
                 margin: auto;
             }
         </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="heading">
-                <br>
-                <h1>About Us</h1>
-            </div>
-            <br>
-            <div class="flexbox">
-                <div class="box">
-                    <h2>The ZEVOYO Way</h2>
-                    <p>ZEVOYO's secret sauce?
-                        We offer tasteful spaces, whenever you need them, at unbeatable prices.
-                    </p>
-                </div>
-                <div class="box">
-                    <h2>Bland is out... ZEVOYO is in.</h2>
-                    <p>We've perfected the art of reviving old, worn down properties, and injecting them with new ZEVOYO style.</p>
-                </div>
-            </div>
-            <div class="flexbox">
-                <div class="box">
-                    <h2>Best-in-Class Efficiency.</h2>
-                    <p>Zero hassle every time..
-                        Reserve a room in-person at one of our well-designed spaces or use our app to book in 3 easy steps.</p>
-                </div>
-                <div class="box">
-                    <h2>Surprisingly Unordinary</h2>
-                    <p>Wherever you go, stay at a space with a curated experience at a price you won't believe.</p>
-                </div>
-            </div>
-            <div class="flexbox">
-                <div class="bigbox">
-                    <br><br>
-                    <h2>The world is cozying up to ZEVOYO's idea of chic hotels for everyone.</h2>
-                    <p>ZEVOYO Hotels & Homes, a young hotel startup, today is the world’s leading chain of hotels, homes, and spaces. The portfolio combines fully operated real estate comprising more than 43,000 hotels with over 1 million rooms. Through its vacation homes business, the company offers travellers and city dwellers access to over 130,000 homes around the world. ZEVOYO today operates in over 800 cities in 80 countries.</p> 
-                <br>
+        </head>
+
+        <body>
+            <div class="container">
+                <div class="heading">
+                    <br>
+                    <h1>About Us</h1>
                 </div>
                 <br>
-            </div>
-            <br>
-        </div>
-
-
-
-
-
-
-
-        <div class="footer">
-            <div class="footer_bottom">
-                <div class="follow-us">
-                    <a class="fa fa-facebook social-icon" href="contact.html#"></a>
-                    <a class="fa fa-twitter social-icon" href="#"></a>
-                    <a class="fa fa-linkedin social-icon" href="#"></a>
-                    <a class="fa fa-google social-icon" href="#"></a>
-                    <a class="fa fa-youtube social-icon" href="#"></a>
+                <div class="flexbox">
+                    <div class="box">
+                        <h2>The ZEVOYO Way</h2>
+                        <p>ZEVOYO's secret sauce? We offer tasteful spaces, whenever you need them, at unbeatable prices.
+                        </p>
+                    </div>
+                    <div class="box">
+                        <h2>Bland is out... ZEVOYO is in.</h2>
+                        <p>We've perfected the art of reviving old, worn down properties, and injecting them with new ZEVOYO style.</p>
+                    </div>
                 </div>
-                <div class="copy">
-                    <p>Copyright © ZEVOYO. Design by <a href="" rel="nofollow">One</a></p>
+                <div class="flexbox">
+                    <div class="box">
+                        <h2>Best-in-Class Efficiency.</h2>
+                        <p>Zero hassle every time.. Reserve a room in-person at one of our well-designed spaces or use our app to book in 3 easy steps.</p>
+                    </div>
+                    <div class="box">
+                        <h2>Surprisingly Unordinary</h2>
+                        <p>Wherever you go, stay at a space with a curated experience at a price you won't believe.</p>
+                    </div>
+                </div>
+                <div class="flexbox">
+                    <div class="bigbox">
+                        <br><br>
+                        <h2>The world is cozying up to ZEVOYO's idea of chic hotels for everyone.</h2>
+                        <p>ZEVOYO Hotels & Homes, a young hotel startup, today is the world’s leading chain of hotels, homes, and spaces. The portfolio combines fully operated real estate comprising more than 43,000 hotels with over 1 million rooms. Through
+                            its vacation homes business, the company offers travellers and city dwellers access to over 130,000 homes around the world. ZEVOYO today operates in over 800 cities in 80 countries.</p>
+                        <br>
+                    </div>
+                    <br>
+                </div>
+                <br>
+            </div>
+
+
+
+
+
+
+
+            <div class="footer">
+                <div class="footer_bottom">
+                    <div class="follow-us">
+                        <a class="fa fa-facebook social-icon" href="contact.html#"></a>
+                        <a class="fa fa-twitter social-icon" href="#"></a>
+                        <a class="fa fa-linkedin social-icon" href="#"></a>
+                        <a class="fa fa-google social-icon" href="#"></a>
+                        <a class="fa fa-youtube social-icon" href="#"></a>
+                    </div>
+                    <div class="copy">
+                        <p>Copyright © ZEVOYO. Design by <a href="" rel="nofollow">One</a></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <script src="{% static 'myApp/js/bootstrap.min.js'%}"></script>
-        <script src="{% static 'myApp/js/jquery.flexslider.js'%}"></script>
+            <script src="{% static 'myApp/js/bootstrap.min.js'%}"></script>
+            <script src="{% static 'myApp/js/jquery.flexslider.js'%}"></script>
 
 
     </div>
 
 
 
-</body>
+    </body>
 
-{% block js %} {% endblock js %}
+    {% block js %} {% endblock js %}
 
 </html>

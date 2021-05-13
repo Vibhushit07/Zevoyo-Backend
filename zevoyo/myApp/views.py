@@ -357,6 +357,43 @@ def allBookings(request):
 
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
+@login_required(login_url = "/staff")
+def filter(request):
+    print('called')
+    if request.user.is_staff == False:
+        return HttpResponse("Access Denied")
+
+    fil = request.GET.get('filter')
+
+    print(fil)
+
+    records = []
+
+    if(fil == "checkIn" or fil == "checkOut"):
+        records = Reservation.objects.values_list(fil, flat = True).distinct().order_by()
+
+    # elif()
+    
+
+    print(records)
+
+    json_res = [] 
+
+    for record in records: 
+        json_obj = myconverter(record) 
+        json_res.append(json_obj)
+
+    print(json_res)
+
+    js = json.dumps(json_res)
+    print(js)
+
+    return HttpResponse(js, content_type="application/json")
+
+def myconverter(o):
+    if isinstance(o, datetime.date):
+        return o.__str__()
+
 def sendEmail(request):
 
     subject = 'Welcome'
