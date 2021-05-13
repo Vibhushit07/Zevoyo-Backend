@@ -49,6 +49,11 @@ def contactpage(request):
 def aboutpage(request):
     return HttpResponse(render(request,'about.html'))
 
+def description(request):
+    room = Rooms.objects.all().get(id = int(request.GET['roomid']))
+    return HttpResponse(render(request, "user/description.html", {"room": room}))
+
+
 def staffSignup(request):
     if request.method == 'POST':
         userName = request.POST['username']
