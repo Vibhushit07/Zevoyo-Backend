@@ -15,4 +15,4 @@ class Chat(models.Model):
         return str(self.message)
 
     def get_absolute_url(self):
-        return reverse('chat:all')
+        return reverse("/myApp/chat/all")
