@@ -357,7 +357,7 @@ def allBookings(request):
 
 @login_required(login_url = "/staff")
 def filter(request):
-    print('called')
+    
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
 
@@ -387,6 +387,33 @@ def filter(request):
             json_res.append(record)
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
+
+@login_required(login_url = "/staff")
+def filterBookings(request):
+    if request.user.is_staff == False:
+        return HttpResponse("Access Denied")
+    
+    bookings = []
+
+    filter = request.POST['filter']
+    data = request.POST['data']
+
+    if(filter == "checkIn"):
+        bookings = Reservation.objects.all().filter(checkIn = data) 
+
+    elif(filter == "checkOut"):
+        bookings = Reservation.objects.all().filter(checkOut = data) 
+
+    elif(filter == "city"):
+        bookings = Reservation.objects.filter(room__hotel__city = data)  
+    
+    elif(filter == "guest"):
+        bookings = Reservation.objects.all().filter(guest__username = data) 
+    
+    else:
+        bookings = Reservation.objects.all().filter(room__hotel__name = data) 
+    
+    return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
 def myconverter(o):
     if isinstance(o, datetime.date):
