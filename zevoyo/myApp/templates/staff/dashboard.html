@@ -108,7 +108,7 @@
     <thead>
         <th>Hotel</th>
         <th>Room Number</th>
-        <th>Type</th>
+        <th>Room Type</th>
         <th>Status</th>
         <th>Price</th>
         <th>Capacity</th>
@@ -121,10 +121,10 @@
         <td> {{ room.hotel.name }} </td>
         <td> {{ room.roomNumber }} </td>
         <td> {{ room.get_roomType_display }} </td>
-        <td> {{ room.status }} </td>
-        <td> {{ room.price }} </td>
-        <td> {{ room.capacity }} </td>
-        <td> {{ room.size }} </td>
+        <td> {{ room.get_status_display }} </td>
+        <td>Rs. {{ room.price }} </td>
+        <td> {{ room.capacity }} person </td>
+        <td> {{ room.size }} ft </td>
         <td colspan="2">
             <a href="/myApp/staff/dashboard/edit-room?roomid={{room.id}}"><button class="btn btn-danger">Edit</button></a>
             <a href="/myApp/staff/dashboard/view-room?roomid={{room.id}}"><button class="btn btn-primary">View</button></a>
@@ -164,13 +164,28 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="type">Type:</label>
+                                    <input type="text" class="form-control" id="type" name="type">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="contact-number">Contact Number:</label>
+                                    <input type="text" class="form-control" id="contact-number" name="contactNumber">
+                                </div>
+
+                                <div class="form-group">
                                     <label for="owner">Owner:</label>
                                     <input type="text" class="form-control" id="owner" name="owner">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="city">City:</label>
-                                    <input type="text" class="form-control" id="city" name="city">
+                                    <label for="address">Address:</label>
+                                    <input type="text" class="form-control" id="address" name="address">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="city-1">City:</label>
+                                    <input type="text" class="form-control" id="city-1" name="city">
                                 </div>
 
                                 <div class="form-group">
@@ -181,6 +196,11 @@
                                 <div class="form-group">
                                     <label for="country">Country:</label>
                                     <input type="text" class="form-control" id="country" name="country">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pincode">Pincode:</label>
+                                    <input type="text" class="form-control" id="pincode" name="pincode">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Add Location</button>
@@ -243,6 +263,44 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="bed-type">Bed Type:</label>
+                                    <input type="text" class="form-control" id="bed-type" name="bedType">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="tv">TV:</label>
+                                    <input type="text" class="form-control" id="tv" name="tv">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="refrigerator">Refrigerator:</label>
+                                    <input type="text" class="form-control" id="refrigerator" name="refrigerator">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ac">AC:</label>
+                                    <input type="text" class="form-control" id="ac" name="ac">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="balcony">Balcony:</label>
+                                    <input type="text" class="form-control" id="balcony" name="balcony">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="parking">Parking:</label>
+                                    <select class="form-control" name="parking" id="parking">
+                                        <option value="True">Yes</option>
+                                        <option value="False">No</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Description:</label>
+                                    <textarea class="form-control" id="description" name="description" cols="5"> </textarea>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="room-status">Status:</label>
                                     <select class="form-control" name="status" id="room-status">
                                         <option value="1">Available</option>
@@ -251,11 +309,17 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="hotel">Location:</label>
-                                    <select class="form-control" id="hotel" name="hotel">
-                                        {% for eachLocation, id in location %}
-                                        <option value="{{id}}"> {{ eachLocation }} </option>
+                                    <label for="city-2">City:</label>
+                                    <select class="form-control" id="city-2" name="city-2" onclick="getHotel(this);">
+                                        {% for city in cities %}
+                                            <option value="{{city}}"> {{ city }} </option>
                                         {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="hotel">Hotel Name:</label>
+                                    <select class="form-control" id="hotel" name="hotel">
                                     </select>
                                 </div>
 
@@ -271,4 +335,5 @@
 
 {% endblock body %} {% block js %}
 <script src="{% static '/myApp/script/dashboard.js' %}"></script>
+<script src="{% static '/myApp/script/filterHotel.js' %}"></script>
 {% endblock js %}

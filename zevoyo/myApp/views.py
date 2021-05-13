@@ -10,9 +10,10 @@ from zevoyo.settings import EMAIL_HOST_USER
 from .models import Hotels, Reservation, Rooms
 
 import datetime
+import json
 
 def homePage(request):
-    all_location = Hotels.objects.values_list('location','id').distinct().order_by()
+    all_location = Hotels.objects.values_list('city','id').distinct().order_by()
     if request.method =="POST":
         try:
             
@@ -32,6 +33,7 @@ def homePage(request):
             if len(room) == 0:
                 messages.warning(request,"Sorry No Rooms Are Available on this time period")
             data = {'rooms':room,'all_location':all_location,'flag':True}
+            print(room)
             response = render(request,'index.html', data)
         except Exception as e:
             messages.error(request,e)
@@ -156,36 +158,55 @@ def dashboard(request):
     unavailableRooms = len(rooms.filter(status = '2'))
     reserved = len(Reservation.objects.all())
 
-    hotel = Hotels.objects.values_list('location', 'name').distinct().order_by()
+    cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
 
-    response = render(request, 'staff/dashboard.html', {'location': hotel, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
+    print(cities)
+      
+    response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
+
+@login_required(login_url = "/staff")
+def searchDashboard(request):
+
+    if request.user.is_staff == False:
+        return HttpResponse("Access Denied")
+
+    city = request.GET.get('city', None)
+
+    records = Hotels.objects.filter(city = city)
+    json_res = [] 
+
+    for record in records: 
+        json_obj = dict( name = record.name) 
+        json_res.append(json_obj)
+
+    return HttpResponse(json.dumps(json_res), content_type="application/json")
 
 @login_required(login_url = "/staff")
 def addNewLocation(request):
     if request.method == "POST" and request.user.is_staff:
         name = request.POST['hotelName']
-        owner = request.POST['owner']
-        location = request.POST['city']
-        state = request.POST['state']
-        country = request.POST['country']
 
-        hotels = Hotels.objects.all().filter(location = location, state = state)
+        hotels = Hotels.objects.all().filter(name = name)
 
         if hotels:
-            messages.warning(request, "Sorry city at this location already exist")
+            messages.warning(request, "Sorry this hotel at this city already exist")
         else:
             hotel = Hotels()
             hotel.name = name
-            hotel.owner = owner
-            hotel.location = location
-            hotel.state = state
-            hotel.country = country
+            hotel.owner = request.POST['owner']
+            hotel.contactNumber = request.POST['contactNumber']
+            hotel.type = request.POST['type']
+            hotel.address = request.POST['address']
+            hotel.city = request.POST['city']
+            hotel.state = request.POST['state']
+            hotel.country = request.POST['country']
+            hotel.pincode = request.POST['pincode']
             hotel.save()
 
             messages.success(request, "New Location added successfully")
 
-        return redirect("dashboard")
+        return redirect("staffDashboard")
 
     else:
         return HttpResponse("Access Denied")
@@ -204,13 +225,29 @@ def addNewRoom(request):
         newRoom.size = request.POST["size"]
         newRoom.status = request.POST["status"]
         newRoom.price = request.POST["price"]
+        newRoom.bedType = request.POST["bedType"] 
+        newRoom.tv = request.POST["tv"]
+        newRoom.refrigerator = request.POST["refrigerator"]
+        newRoom.ac = request.POST["ac"]
+        newRoom.balcony = request.POST["balcony"]
+        newRoom.description = request.POST["description"]
+        
+        print(request.POST["parking"])
+
+        park = False
+
+        if request.POST["parking"] == "Yes":
+            park = True
+        
+        newRoom.parking = park
+
         newRoom.hotel = hotel
 
         newRoom.save()
 
         messages.success(request, "New Room added successfully")
     
-        return redirect("dashboard")
+        return redirect("staffDashboard")
     
     else:
         return HttpResponse("Access Denied")
@@ -238,8 +275,6 @@ def bookRoom(request):
     if request.method == 'POST':
         roomId = request.POST['roomId']
         room = Rooms.objects.all().get(id = roomId)
-
-        # sendEmail(request)
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
@@ -270,7 +305,7 @@ def bookRoom(request):
 
         reservation.save()
 
-        # sendEmail(request, request.POST['email'])
+        # sendEmail(request)
 
         messages.success(request, "Congratulations! Booking Successfull")
 
@@ -287,7 +322,7 @@ def editRoom(request):
 
         room = Rooms.objects.all().get(id = int(request.POST['roomId']))
         hotel = Hotels.objects.all().get(id = int(request.POST['hotel']))
-        
+
         room.roomType = request.POST['roomType']
         room.capacity = int(request.POST['capacity'])
         room.price = int(request.POST['price'])

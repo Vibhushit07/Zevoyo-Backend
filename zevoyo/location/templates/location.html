@@ -1,0 +1,9 @@
+{% extends 'basic.html' %} {% block title %} Location Tracking {% endblock title %} {% load static %} {% block body %}
+<p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<p id="demo"></p>
+{% endblock body %} {% block js %}
+<script src="{% static '/js/location.js' %}"></script>
+{% endblock js %}

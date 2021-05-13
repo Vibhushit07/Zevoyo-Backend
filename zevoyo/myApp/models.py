@@ -1,17 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.conf import settings
-
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 
 # Create your models here.
 
 class Hotels(models.Model):
-    name = models.CharField(max_length = 30,default="Zevoyo")
+    name = models.CharField(max_length = 30)
     owner = models.CharField(max_length = 30)
-    location = models.CharField(max_length = 50)
+    type = models.CharField(max_length = 30)
+    contactNumber = models.CharField(max_length = 30)
+    address = models.CharField(max_length = 50)
     city = models.CharField(max_length = 20)
-    state = models.CharField(max_length = 15,default="Punjab")
-    country = models.CharField(max_length = 20,default="India")
+    state = models.CharField(max_length = 15)
+    country = models.CharField(max_length = 20)
+    pincode = models.IntegerField(validators=[MaxLengthValidator(6),MinLengthValidator(6)])
 
     def __str__(self):
         return self.name
@@ -32,6 +34,13 @@ class Rooms(models.Model):
     capacity = models.IntegerField()
     price = models.IntegerField()
     size = models.IntegerField()
+    bedType = models.CharField(max_length = 30)
+    tv = models.CharField(max_length = 30)
+    refrigerator = models.CharField(max_length = 30)
+    ac = models.CharField(max_length = 30)
+    balcony = models.CharField(max_length = 30)
+    parking = models.BooleanField()
+    description = models.CharField(max_length = 300)
     hotel = models.ForeignKey(Hotels, on_delete = models.CASCADE)
     status = models.CharField(choices = ROOM_STATUS, max_length = 15)
     roomNumber = models.IntegerField()

@@ -10,9 +10,9 @@
                     <select class="form-control" name="search_location" id="roomstatus">
                     <!--Hotel id and location-->
                     <option>Location</option>
-                    {% for each_location,each_hotel_id in all_location %}
+                    {% for each_location, id in all_location %}
                         
-                        <option value={{each_hotel_id}}>{{each_location}}</option>
+                        <option value={{id}}>{{each_location}}</option>
                     {% endfor %}    
                         
                 </select>
@@ -53,16 +53,19 @@
             <th>Location</th>
             <th>Person</th>
             <th>price</th>
-            <th>Action</th>
+            <th colspan="2">Action</th>
         </thead>
         {% for room in rooms %}
         <tr class="">
             <td>{{ room.get_roomType_display }}</td>
-            <td>{{ room.hotel.location }}</td>
+            <td>{{ room.hotel.city }}</td>
             <td>{{ room.capacity }}</td>
             <td>{{ room.price }}</td>
 
-            <td><a href="/myApp/user/book-room?roomid={{room.id}}"><button class="btn btn-warning">Book Now</button></a></td>
+            <td colspan="2">
+                <a href="/myApp/user/book-room?roomid={{room.id}}"><button class="btn btn-warning">Book Now</button></a>
+                <a href="/location/"><button class="btn btn-warning">Location</button></a>
+            </td>
         </tr>
         {% endfor %}
 
