@@ -231,8 +231,6 @@ def addNewRoom(request):
         newRoom.ac = request.POST["ac"]
         newRoom.balcony = request.POST["balcony"]
         newRoom.description = request.POST["description"]
-        
-        print(request.POST["parking"])
 
         park = False
 
@@ -359,36 +357,63 @@ def allBookings(request):
 
 @login_required(login_url = "/staff")
 def filter(request):
-    print('called')
+    
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
 
     fil = request.GET.get('filter')
-
-    print(fil)
 
     records = []
 
     if(fil == "checkIn" or fil == "checkOut"):
         records = Reservation.objects.values_list(fil, flat = True).distinct().order_by()
 
-    # elif()
+    elif(fil == "city"):
+        records = Hotels.objects.values_list(fil, flat = True).distinct().order_by()
     
-
-    print(records)
+    elif(fil == "guest"):
+        records = User.objects.values_list("username", flat = True).distinct().order_by()
+    
+    else:
+        records = Hotels.objects.values_list("name", flat = True).distinct().order_by()
 
     json_res = [] 
 
     for record in records: 
-        json_obj = myconverter(record) 
-        json_res.append(json_obj)
 
-    print(json_res)
+        if(fil == "checkIn" or fil == "checkOut"):
+            json_res.append(myconverter(record))
+        else:
+            json_res.append(record)
 
-    js = json.dumps(json_res)
-    print(js)
+    return HttpResponse(json.dumps(json_res), content_type="application/json")
 
-    return HttpResponse(js, content_type="application/json")
+@login_required(login_url = "/staff")
+def filterBookings(request):
+    if request.user.is_staff == False:
+        return HttpResponse("Access Denied")
+    
+    bookings = []
+
+    filter = request.POST['filter']
+    data = request.POST['data']
+
+    if(filter == "checkIn"):
+        bookings = Reservation.objects.all().filter(checkIn = data) 
+
+    elif(filter == "checkOut"):
+        bookings = Reservation.objects.all().filter(checkOut = data) 
+
+    elif(filter == "city"):
+        bookings = Reservation.objects.filter(room__hotel__city = data)  
+    
+    elif(filter == "guest"):
+        bookings = Reservation.objects.all().filter(guest__username = data) 
+    
+    else:
+        bookings = Reservation.objects.all().filter(room__hotel__name = data) 
+    
+    return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
 def myconverter(o):
     if isinstance(o, datetime.date):
