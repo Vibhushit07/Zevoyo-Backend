@@ -357,6 +357,10 @@ def allBookings(request):
 
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
+@login_required(login_url = "/staff")
+def filter(request):
+    return HttpResponse('Hello')
+
 def sendEmail(request):
 
     subject = 'Welcome'
