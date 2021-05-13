@@ -1,10 +1,6 @@
 function getDetails(c) {
 
-    console.log(document.getElementById('filter').value)
-
     var filter = document.getElementById('filter').value;
-
-    console.log(filter)
 
     $.ajax({
         url: '/myApp/staff/allbookings/filter/',

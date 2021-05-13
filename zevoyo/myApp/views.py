@@ -231,8 +231,6 @@ def addNewRoom(request):
         newRoom.ac = request.POST["ac"]
         newRoom.balcony = request.POST["balcony"]
         newRoom.description = request.POST["description"]
-        
-        print(request.POST["parking"])
 
         park = False
 
@@ -365,30 +363,30 @@ def filter(request):
 
     fil = request.GET.get('filter')
 
-    print(fil)
-
     records = []
 
     if(fil == "checkIn" or fil == "checkOut"):
         records = Reservation.objects.values_list(fil, flat = True).distinct().order_by()
 
-    # elif()
+    elif(fil == "city"):
+        records = Hotels.objects.values_list(fil, flat = True).distinct().order_by()
     
-
-    print(records)
+    elif(fil == "guest"):
+        records = User.objects.values_list("username", flat = True).distinct().order_by()
+    
+    else:
+        records = Hotels.objects.values_list("name", flat = True).distinct().order_by()
 
     json_res = [] 
 
     for record in records: 
-        json_obj = myconverter(record) 
-        json_res.append(json_obj)
 
-    print(json_res)
+        if(fil == "checkIn" or fil == "checkOut"):
+            json_res.append(myconverter(record))
+        else:
+            json_res.append(record)
 
-    js = json.dumps(json_res)
-    print(js)
-
-    return HttpResponse(js, content_type="application/json")
+    return HttpResponse(json.dumps(json_res), content_type="application/json")
 
 def myconverter(o):
     if isinstance(o, datetime.date):
