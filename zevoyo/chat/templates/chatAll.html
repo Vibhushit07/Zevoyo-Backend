@@ -13,6 +13,6 @@
     <p><b class="chat-content">{{ chat|linebreaks }}</b></p>
     <small class="chat-date">{{ chat.posted_at }}</small>
 </div>
-<br><br>
+<br><br> {% empty %}
 <h1 class="heading">No Chats Yet Be The First To Message!</h1><br> {% endfor %}
 <br><a href="{% url 'new' %}"><button class="btn btn-outline-primary">New Message</button></a> {% endblock body %}
