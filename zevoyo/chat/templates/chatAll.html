@@ -22,5 +22,5 @@
     <small class="chat-date">{{ chat.posted_at }}</small>
 </div>
 <br><br> {% empty %}
-<h1 class="heading">No Chats Yet Be The First To Message!</h1><br> {% endfor %}
+<h1 class="heading" style="margin-left: 43px;">No Chats Yet Be The First To Message!</h1><br> {% endfor %}
 <br><a href="{% url 'new' %}"><button class="btn btn-outline-primary" style=" margin-left: 50px;">New Message</button></a> {% endblock body %}
