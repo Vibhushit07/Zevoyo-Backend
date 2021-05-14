@@ -17,4 +17,6 @@
 </div>
 <br><br> {% empty %}
 <h1 class="heading" style="margin-left: 500px;">No Chats Yet Be The First To Message!</h1><br> {% endfor %}
-<br><a href="{% url 'new' %}"><button class="btn btn-outline-primary" style=" margin-left: 500px;">New Message</button></a> {% endblock body %}
+<br> {% if user.is_staff %}
+<a href='/myApp/chat/new/?userid={{chatAll.0.user.id}}/'><button class="btn btn-outline-primary" style=" margin-left: 500px;">New Message</button></a> {% else %}
+<a href='/myApp/chat/new/'><button class="btn btn-outline-primary" style=" margin-left: 500px;">New Message</button></a> {% endif %} {% endblock body %}

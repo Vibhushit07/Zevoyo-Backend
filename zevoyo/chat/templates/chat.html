@@ -1,10 +1,9 @@
 {%extends 'basic.html' %}{% block title %} Chat {% endblock title %} {% block body %}
 
 <div>
-    <form action="/myApp/chat/new/" method="post">
+    <form action="/myApp/chat/new/?userid={{userid}}/" method="post">
         {% csrf_token %} {{ form }}
-        <input type="submit" value="Submit" class="btn btn-lg btn-outline-primary"
-        style="margin-top:7em;">
+        <input type="submit" value="Submit" class="btn btn-lg btn-outline-primary" style="margin-top:7em;">
     </form>
 </div>
 

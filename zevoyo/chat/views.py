@@ -16,7 +16,14 @@ def newChat(request):
     if request.method == "POST":
 
         user = User.objects.all().get(id = request.user.id)
-        sendTo = User.objects.all().get(username = 'admin')
+        sendTo = ""
+        
+        if user.is_staff:
+            print('hello', request.GET['userid'])
+            sendTo = User.objects.all().get(id = request.GET['userid'].split('/')[0])
+
+        else:
+            sendTo = User.objects.all().get(username = 'admin')
 
         chat = Chat()
 
@@ -27,6 +34,9 @@ def newChat(request):
         chat.save()
 
         return redirect('all')
+    
+    if request.method == "GET" and request.user.is_staff:
+        return HttpResponse(render(request, 'chat.html', { 'form': ChatForm, 'userid':  request.GET['userid'].split('/')[0]}))
     
     return HttpResponse(render(request, 'chat.html', { 'form': ChatForm }))
 
@@ -39,13 +49,11 @@ def chatList(request):
     if request.method == "POST":
         print(request.GET['userid'].split('/')[0])
         user = User.objects.all().get(id = request.GET['userid'].split('/')[0])
-        # chat = Chat.objects.filter(user = user).order_by('posted_at')
-        # chat.add(Chat.objects.filter(user = user))
 
         for c in Chat.objects.filter(user = user):
             chat.append(c)
         
-        for c in Chat.objects.filter(user__username = 'admin'):
+        for c in Chat.objects.filter(user__username = 'admin', sentTo = user):
             chat.append(c)
 
         chat.sort(key = posted_at)
@@ -55,8 +63,6 @@ def chatList(request):
         chat = Chat.objects.filter(user = user).order_by('posted_at')
 
     userList = User.objects.all().filter(is_staff = False)
-
-    print(userList)
 
     return HttpResponse(render(request, 'chatAll.html', { 'chatAll': chat, 'users': userList }))
 
