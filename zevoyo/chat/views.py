@@ -33,15 +33,32 @@ def newChat(request):
 @login_required(login_url = "/staff")
 def chatList(request):
 
+    user = ""
+    chat = []
+
     if request.method == "POST":
-        print(request.GET['userid'])
-    
-    user = User.objects.all().get(id = request.user.id)
-    admin = User.objects.all().get(username = 'admin')
-    chat = Chat.objects.filter(user = user).order_by('posted_at')
+        print(request.GET['userid'].split('/')[0])
+        user = User.objects.all().get(id = request.GET['userid'].split('/')[0])
+        # chat = Chat.objects.filter(user = user).order_by('posted_at')
+        # chat.add(Chat.objects.filter(user = user))
+
+        for c in Chat.objects.filter(user = user):
+            chat.append(c)
+        
+        for c in Chat.objects.filter(user__username = 'admin'):
+            chat.append(c)
+
+        chat.sort(key = posted_at)
+        
+    else:
+        user = User.objects.all().get(id = request.user.id)
+        chat = Chat.objects.filter(user = user).order_by('posted_at')
 
     userList = User.objects.all().filter(is_staff = False)
 
     print(userList)
 
     return HttpResponse(render(request, 'chatAll.html', { 'chatAll': chat, 'users': userList }))
+
+def posted_at(e):
+  return e.posted_at
