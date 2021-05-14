@@ -19,9 +19,7 @@ def newChat(request):
         sendTo = ""
         
         if user.is_staff:
-            print('hello', request.GET['userid'])
             sendTo = User.objects.all().get(id = request.GET['userid'].split('/')[0])
-
         else:
             sendTo = User.objects.all().get(username = 'admin')
 
@@ -46,21 +44,18 @@ def chatList(request):
     user = ""
     chat = []
 
-    if request.method == "POST":
-        print(request.GET['userid'].split('/')[0])
-        user = User.objects.all().get(id = request.GET['userid'].split('/')[0])
-
-        for c in Chat.objects.filter(user = user):
-            chat.append(c)
-        
-        for c in Chat.objects.filter(user__username = 'admin', sentTo = user):
-            chat.append(c)
-
-        chat.sort(key = posted_at)
-        
+    if request.method == "POST" and request.user.is_staff:
+        user = User.objects.all().get(id = request.GET['userid'].split('/')[0])   
     else:
         user = User.objects.all().get(id = request.user.id)
-        chat = Chat.objects.filter(user = user).order_by('posted_at')
+
+    for c in Chat.objects.filter(user = user):
+        chat.append(c)
+
+    for c in Chat.objects.filter(user__username = 'admin', sentTo = user):
+        chat.append(c) 
+    
+    chat.sort(key = posted_at)
 
     userList = User.objects.all().filter(is_staff = False)
 
