@@ -2,7 +2,7 @@
 
 <h3 class="text-center text-success">All Bookings</h3>
 
-<form action="" method="POST">
+<form action="/myApp/staff/allbookings/filter/data/" method="POST">
     {% csrf_token %}
     <div class="form-group">
         <label for="filter">Filter:</label>
@@ -20,6 +20,12 @@
         <select class="form-control" id="data" name="data">
         </select>
     </div>
+
+    <!-- <div class="form-group">
+        <button type="submit" class="btn btn-warning">Filter</button>
+    </div> -->
+
+    <input type="submit" value="Filter" class="form-control btn btn-warning">
 </form>
 
 <table class="table">
@@ -49,5 +55,5 @@
 </table>
 
 {% endblock body %} {% block js %}
-<script src="{% static '/myApp/script/filterBookings.js' %}"></script>
+<script src="{% static '/myApp/script/filter.js' %}"></script>
 {% endblock js %}
