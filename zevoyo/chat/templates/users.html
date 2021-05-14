@@ -1,0 +1,14 @@
+{% extends 'basic.html' %} {% load static %} {% block title %} Chat {% endblock title %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'chat/css/users.css'%}"> {% endblock css %} {% block body %} {% if user.is_staff %}
+
+<div class="container">
+    {% for user in users %}
+    <form action="/myApp/chat/all/?userid={{user.id}}/" method="POST" class="ul">
+        {% csrf_token %}
+        <button class="list" name="user">
+            {{user.username}}
+        </button>
+    </form>
+    <br> {% endfor %}
+</div>
+{% endif %} {% endblock body %}

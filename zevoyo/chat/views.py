@@ -30,11 +30,18 @@ def newChat(request):
     
     return HttpResponse(render(request, 'chat.html', { 'form': ChatForm }))
 
-@login_required(login_url = "/user")
+@login_required(login_url = "/staff")
 def chatList(request):
+
+    if request.method == "POST":
+        print(request.GET['userid'])
     
     user = User.objects.all().get(id = request.user.id)
     admin = User.objects.all().get(username = 'admin')
     chat = Chat.objects.filter(user = user).order_by('posted_at')
 
-    return HttpResponse(render(request, 'chatAll.html', { 'chatAll': chat }))
+    userList = User.objects.all().filter(is_staff = False)
+
+    print(userList)
+
+    return HttpResponse(render(request, 'chatAll.html', { 'chatAll': chat, 'users': userList }))
