@@ -1,3 +1,6 @@
+.body{
+    background-color: black;
+}
 .chat {
     background: rgb(220, 20, 60); 
     border-radius: 10px; 
