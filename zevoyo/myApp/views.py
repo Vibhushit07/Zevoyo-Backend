@@ -13,11 +13,11 @@ import datetime
 import json
 
 def homePage(request):
-    all_location = Hotels.objects.values_list('city','id').distinct().order_by()
+    all_location = Hotels.objects.values_list('city', flat=True).distinct().order_by()
     if request.method =="POST":
         try:
             
-            hotel = Hotels.objects.all().get(id=int(request.POST['search_location']))
+            hotel = Hotels.objects.all().filter(city=request.POST['search_location'])
             rr = []
             
             #for finding the reserved rooms on this time period for excluding from the query set
@@ -29,7 +29,7 @@ def homePage(request):
                 else:
                     rr.append(reservation.room.id)
                 
-            room = Rooms.objects.all().filter(hotel=hotel,capacity__gte = int(request.POST['capacity'])).exclude(id__in=rr)
+            room = Rooms.objects.all().filter(hotel__city=hotel[0].city,capacity__gte = int(request.POST['capacity'])).exclude(id__in=rr)
             if len(room) == 0:
                 messages.warning(request,"Sorry No Rooms Are Available on this time period")
             data = {'rooms':room,'all_location':all_location,'flag':True}
@@ -296,7 +296,7 @@ def bookRoom(request):
 
         reservation.save()
 
-        sendEmail(request)
+        # sendEmail(request)
 
         messages.success(request, "Congratulations! Booking Successfull")
 
