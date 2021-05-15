@@ -64,7 +64,12 @@
 
             <td colspan="2">
                 <a href="/myApp/user/book-room?roomid={{room.id}}"><button class="btn btn-warning">Book Now</button></a>
-                <a href="/myApp/location/?roomid={{room.id}}"><button class="btn btn-warning">Location</button></a>
+                <!-- <a href="/myApp/location/?roomid={{room.id}}"><button class="btn btn-warning">Location</button></a> -->
+                <a href="https://www.google.com/maps/dir//{{room.hotel.name}} + ' ' + 
+                        {{room.hotel.address}} + ' ' + {{room.hotel.city}} + ' ' + {{room.hotel.state}} + ' ' + 
+                        {{room.hotel.country}} + ' ' + {{room.hotel.pincode}}" target="_blank">
+                    <button class="btn btn-warning">Location</button>
+                </a>
             </td>
         </tr>
         {% endfor %}
