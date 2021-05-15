@@ -49,6 +49,7 @@
     {% if rooms %}
     <table class="table">
         <thead class="o">
+            <th>Hotel</th>
             <th>Type</th>
             <th>Location</th>
             <th>Person</th>
@@ -57,6 +58,7 @@
         </thead>
         {% for room in rooms %}
         <tr class="">
+            <td> <b> {{ room.hotel.name }} </b> {{ room.hotel.type }} </td>
             <td>{{ room.get_roomType_display }}</td>
             <td>{{ room.hotel.city }}</td>
             <td>{{ room.capacity }}</td>
