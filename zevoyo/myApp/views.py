@@ -301,7 +301,7 @@ def bookRoom(request):
 
         reservation.save()
 
-        sendEmail(request)
+        sendEmail(request, reservation)
 
         messages.success(request, "Congratulations! Booking Successfull")
 
@@ -431,10 +431,12 @@ def myconverter(o):
     if isinstance(o, datetime.date):
         return o.__str__()
 
-def sendEmail(request):
+def sendEmail(request, reservation):
 
-    subject = 'Welcome'
-    message = 'Thankyou for registering.'
     recepient = request.POST['email']
+    subject = 'Hotel Room Booking Confirmation'
+    
+    message = 'Congratulations. Your hotel room is booked. \n Bookings Details are mentioned below: \nBooking Id-' + reservation.bookingId +'\nGuest name- ' + reservation.guest.username + '\nCheck In- ' + reservation.checkIn + '\nCheck Out-' + reservation.checkOut + '\nHotel Name- ' + reservation.room.hotel.name + '\nContact Number- ' + reservation.room.hotel.contactNumber + '\nAddress- ' + reservation.room.hotel.address + ', ' + reservation.room.hotel.city + ', ' + reservation.room.hotel.state + '- ' + str(reservation.room.hotel.pincode) + '\nCity-' + reservation.room.hotel.city
+    
     send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
     return HttpResponse('Success email send')
