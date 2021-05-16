@@ -51,7 +51,7 @@ def aboutpage(request):
 
 def description(request):
     room = Rooms.objects.all().get(id = int(request.GET['roomid']))
-    return HttpResponse(render(request, "user/description.html", {"room": room}))
+    return HttpResponse(render(request, "description.html", {"room": room}))
 
 
 def staffSignup(request):
