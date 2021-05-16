@@ -16,6 +16,7 @@ urlpatterns = [
     path('user/book-room/', views.bookRoomPage, name = "bookRoomPage"),
     path('user/book-room/book/', views.bookRoom, name = "bookRoom"),
     path('user/bookings/', views.user_bookings,name="dashboard"),
+    path('user/description/', views.description, name = "description"),
 
     path('staff/', views.staffSignup, name="staff"),
     path('staff/login/', views.staffLogin, name = "stafflogin"),
@@ -30,6 +31,7 @@ urlpatterns = [
     path('staff/allbookings/', views.allBookings, name = 'allBookings'),
     path('staff/allbookings/filter/', views.filter, name = 'allBookingsFilter'),
     path('staff/allbookings/filter/data/', views.filterBookings, name = 'filterBookings'),
+
 
     path('logout/', views.logoutUser, name = "logout"),
 

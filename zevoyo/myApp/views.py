@@ -13,11 +13,11 @@ import datetime
 import json
 
 def homePage(request):
-    all_location = Hotels.objects.values_list('city','id').distinct().order_by()
+    all_location = Hotels.objects.values_list('city', flat=True).distinct().order_by()
     if request.method =="POST":
         try:
             
-            hotel = Hotels.objects.all().get(id=int(request.POST['search_location']))
+            hotel = Hotels.objects.all().filter(city=request.POST['search_location'])
             rr = []
             
             #for finding the reserved rooms on this time period for excluding from the query set
@@ -29,11 +29,11 @@ def homePage(request):
                 else:
                     rr.append(reservation.room.id)
                 
-            room = Rooms.objects.all().filter(hotel=hotel,capacity__gte = int(request.POST['capacity'])).exclude(id__in=rr)
+            room = Rooms.objects.all().filter(hotel__city=hotel[0].city,capacity__gte = int(request.POST['capacity'])).exclude(id__in=rr)
             if len(room) == 0:
                 messages.warning(request,"Sorry No Rooms Are Available on this time period")
             data = {'rooms':room,'all_location':all_location,'flag':True}
-            print(room)
+            
             response = render(request,'index.html', data)
         except Exception as e:
             messages.error(request,e)
@@ -48,6 +48,11 @@ def contactpage(request):
 
 def aboutpage(request):
     return HttpResponse(render(request,'about.html'))
+
+def description(request):
+    room = Rooms.objects.all().get(id = int(request.GET['roomid']))
+    return HttpResponse(render(request, "description.html", {"room": room}))
+
 
 def staffSignup(request):
     if request.method == 'POST':
@@ -159,8 +164,6 @@ def dashboard(request):
     reserved = len(Reservation.objects.all())
 
     cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
-
-    print(cities)
       
     response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
@@ -277,13 +280,8 @@ def bookRoom(request):
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
             if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']):
-                print('reservation.checkIn 1', reservation.checkIn)
-                print('reservation.checkOut 1', reservation.checkOut)
                 pass
-            
             elif str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']):
-                print('reservation.checkIn 2', reservation.checkIn)
-                print('reservation.checkOut 2', reservation.checkOut)
                 pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
@@ -303,7 +301,7 @@ def bookRoom(request):
 
         reservation.save()
 
-        # sendEmail(request)
+        sendEmail(request)
 
         messages.success(request, "Congratulations! Booking Successfull")
 

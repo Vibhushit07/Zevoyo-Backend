@@ -107,7 +107,7 @@
 <table class="table table-striped">
     <thead>
         <th>Hotel</th>
-        <th>Room Number</th>
+        <th>City</th>
         <th>Room Type</th>
         <th>Status</th>
         <th>Price</th>
@@ -119,12 +119,12 @@
     {% if rooms %} {% for room in rooms %}
     <tr>
         <td> {{ room.hotel.name }} </td>
-        <td> {{ room.roomNumber }} </td>
+        <td> {{ room.hotel.city }} </td>
         <td> {{ room.get_roomType_display }} </td>
         <td> {{ room.get_status_display }} </td>
         <td>Rs. {{ room.price }} </td>
         <td> {{ room.capacity }} person </td>
-        <td> {{ room.size }} ft </td>
+        <td> {{ room.size }} sq.ft. </td>
         <td colspan="2">
             <a href="/myApp/staff/dashboard/edit-room?roomid={{room.id}}"><button class="btn btn-danger">Edit</button></a>
             <a href="/myApp/staff/dashboard/view-room?roomid={{room.id}}"><button class="btn btn-primary">View</button></a>
