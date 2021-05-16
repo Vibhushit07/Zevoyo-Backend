@@ -1,12 +1,39 @@
-{% extends 'basic.html' %} {% block title %} All Bookings {% endblock title %} {% block body %}
+{% extends 'basic.html' %} {% block title %} All Bookings {% endblock title %} {% load static %} {% block body %}
 
 <h3 class="text-center text-success">All Bookings</h3>
 
+<form action="/myApp/staff/allbookings/filter/data/" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="filter">Filter:</label>
+        <select class="form-control" id="filter" name="filter" onclick="getDetails(this)">
+            <option value="checkIn">Check-In</option>
+            <option value="checkOut">Check-Out</option>
+            <option value="city">City</option>
+            <option value="guest">Guest</option>
+            <option value="hotel">Hotel</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="data" id="label"></label>
+        <select class="form-control" id="data" name="data">
+        </select>
+    </div>
+
+    <!-- <div class="form-group">
+        <button type="submit" class="btn btn-warning">Filter</button>
+    </div> -->
+
+    <input type="submit" value="Filter" class="form-control btn btn-warning">
+</form>
+
 <table class="table">
     <thead>
-        <th>User</th>
+        <th>Guest</th>
         <th>Room Number</th>
-        <th>Location</th>
+        <th>Hotel</th>
+        <th>City</th>
         <th>Person</th>
         <th>Check In</th>
         <th>Check Out</th>
@@ -17,7 +44,8 @@
     <tr>
         <td> {{ booking.guest.username }} </td>
         <td> {{ booking.room.roomNumber }} </td>
-        <td> {{ booking.room.hotel.location }} </td>
+        <td> {{ booking.room.hotel.name }} </td>
+        <td> {{ booking.room.hotel.city }} </td>
         <td> {{ booking.room.capacity }} </td>
         <td> {{ booking.checkIn }} </td>
         <td> {{ booking.checkOut }} </td>
@@ -26,4 +54,6 @@
     {% endfor %}
 </table>
 
-{% endblock body %}
+{% endblock body %} {% block js %}
+<script src="{% static '/myApp/script/filter.js' %}"></script>
+{% endblock js %}

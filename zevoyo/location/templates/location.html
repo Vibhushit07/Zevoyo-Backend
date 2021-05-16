@@ -4,6 +4,7 @@
 <button onclick="getLocation()">Try It</button>
 
 <p id="demo"></p>
-{% endblock body %} {% block js %}
+
+<a href="https://www.google.com/maps/dir//{{address}}" target="_blank">Click</a> {% endblock body %} {% block js %}
 <script src="{% static '/js/location.js' %}"></script>
 {% endblock js %}
