@@ -5,12 +5,16 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserChangeForm
+#from .forms import EditProfileform
 from zevoyo.settings import EMAIL_HOST_USER
-
+from django.urls import reverse_lazy
+from django.views import generic
 from .models import Hotels, Reservation, Rooms
 
 import datetime
 import json
+from django.urls import reverse_lazy
 
 def homePage(request):
     all_location = Hotels.objects.values_list('city','id').distinct().order_by()
@@ -145,6 +149,16 @@ def user_log_sign_page(request):
 def logoutUser(request):
     logout(request)
     return redirect('/myApp/user/')
+
+class editProfile(generic.CreateView):
+    form_class=UserChangeForm
+    template_name='user/editProfile.html'
+    success_url=reverse_lazy('home')
+    #return HttpResponse(render(request,'user/editProfile.html'))
+
+    def get_obj(self):
+        return self.request.user
+
 
 @login_required(login_url = "/staff")
 def dashboard(request):

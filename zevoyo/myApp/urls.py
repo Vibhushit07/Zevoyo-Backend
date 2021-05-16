@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from .views import editProfile
 
 urlpatterns = [
     path('', views.homePage, name = "homePage"),
@@ -10,6 +11,8 @@ urlpatterns = [
     path('user/', views.user_log_sign_page, name = "userlogin"),
     path('user/login/', views.user_log_sign_page, name = "userlogin"),
     path('user/signup/', views.user_sign_up,name = "usersignup"),
+    path('user/editProfile/', editProfile.as_view(),name = "editProfile"),
+
     path('user/book-room/', views.bookRoomPage, name = "bookRoomPage"),
     path('user/book-room/book/', views.bookRoom, name = "bookRoom"),
     path('user/bookings/', views.user_bookings,name="dashboard"),

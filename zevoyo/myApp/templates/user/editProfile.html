@@ -1,0 +1,18 @@
+{% extends 'basic.html' %} {% block title %}Edit Profile {% endblock title %} {% block body %}
+<!--Cards starts here-->
+
+<h1>EDIT PROFILE</h1>
+<br/><br/>
+
+<div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn secondary">Update Profile</button>
+    
+
+</div>
+
+
+    <!--Cards ends here-->
+    {% endblock body %}
