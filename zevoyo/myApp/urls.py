@@ -1,10 +1,7 @@
-from django.urls import path,include
+from django.urls import path
 
 from . import views
 from .views import editProfile
-
-from chat import urls as chat_urls
-from location import urls as location_urls
 
 urlpatterns = [
     path('', views.homePage, name = "homePage"),
@@ -14,14 +11,12 @@ urlpatterns = [
     path('user/', views.user_log_sign_page, name = "userlogin"),
     path('user/login/', views.user_log_sign_page, name = "userlogin"),
     path('user/signup/', views.user_sign_up,name = "usersignup"),
-     path('user/editP/', views.editP,name = "editP"),
     path('user/editProfile/', editProfile.as_view(),name = "editProfile"),
 
     path('user/book-room/', views.bookRoomPage, name = "bookRoomPage"),
     path('user/book-room/book/', views.bookRoom, name = "bookRoom"),
     path('user/bookings/', views.user_bookings,name="dashboard"),
-    path('user/description/', views.description, name = "description"),
-
+    
     path('staff/', views.staffSignup, name="staff"),
     path('staff/login/', views.staffLogin, name = "stafflogin"),
     path('staff/signup/', views.staffSignup, name="staffsignup"),
@@ -33,12 +28,6 @@ urlpatterns = [
     path('staff/dashboard/edit-room/edit/', views.editRoom, name = "editRoom"),
     path('staff/dashboard/view-room/', views.viewRoom, name = 'viewRoom'),
     path('staff/allbookings/', views.allBookings, name = 'allBookings'),
-    path('staff/allbookings/filter/', views.filter, name = 'allBookingsFilter'),
-    path('staff/allbookings/filter/data/', views.filterBookings, name = 'filterBookings'),
-
 
     path('logout/', views.logoutUser, name = "logout"),
-
-    path('chat/', include(chat_urls)),
-    path('location/', include(location_urls)),
 ]

@@ -1,5 +1,5 @@
 {% extends 'basic.html' %} {% block title %}Edit Profile {% endblock title %} {% block body %}
-
+<!--Cards starts here-->
 
 <h1>EDIT PROFILE</h1>
 <br/><br/>
@@ -7,15 +7,12 @@
 <div class="form-group">
     <form method="POST">
         {% csrf_token %}
-        <div class= "col-md-6 ">
         {{form.as_p}}
-        </div> 
-        <button type="button" class="btn btn-success">Update Profile</button>
+        <button class="btn btn secondary">Update Profile</button>
     
 
 </div>
 
 
-    
+    <!--Cards ends here-->
     {% endblock body %}
-    
