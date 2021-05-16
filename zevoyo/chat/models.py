@@ -6,7 +6,7 @@ from django.urls import reverse
 
 class Chat(models.Model):
     message = models.TextField()
-    posted_at = models.DateTimeField(auto_now = True)
+    posted_at = models.DateTimeField()
     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'user')
     sentTo = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'sendTo')
 

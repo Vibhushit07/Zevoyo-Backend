@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from .forms import ChatForm
 from .models import Chat
 
+import datetime
+
 # Create your views here.
 
 @login_required(login_url = "/user")
@@ -25,6 +27,7 @@ def newChat(request):
 
         chat = Chat()
 
+        chat.posted_at = datetime.datetime.now()
         chat.user = user
         chat.sentTo = sendTo
         chat.message = request.POST['message']
