@@ -1,0 +1,22 @@
+{% include "users.html" %} {% load static %} {% block body %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'chat/css/chat.css'%}"> {% endblock css %}
+
+<a href="/myApp/chat/all">
+    <button class="btn btn btn-primary" style="margin-top: 20px; margin-left: 500px;">
+        <i class="fa fa-refresh" aria-hidden="true"></i>
+        Refresh For Any New Chats
+    </button>
+</a>
+<br><br><br> {% for chat in chatAll %}
+<div class="chat" id="chat" style="width: 50%; background: rgb(220, 20, 60); box-shadow: 2px 0px 25px 20px #111; margin-left: 500px;">
+    {% if chat.user.is_superuser %}
+    <small class="chat-user-special"> {{ chat.user }}- Admin </small> {% else %}
+    <small class="chat-user"> {{ chat.user }} </small> {% endif %}
+    <p><b class="chat-content">{{ chat|linebreaks }}</b></p>
+    <small class="chat-date">{{ chat.posted_at }}</small>
+</div>
+<br><br> {% empty %}
+<h1 class="heading" style="margin-left: 500px;">No Chats Yet Be The First To Message!</h1><br> {% endfor %}
+<br> {% if user.is_staff %}
+<a href='/myApp/chat/new/?userid={{chatAll.0.user.id}}/'><button class="btn btn-outline-primary" style=" margin-left: 500px;">New Message</button></a> {% else %}
+<a href='/myApp/chat/new/'><button class="btn btn-outline-primary" style=" margin-left: 500px;">New Message</button></a> {% endif %} {% endblock body %}
