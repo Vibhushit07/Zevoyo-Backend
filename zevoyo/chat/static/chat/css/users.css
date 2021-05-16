@@ -8,9 +8,20 @@
     padding: 0;
     width: 25%;
     background-color: #f1f1f1;
-    position: fixed;
+    position: absolute;
     height: 100%;
     overflow: auto;
+}
+.form {
+    padding-top:2px;
+    display: flex;
+    width: 100%;
+    background-color: #f1f1f1;
+    position: absolute;
+    height: 100%;
+    overflow: auto;
+    align-items:center;
+    flex-direction: column;
 }
 
 .list a {
