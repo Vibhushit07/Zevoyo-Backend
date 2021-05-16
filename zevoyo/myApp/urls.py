@@ -30,6 +30,7 @@ urlpatterns = [
     path('staff/dashboard/view-room/', views.viewRoom, name = 'viewRoom'),
     path('staff/allbookings/', views.allBookings, name = 'allBookings'),
     path('staff/allbookings/filter/', views.filter, name = 'allBookingsFilter'),
+    path('staff/allbookings/filter/data/', views.filterBookings, name = 'filterBookings'),
 
 
     path('logout/', views.logoutUser, name = "logout"),
