@@ -1,10 +1,11 @@
-{% extends 'basic.html' %} {% block title %} All Bookings {% endblock title %} {% load static %} {% block body %}
+{% extends 'basic.html' %} {% block title %} All Bookings {% endblock title %} {% load static %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/allBookings.css'%}"> {% endblock css %} {% block body %}
 <h3 class="text-center text-success">All Bookings</h3>
 
-<form action="/myApp/staff/allbookings/filter/data/" method="POST">
+<form action="/myApp/staff/allbookings/filter/data/" method="POST" class="all-booking">
     {% csrf_token %}
+    <label for="filter">Filter:</label>
     <div class="form-group">
-        <label for="filter">Filter:</label>
         <select class="form-control" id="filter" name="filter" onclick="getDetails(this)">
             <option value="checkIn">Check-In</option>
             <option value="checkOut">Check-Out</option>
@@ -15,12 +16,13 @@
     </div>
 
     <div class="form-group">
-        <label for="data" id="label"></label>
         <select class="form-control" id="data" name="data">
         </select>
     </div>
 
-    <input type="submit" value="Filter" class="form-control btn btn-warning">
+    <div class="form-group">
+        <input type="submit" value="Filter" class="form-control btn btn-warning">
+    </div>
 </form>
 
 <table class="table">
