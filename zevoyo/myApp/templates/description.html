@@ -12,7 +12,8 @@
     <div class="container">
       <div class="left-container">
         <h1>{{ room.hotel.name }}</h1>
-        <p>{{room.hotel.address| capfirst}} </p>
+        <h5>{{room.hotel.address| capfirst}} </h5>
+        <p> {{room.hotel.city| capfirst}} , {{room.hotel.state| capfirst}} , {{room.hotel.pincode}} , {{room.hotel.country| capfirst}}</p>
         <br>
         <h2>Description</h2>
         <p><i>
@@ -38,6 +39,7 @@
             &nbsp&nbsp
             <h3>Offer price - ${{room.price}}</h3>
           </caption>
+
           <tr>
             <th>
               Room Type
@@ -70,38 +72,7 @@
               {{ room.get_status_display| capfirst }}
             </td>
           </tr>
-          <tr>
-            <th>
-              City
-            </th>
-            <td>
-              {{room.hotel.city| capfirst}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              State
-            </th>
-            <td>
-              {{room.hotel.state| capfirst}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Country
-            </th>
-            <td>
-              {{room.hotel.country| capfirst}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Pincode
-            </th>
-            <td>
-              {{room.hotel.pincode}}
-            </td>
-          </tr>
+            
           <tr>
             <th>
               Balcony
