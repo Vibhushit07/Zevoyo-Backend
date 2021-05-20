@@ -1,10 +1,17 @@
-{%extends 'basic.html' %}{% block title %} Chat {% endblock title %} {% block body %}
+{%extends 'basic.html' %}
+{% load static %}
+{% block title %} Chat {% endblock title %} 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'chat/css/users.css'%}"> {% endblock css %}
+{% block body %}
 
 <div>
-    <form action="/myApp/chat/new/" method="post">
+    <form action="/myApp/chat/new/?userid={{userid}}/" method="post" class="form">
         {% csrf_token %} {{ form }}
-        <input type="submit" value="Submit" class="btn btn-lg btn-outline-primary"
-        style="margin-top:7em;">
+        <input type="submit" value="Submit" class="btn btn-lg btn-outline-primary" style="margin-top:1em;
+        width: 15%;
+        align-self: center;
+        align-content: center;">
     </form>
 </div>
 
