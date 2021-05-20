@@ -25,7 +25,7 @@ class Rooms(models.Model):
     )
 
     ROOM_TYPE = (
-        ('1', 'Premimum'),
+        ('1', 'Premium'),
         ('2', 'Deluxe'),
         ('3', 'Basic')
     )
