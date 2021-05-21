@@ -377,10 +377,7 @@ def filter(request):
 
     records = []
 
-    if(fil == "checkIn" or fil == "checkOut"):
-        records = Reservation.objects.values_list(fil, flat = True).distinct().order_by()
-
-    elif(fil == "city"):
+    if(fil == "city"):
         records = Hotels.objects.values_list(fil, flat = True).distinct().order_by()
     
     elif(fil == "guest"):
@@ -392,11 +389,7 @@ def filter(request):
     json_res = [] 
 
     for record in records: 
-
-        if(fil == "checkIn" or fil == "checkOut"):
-            json_res.append(myconverter(record))
-        else:
-            json_res.append(record)
+        json_res.append(record)
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
@@ -426,10 +419,6 @@ def filterBookings(request):
         bookings = Reservation.objects.all().filter(room__hotel__name = data) 
     
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
-
-def myconverter(o):
-    if isinstance(o, datetime.date):
-        return o.__str__()
 
 def sendEmail(request, reservation):
 
