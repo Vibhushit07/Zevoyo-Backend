@@ -8,15 +8,19 @@
         <th>Check in</th>
         <th>Check out</th>
         <th>Price</th>
+        <th>Status</th>
+        <th>Cancel Booking</th>
     </thead>
-    {% for each_booking in bookings %}
+    {% for booking in bookings %}
     <tr>
-        <td>{{each_booking.room.hotel.name}}</td>
-        <td>{{each_booking.room.hotel.city}}</td>
-        <td>{{each_booking.room.capacity}}</td>
-        <td>{{each_booking.checkIn}}</td>
-        <td>{{each_booking.checkOut}}</td>
-        <td>{{each_booking.room.price}}</td>
+        <td>{{booking.room.hotel.name}}</td>
+        <td>{{booking.room.hotel.city}}</td>
+        <td>{{booking.room.capacity}}</td>
+        <td>{{booking.checkIn}}</td>
+        <td>{{booking.checkOut}}</td>
+        <td>{{booking.room.price}}</td>
+        <td>{{booking.get_status_display}}</td>
+        <td>{{booking.cancel}}</td>
     </tr>
     {% endfor %}
 

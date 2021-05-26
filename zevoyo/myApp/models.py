@@ -59,7 +59,7 @@ class Reservation(models.Model):
     room = models.ForeignKey(Rooms, on_delete = models.CASCADE)
     guest = models.ForeignKey(User, on_delete = models.CASCADE)
     status = models.CharField(choices = RESERVATION_STATUS, max_length = 15)
-    cancelled = models.BooleanField()
+    cancel = models.BooleanField()
     bookingId = models.CharField(max_length = 100, default = 'null')
 
     def __str__(self):
