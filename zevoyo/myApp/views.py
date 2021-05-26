@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+
 from zevoyo.settings import EMAIL_HOST_USER
 
 from .models import Hotels, Reservation, Rooms
@@ -151,7 +151,6 @@ def logoutUser(request):
     logout(request)
     return redirect('/myApp/user/')
 
-@login_required(login_url = "/staff")
 def dashboard(request):
 
     if request.user.is_staff == False:
@@ -168,7 +167,6 @@ def dashboard(request):
     response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
     return HttpResponse(response)
 
-@login_required(login_url = "/staff")
 def searchDashboard(request):
 
     if request.user.is_staff == False:
@@ -185,7 +183,6 @@ def searchDashboard(request):
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
-@login_required(login_url = "/staff")
 def addNewLocation(request):
     if request.method == "POST" and request.user.is_staff:
         name = request.POST['hotelName']
@@ -214,7 +211,6 @@ def addNewLocation(request):
     else:
         return HttpResponse("Access Denied")
 
-@login_required(login_url = "/staff")
 def addNewRoom(request):
     if request.method == "POST" and request.user.is_staff:
         totalRooms = len(Rooms.objects.all())
@@ -253,7 +249,6 @@ def addNewRoom(request):
     else:
         return HttpResponse("Access Denied")
 
-@login_required(login_url='/user')
 def user_bookings(request):
     if request.user.is_authenticated==False:
         return redirect('userlogin')
@@ -266,12 +261,10 @@ def user_bookings(request):
         messages.warning(request,"No Bookings Found")
     return HttpResponse(render(request,'user/mybookings.html', {'bookings': bookings}))
 
-@login_required(login_url= "/user")
 def bookRoomPage(request):
     room = Rooms.objects.all().get(id = int(request.GET['roomid']))
     return HttpResponse(render(request, "user/bookRoom.html", {"room": room}))
 
-@login_required(login_url = '/user')
 def bookRoom(request):
     if request.method == 'POST':
         roomId = request.POST['roomId']
@@ -301,7 +294,7 @@ def bookRoom(request):
 
         reservation.save()
 
-        sendEmail(request, reservation)
+        # sendEmail(request, reservation)
 
         messages.success(request, "Congratulations! Booking Successfull")
 
@@ -309,7 +302,6 @@ def bookRoom(request):
     else:
         return HttpResponse("Access Denied")
 
-@login_required(login_url='/staff')
 def editRoom(request):
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
@@ -351,14 +343,12 @@ def editRoom(request):
         room = Rooms.objects.all().get(id = request.GET['roomid'])
         return HttpResponse(render(request, 'staff/editRoom.html', {'room': room}))
 
-@login_required(login_url = '/staff')
 def viewRoom(request):
     room = Rooms.objects.all().get(id = request.GET['roomid'])
     reservations = Reservation.objects.all().filter(room = room)
 
     return HttpResponse(render(request, 'staff/viewRoom.html', {'room': room, 'reservations': reservations}))
 
-@login_required(login_url = '/staff')
 def allBookings(request):
     bookings = Reservation.objects.all()
 
@@ -367,7 +357,6 @@ def allBookings(request):
 
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
-@login_required(login_url = "/staff")
 def filter(request):
     
     if request.user.is_staff == False:
@@ -393,7 +382,6 @@ def filter(request):
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
-@login_required(login_url = "/staff")
 def filterBookings(request):
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
