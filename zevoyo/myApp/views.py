@@ -418,10 +418,13 @@ def cancelBooking(request):
     if request.method == "POST":
         booking = Reservation.objects.get(id = request.POST['bookingId'])
         
-        if booking.guest.id == request.user.id or User.objects.get(id = request.user.id).is_staff :
+        if booking.guest.id == request.user.id or User.objects.get(id = request.user.id).is_staff:
             booking.status = '2'
             booking.save()
         
+        if User.objects.get(id = request.user.id).is_staff:
+            return redirect('allBookings')
+
         return redirect('dashboard')
 
     else:
