@@ -293,6 +293,8 @@ def bookRoom(request):
         reservation.checkIn = request.POST["checkIn"]
         reservation.checkOut = request.POST["checkOut"]
         reservation.bookingId = str(roomId) + str(datetime.datetime.now())
+        reservation.cancel = True
+        reservation.status = '1'
 
         reservation.save()
 
