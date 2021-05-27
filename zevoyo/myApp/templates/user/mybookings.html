@@ -20,7 +20,13 @@
         <td>{{booking.checkOut}}</td>
         <td>{{booking.room.price}}</td>
         <td>{{booking.get_status_display}}</td>
-        <td>{{booking.cancel}}</td>
+        <td>
+            <form action="" method="POST">
+                {% csrf_token %} {% if booking.cancel %}
+                <button type="submit" class="btn btn-danger">Cancel</button> {% else %}
+                <button type="submit" class="btn btn-danger" disabled>Cancel</button> {% endif %}
+            </form>
+        </td>
     </tr>
     {% endfor %}
 

@@ -257,6 +257,8 @@ def user_bookings(request):
     
     bookings = Reservation.objects.all().filter(guest=user)
 
+    bookings = updateBookings(bookings)
+
     if not bookings:
         messages.warning(request,"No Bookings Found")
     return HttpResponse(render(request,'user/mybookings.html', {'bookings': bookings}))
@@ -417,3 +419,11 @@ def sendEmail(request, reservation):
     
     send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
     return HttpResponse('Success email send')
+
+def updateBookings(bookings):
+    
+    for booking in bookings:
+        if booking.checkIn < datetime.date.today():
+            booking.cancel = False
+            booking.save()
+    return bookings
