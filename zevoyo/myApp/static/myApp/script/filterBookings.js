@@ -13,6 +13,25 @@ function getDetails(c) {
         input.setAttribute("name", "data");
         parent.appendChild(input);
 
+    } else if (filter === 'status') {
+
+        let select = document.createElement("select");
+        select.setAttribute("class", "form-control");
+        select.setAttribute("id", "data");
+        select.setAttribute("name", "data");
+
+        let res = ['Booked', 'Cancelled']
+
+        for (let i = 0; i < res.length; i++) {
+
+            let child = document.createElement("option");
+            child.innerHTML = res[i];
+            child.setAttribute("value", i + 1)
+            select.appendChild(child)
+        }
+
+        parent.appendChild(select);
+
     } else {
 
         $.ajax({
