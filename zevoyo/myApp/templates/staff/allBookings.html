@@ -33,6 +33,8 @@
         <th>Check In</th>
         <th>Check Out</th>
         <th>Price</th>
+        <th>Status</th>
+        <th>Cancel Booking</th>
     </thead>
 
     {% for booking in bookings %}
@@ -44,6 +46,15 @@
         <td> {{ booking.checkIn }} </td>
         <td> {{ booking.checkOut }} </td>
         <td>Rs. {{ booking.room.price }} </td>
+        <td>{{booking.get_status_display}}</td>
+        <td>
+            <form action="/myApp/booking/cancel/" method="POST">
+                {% csrf_token %} {% if booking.cancel and booking.status == '1' %}
+                <button type="submit" class="btn btn-danger">Cancel</button> {% else %}
+                <button type="submit" class="btn btn-danger" disabled>Cancel</button> {% endif %}
+                <input type="hidden" name="bookingId" value="{{booking.id}}">
+            </form>
+        </td>
     </tr>
     {% endfor %}
 </table>
