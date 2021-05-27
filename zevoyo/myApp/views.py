@@ -22,9 +22,9 @@ def homePage(request):
             
             #for finding the reserved rooms on this time period for excluding from the query set
             for reservation in Reservation.objects.all():
-                if str(reservation.checkIn) < str(request.POST['cin']) and str(reservation.checkOut) < str(request.POST['cout']):
+                if (str(reservation.checkIn) < str(request.POST['cin']) and str(reservation.checkOut) < str(request.POST['cout'])) or reservation.status == '2':
                     pass
-                elif str(reservation.checkIn) > str(request.POST['cin']) and str(reservation.checkOut) > str(request.POST['cout']):
+                elif str(reservation.checkIn) > str(request.POST['cin']) and str(reservation.checkOut) > str(request.POST['cout']) or reservation.status == '2':
                     pass
                 else:
                     rr.append(reservation.room.id)
@@ -274,9 +274,9 @@ def bookRoom(request):
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
-            if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']):
+            if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']) or reservation.status == '2':
                 pass
-            elif str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']):
+            elif str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']) or reservation.status == '2':
                 pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
@@ -419,7 +419,8 @@ def cancelBooking(request):
         booking = Reservation.objects.get(id = request.POST['bookingId'])
         
         if booking.guest.id == request.user.id or User.objects.get(id = request.user.id).is_staff :
-            booking.delete()
+            booking.status = '2'
+            booking.save()
         
         return redirect('dashboard')
 
