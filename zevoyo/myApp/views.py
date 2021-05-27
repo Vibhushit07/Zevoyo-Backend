@@ -412,6 +412,17 @@ def filterBookings(request):
     
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
+def cancelBooking(request):
+    if request.method == "POST":
+        booking = Reservation.objects.get(id = request.POST['bookingId'])
+        
+        if booking.guest.id == request.user.id or User.objects.get(id = request.user.id).is_staff :
+            print(booking.guest.id)
+            print(request.user.id)
+
+    else:
+        return HttpResponse("Access Denied")
+
 def sendEmail(request, reservation):
 
     recepient = request.POST['email']
@@ -423,7 +434,7 @@ def sendEmail(request, reservation):
     return HttpResponse('Success email send')
 
 def updateBookings(bookings):
-    
+
     for booking in bookings:
         if booking.checkIn < datetime.date.today():
             booking.cancel = False

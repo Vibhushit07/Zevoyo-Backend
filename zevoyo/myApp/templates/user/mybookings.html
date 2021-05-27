@@ -25,6 +25,7 @@
                 {% csrf_token %} {% if booking.cancel %}
                 <button type="submit" class="btn btn-danger">Cancel</button> {% else %}
                 <button type="submit" class="btn btn-danger" disabled>Cancel</button> {% endif %}
+                <input type="hidden" name="bookingId" value="{{booking.id}}">
             </form>
         </td>
     </tr>
