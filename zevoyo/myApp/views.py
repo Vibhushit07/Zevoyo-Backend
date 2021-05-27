@@ -409,8 +409,11 @@ def filterBookings(request):
     elif(filter == "guest"):
         bookings = Reservation.objects.all().filter(guest__username = data) 
     
+    elif(filter == "hotel"):
+        bookings = Reservation.objects.all().filter(room__hotel__name = data)
+    
     else:
-        bookings = Reservation.objects.all().filter(room__hotel__name = data) 
+        bookings = Reservation.objects.filter(status = data)
     
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
