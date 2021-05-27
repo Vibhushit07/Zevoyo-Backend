@@ -417,8 +417,9 @@ def cancelBooking(request):
         booking = Reservation.objects.get(id = request.POST['bookingId'])
         
         if booking.guest.id == request.user.id or User.objects.get(id = request.user.id).is_staff :
-            print(booking.guest.id)
-            print(request.user.id)
+            booking.delete()
+        
+        return redirect('dashboard')
 
     else:
         return HttpResponse("Access Denied")

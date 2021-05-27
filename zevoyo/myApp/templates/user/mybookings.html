@@ -21,7 +21,7 @@
         <td>{{booking.room.price}}</td>
         <td>{{booking.get_status_display}}</td>
         <td>
-            <form action="" method="POST">
+            <form action="/myApp/booking/cancel/" method="POST">
                 {% csrf_token %} {% if booking.cancel %}
                 <button type="submit" class="btn btn-danger">Cancel</button> {% else %}
                 <button type="submit" class="btn btn-danger" disabled>Cancel</button> {% endif %}
