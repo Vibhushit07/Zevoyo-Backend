@@ -354,6 +354,8 @@ def viewRoom(request):
 def allBookings(request):
     bookings = Reservation.objects.all()
 
+    bookings = updateBookings(bookings)
+
     if not bookings:
         messages.warning(request, "No bookings found")
 
