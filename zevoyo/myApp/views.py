@@ -171,19 +171,32 @@ def logoutUser(request):
 #         return User.objects.get(username=request.user.username)
 
 def editProfile(request):
-    form_class= EditProfileform
-    template_name='user/editProfile.html'
-    #success_url=reverse_lazy('home')
-    user = User.objects.get(username=request.user.username)
-    print(user)
+    print(request.user)
     if request.method == 'POST':
-        userName = request.POST['username']
-        password = request.POST['password']
+        userName = request.user
+        firstname = request.POST['fname']
+        lastname = request.POST['lname']
+        email= request.POST['email']
+        phoneNumber=request.POST['phonenumber']
+        print(userName,firstname,lastname,email)
+        existingUser = User.objects.all().get(username = userName)
+        # print(request.username,"fff")
+        existingUser.first_name=request.POST['fname']
+        existingUser.last_name=request.POST['lname']
+        existingUser.email=request.POST['email']
+        existingUser.phone_number=request.POST['phonenumber']
 
-        user = authenticate(request, username = userName, password = password)
 
-    return render(request, template_name,{'form':form_class})
-    #return render(request,"index.html",{'form':student})  
+
+      
+
+        existingUser.save()
+
+        messages.success(request, "User details updated successfully")
+
+        return redirect('editProfile')
+    else:
+        return render(request, 'user/editProfile.html')
 
 
 @login_required(login_url = "/staff")
