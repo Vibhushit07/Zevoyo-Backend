@@ -25,7 +25,7 @@ class Rooms(models.Model):
     )
 
     ROOM_TYPE = (
-        ('1', 'Premimum'),
+        ('1', 'Premium'),
         ('2', 'Deluxe'),
         ('3', 'Basic')
     )
@@ -49,10 +49,17 @@ class Rooms(models.Model):
         return self.hotel.name
 
 class Reservation(models.Model):
+    RESERVATION_STATUS = (
+        ('1', 'Booked'),
+        ('2', 'Cancelled')
+    )
+
     checkIn = models.DateField(auto_now = False)
     checkOut = models.DateField()
     room = models.ForeignKey(Rooms, on_delete = models.CASCADE)
     guest = models.ForeignKey(User, on_delete = models.CASCADE)
+    status = models.CharField(choices = RESERVATION_STATUS, max_length = 15)
+    cancel = models.BooleanField()
     bookingId = models.CharField(max_length = 100, default = 'null')
 
     def __str__(self):
