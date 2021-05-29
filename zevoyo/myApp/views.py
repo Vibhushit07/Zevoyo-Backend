@@ -298,7 +298,7 @@ def bookRoom(request):
 
         reservation.save()
 
-        # sendEmail(request, reservation)
+        sendEmail(request, reservation)
 
         messages.success(request, "Congratulations! Booking Successfull")
 
