@@ -13,7 +13,7 @@
 
     <div class="container-fluid px-5 py-5 border">
         <div class="row">
-            <div class="col-xl-3 col-lg-6 col-sm-12 mb-4">
+            <div class="col-lg-6 col-sm-12 mb-4">
                 <div class="bg-white rounded-lg p-5 shadow">
                     <h2 class="h6 font-weight-bold text-center mb-4">Total Rooms</h2>
 
@@ -33,12 +33,12 @@
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-6 col-sm-12 mb-4">
+            <!-- <div class="col-xl-3 col-lg-6 col-sm-12 mb-4">
                 <div class="bg-white rounded-lg p-5 shadow">
-                    <h2 class="h6 font-weight-bold text-center mb-4">Available Rooms</h2>
+                    <h2 class="h6 font-weight-bold text-center mb-4">Available Rooms</h2> -->
 
-                    <!-- Progress Bar 2 -->
-                    <div class="progress mx-auto" data-value={{ available|percentage:totalRooms }}>
+            <!-- Progress Bar 2 -->
+            <!-- <div class="progress mx-auto" data-value={{ available|percentage:totalRooms }}>
                         <span class="progress-left ">
                             <span class="progress-bar border-success"></span>
                         </span>
@@ -48,17 +48,17 @@
                         <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center ">
                             <div class="h2 font-weight-bold ">{{ available }}</div>
                         </div>
-                    </div>
-                    <!-- End -->
-                </div>
-            </div>
+                    </div> -->
+            <!-- End -->
+            <!-- </div>
+            </div> -->
 
-            <div class="col-xl-3 col-lg-6 col-sm-12 mb-4">
+            <!-- <div class="col-xl-3 col-lg-6 col-sm-12 mb-4">
                 <div class="bg-white rounded-lg p-5 shadow">
-                    <h2 class="h6 font-weight-bold text-center mb-4">Not Available</h2>
+                    <h2 class="h6 font-weight-bold text-center mb-4">Not Available</h2> -->
 
-                    <!-- Progress Bar 3 -->
-                    <div class="progress mx-auto" data-value={{ unavailable|percentage:totalRooms }}>
+            <!-- Progress Bar 3 -->
+            <!-- <div class="progress mx-auto" data-value={{ unavailable|percentage:totalRooms }}>
                         <span class="progress-left ">
                             <span class="progress-bar border-danger"></span>
                         </span>
@@ -68,17 +68,17 @@
                         <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center ">
                             <div class="h2 font-weight-bold">{{ unavailable }}</div>
                         </div>
-                    </div>
-                    <!-- End -->
-                </div>
-            </div>
+                    </div> -->
+            <!-- End -->
+            <!-- </div>
+            </div> -->
 
-            <div class="col-xl-3 col-lg-6 col-sm-12 mb-4">
+            <div class="col-lg-6 col-sm-12 mb-4">
                 <div class="bg-white rounded-lg p-5 shadow">
-                    <h2 class="h6 font-weight-bold text-center mb-4">Total Reservation</h2>
+                    <h2 class="h6 font-weight-bold text-center mb-4">Total Bookings</h2>
 
                     <!-- Progress Bar 4 -->
-                    <div class="progress mx-auto" data-value={{ reserved|percentage:totalRooms }}>
+                    <div class="progress mx-auto" data-value={{ bookings|percentage:reserved }}>
                         <span class="progress-left ">
                             <span class="progress-bar border-warning"></span>
                         </span>
