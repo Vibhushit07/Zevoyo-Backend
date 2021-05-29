@@ -4,6 +4,8 @@ $(function() {
         var left = $(this).find('.progress-left .progress-bar')
         var right = $(this).find('.progress-right .progress-bar')
 
+        console.log(value)
+
         if (value > 0) {
             if (value <= 50) {
                 right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')

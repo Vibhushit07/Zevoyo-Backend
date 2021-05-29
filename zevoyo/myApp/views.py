@@ -161,10 +161,11 @@ def dashboard(request):
     availableRooms = len(rooms.filter(status = '1'))
     unavailableRooms = len(rooms.filter(status = '2'))
     reserved = len(Reservation.objects.all())
+    bookings = len(Reservation.objects.filter(status = '1'))
 
     cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
       
-    response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
+    response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms, 'bookings': bookings})
     return HttpResponse(response)
 
 def searchDashboard(request):
