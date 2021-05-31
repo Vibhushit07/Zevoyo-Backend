@@ -73,17 +73,17 @@
                         <a class="nav-link text-bold" href="/myApp/staff/dashboard">Dashboard</a>
                     </li>
 
-                    {% elif user.is_staff == False and user.is_authenticated %}
-                    <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/myApp/user/bookings">My Bookings</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/myApp/chat/all">Chat</a>
-                    </li>
-
                     {% endif %} {% if user.is_staff %}
                     <li class="nav-item active">
                         <a class="nav-link text-bold" href="/myApp/staff/allbookings">All Bookings</a>
+                    </li>
+                    {% endif %} {% if user.is_staff == False %}
+                    <li class="nav-item active">
+                        <a class="nav-link text-bold" href="/myApp/user/bookings">My Bookings</a>
+                    </li>
+                    {% endif %} {% if user.is_authenticated %}
+                    <li class="nav-item active">
+                        <a class="nav-link text-bold" href="/myApp/chat/all/">Chat</a>
                     </li>
                     {% endif %}
 
@@ -212,8 +212,7 @@
                     <div class="bigbox">
                         <br><br>
                         <h2>The world is cozying up to ZEVOYO's idea of chic hotels for everyone.</h2>
-                        <p>ZEVOYO Hotels & Homes, a young hotel startup, today is the world’s leading chain of hotels, homes, and spaces. The portfolio combines fully operated real estate comprising more than 43,000 hotels with over 1 million rooms. Through
-                            its vacation homes business, the company offers travellers and city dwellers access to over 130,000 homes around the world. ZEVOYO today operates in over 800 cities in 80 countries.</p>
+                        <p>ZEVOYO Hotels & Homes, a young hotel startup, today is the world’s leading chain of hotels, homes, and spaces. The portfolio combines fully operated real estate.</p>
                         <br>
                     </div>
                     <br>

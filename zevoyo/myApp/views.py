@@ -26,9 +26,9 @@ def homePage(request):
             
             #for finding the reserved rooms on this time period for excluding from the query set
             for reservation in Reservation.objects.all():
-                if str(reservation.checkIn) < str(request.POST['cin']) and str(reservation.checkOut) < str(request.POST['cout']):
+                if (str(reservation.checkIn) < str(request.POST['cin']) and str(reservation.checkOut) < str(request.POST['cout'])) or reservation.status == '2':
                     pass
-                elif str(reservation.checkIn) > str(request.POST['cin']) and str(reservation.checkOut) > str(request.POST['cout']):
+                elif str(reservation.checkIn) > str(request.POST['cin']) and str(reservation.checkOut) > str(request.POST['cout']) or reservation.status == '2':
                     pass
                 else:
                     rr.append(reservation.room.id)
@@ -159,16 +159,8 @@ def logoutUser(request):
     logout(request)
     return redirect('/myApp/user/')
 
-# class editProfile(generic.CreateView):
-#     form_class= EditProfileform
-#     template_name='user/editProfile.html'
-#     success_url=reverse_lazy('home')
-#     #return HttpResponse(render(request,'user/editProfile.html'))
 
-#     def get_obj(self):
-#         print("xyz")
-#         print(self.request.user)
-#         return User.objects.get(username=request.user.username)
+
 
 def editProfile(request):
     print(request.user)
@@ -210,13 +202,13 @@ def dashboard(request):
     availableRooms = len(rooms.filter(status = '1'))
     unavailableRooms = len(rooms.filter(status = '2'))
     reserved = len(Reservation.objects.all())
+    bookings = len(Reservation.objects.filter(status = '1'))
 
     cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
       
-    response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms})
+    response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms, 'bookings': bookings})
     return HttpResponse(response)
 
-@login_required(login_url = "/staff")
 def searchDashboard(request):
 
     if request.user.is_staff == False:
@@ -233,7 +225,6 @@ def searchDashboard(request):
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
-@login_required(login_url = "/staff")
 def addNewLocation(request):
     if request.method == "POST" and request.user.is_staff:
         name = request.POST['hotelName']
@@ -262,7 +253,6 @@ def addNewLocation(request):
     else:
         return HttpResponse("Access Denied")
 
-@login_required(login_url = "/staff")
 def addNewRoom(request):
     if request.method == "POST" and request.user.is_staff:
         totalRooms = len(Rooms.objects.all())
@@ -301,7 +291,6 @@ def addNewRoom(request):
     else:
         return HttpResponse("Access Denied")
 
-@login_required(login_url='/user')
 def user_bookings(request):
     if request.user.is_authenticated==False:
         return redirect('userlogin')
@@ -310,16 +299,16 @@ def user_bookings(request):
     
     bookings = Reservation.objects.all().filter(guest=user)
 
+    bookings = updateBookings(bookings)
+
     if not bookings:
         messages.warning(request,"No Bookings Found")
     return HttpResponse(render(request,'user/mybookings.html', {'bookings': bookings}))
 
-@login_required(login_url= "/user")
 def bookRoomPage(request):
     room = Rooms.objects.all().get(id = int(request.GET['roomid']))
     return HttpResponse(render(request, "user/bookRoom.html", {"room": room}))
 
-@login_required(login_url = '/user')
 def bookRoom(request):
     if request.method == 'POST':
         roomId = request.POST['roomId']
@@ -327,9 +316,9 @@ def bookRoom(request):
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
-            if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']):
+            if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']) or reservation.status == '2':
                 pass
-            elif str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']):
+            elif str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']) or reservation.status == '2':
                 pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
@@ -346,6 +335,8 @@ def bookRoom(request):
         reservation.checkIn = request.POST["checkIn"]
         reservation.checkOut = request.POST["checkOut"]
         reservation.bookingId = str(roomId) + str(datetime.datetime.now())
+        reservation.cancel = True
+        reservation.status = '1'
 
         reservation.save()
 
@@ -357,7 +348,6 @@ def bookRoom(request):
     else:
         return HttpResponse("Access Denied")
 
-@login_required(login_url='/staff')
 def editRoom(request):
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
@@ -399,23 +389,22 @@ def editRoom(request):
         room = Rooms.objects.all().get(id = request.GET['roomid'])
         return HttpResponse(render(request, 'staff/editRoom.html', {'room': room}))
 
-@login_required(login_url = '/staff')
 def viewRoom(request):
     room = Rooms.objects.all().get(id = request.GET['roomid'])
     reservations = Reservation.objects.all().filter(room = room)
 
     return HttpResponse(render(request, 'staff/viewRoom.html', {'room': room, 'reservations': reservations}))
 
-@login_required(login_url = '/staff')
 def allBookings(request):
     bookings = Reservation.objects.all()
+
+    bookings = updateBookings(bookings)
 
     if not bookings:
         messages.warning(request, "No bookings found")
 
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
-@login_required(login_url = "/staff")
 def filter(request):
     
     if request.user.is_staff == False:
@@ -425,10 +414,7 @@ def filter(request):
 
     records = []
 
-    if(fil == "checkIn" or fil == "checkOut"):
-        records = Reservation.objects.values_list(fil, flat = True).distinct().order_by()
-
-    elif(fil == "city"):
+    if(fil == "city"):
         records = Hotels.objects.values_list(fil, flat = True).distinct().order_by()
     
     elif(fil == "guest"):
@@ -440,15 +426,10 @@ def filter(request):
     json_res = [] 
 
     for record in records: 
-
-        if(fil == "checkIn" or fil == "checkOut"):
-            json_res.append(myconverter(record))
-        else:
-            json_res.append(record)
+        json_res.append(record)
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
-@login_required(login_url = "/staff")
 def filterBookings(request):
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
@@ -470,14 +451,29 @@ def filterBookings(request):
     elif(filter == "guest"):
         bookings = Reservation.objects.all().filter(guest__username = data) 
     
+    elif(filter == "hotel"):
+        bookings = Reservation.objects.all().filter(room__hotel__name = data)
+    
     else:
-        bookings = Reservation.objects.all().filter(room__hotel__name = data) 
+        bookings = Reservation.objects.filter(status = data)
     
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
-def myconverter(o):
-    if isinstance(o, datetime.date):
-        return o.__str__()
+def cancelBooking(request):
+    if request.method == "POST":
+        booking = Reservation.objects.get(id = request.POST['bookingId'])
+        
+        if booking.guest.id == request.user.id or User.objects.get(id = request.user.id).is_staff:
+            booking.status = '2'
+            booking.save()
+        
+        if User.objects.get(id = request.user.id).is_staff:
+            return redirect('allBookings')
+
+        return redirect('dashboard')
+
+    else:
+        return HttpResponse("Access Denied")
 
 def sendEmail(request, reservation):
 
@@ -488,3 +484,11 @@ def sendEmail(request, reservation):
     
     send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
     return HttpResponse('Success email send')
+
+def updateBookings(bookings):
+
+    for booking in bookings:
+        if booking.checkIn < datetime.date.today():
+            booking.cancel = False
+            booking.save()
+    return bookings

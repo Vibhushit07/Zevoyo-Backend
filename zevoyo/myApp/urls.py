@@ -36,7 +36,7 @@ urlpatterns = [
     path('staff/allbookings/filter/', views.filter, name = 'allBookingsFilter'),
     path('staff/allbookings/filter/data/', views.filterBookings, name = 'filterBookings'),
 
-
+    path('booking/cancel/', views.cancelBooking, name = 'cancelBookig'),
     path('logout/', views.logoutUser, name = "logout"),
 
     path('chat/', include(chat_urls)),

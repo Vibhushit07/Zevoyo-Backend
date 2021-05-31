@@ -1,0 +1,40 @@
+.container {
+    width: 80%;
+    margin: auto;
+    display: flex;
+}
+
+.left-container {
+    width: 60%;
+    padding-right: 30px;
+}
+
+.right-container {
+    width: 40%;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.price-details {
+    padding: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table tr th {
+    width: 30%;
+    text-align: left;
+    padding: 10px;
+}
+
+.table tr {
+    border-bottom: 1px solid rgb(255, 239, 239);
+}
+
+.table tr:nth-child(even) {
+    background-color: rgb(255, 240, 240);
+}

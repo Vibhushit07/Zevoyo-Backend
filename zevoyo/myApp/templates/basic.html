@@ -54,14 +54,14 @@
                         <a class="nav-link text-bold" href="/myApp/staff/dashboard/">Dashboard</a>
                     </li>
 
-                    {% elif user.is_staff == False and user.is_authenticated %}
-                    <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/myApp/user/bookings/">My Bookings</a>
-                    </li>
-
                     {% endif %} {% if user.is_staff %}
                     <li class="nav-item active">
                         <a class="nav-link text-bold" href="/myApp/staff/allbookings/">All Bookings</a>
+                    </li>
+
+                    {% endif %} {% if user.is_staff == False %}
+                    <li class="nav-item active">
+                        <a class="nav-link text-bold" href="/myApp/user/bookings">My Bookings</a>
                     </li>
                     {% endif %} {% if user.is_authenticated %}
                     <li class="nav-item active">

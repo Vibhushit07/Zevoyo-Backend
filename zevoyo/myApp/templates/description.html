@@ -1,27 +1,120 @@
-{% extends 'basic.html' %} {% block title %} View Room {% endblock title %} {% block body %}
+{% extends 'basic.html' %} {% block title %} View Room {% endblock title %} {% load static %} {% block body %} {% block css %}
 
-<h3 class="text-success">Details</h3>
-<hr>
-<div class="container mx-0"></div>
-    <p><b>Room Type: </b> {{ room.get_roomType_display }} </p>
-    <p><b>Name: </b> {{ room.hotel.name }} </p>
-    <p><b>Capacity: </b> {{ room.capacity }} person </p>
-    <p><b>Size: </b> {{ room.size }} ft </p>
-    <p><b>Status: </b> {{ room.get_status_display| capfirst }} </p>
-    <p><b>Address: </b> {{room.hotel.address| capfirst}} </p>
-    <p><b>City: </b> {{room.hotel.city| capfirst}} </p>
-    <p><b>State: </b> {{room.hotel.state| capfirst}} </p>
-    <p><b>Country: </b> {{room.hotel.country| capfirst}} </p>
-    <p><b>Pincode: </b> {{room.hotel.pincode}} </p>
-    <p><b>Balcony: </b> {{room.balcony}} </p>
-    <p><b>Parking: </b> {{room.parking}} </p>
-    <p><b>Description: </b> {{room.description}} </p>
-    <p><b>Price: </b> {{room.price}} </p>
-    <p><b>Bed Type: </b> {{room.bedType}} </p>
-    <p><b>Tv: </b> {{room.tv}} </p>
-    <p><b>Ac: </b> {{room.ac}} </p>
-    <p><b>Refrigerator: </b> {{room.refrigerator}} </p>
-    
-</div>
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/description.css'%}"> {% endblock css %}
 
-{% endblock body %}
+<div class="slideshow-container">
+    <br>
+
+    <div class="container">
+        <div class="left-container">
+            <h1>{{ room.hotel.name }}</h1>
+            <h5>{{room.hotel.address| capfirst}}, </h5>
+            <h6> {{room.hotel.city| capfirst}}, {{room.hotel.state| capfirst}}, {{room.hotel.country| capfirst}}- {{room.hotel.pincode}}</h6>
+            <br>
+            <h2>Description</h2>
+            <p>
+                <i>{{room.description}}</i>
+            </p>
+        </div>
+        <div class="right-container">
+            <table class="table">
+                <caption>
+                    &nbsp;
+                    <h3>Price - ₹ {{room.price}}</h3>
+                </caption>
+
+                <tr>
+                    <th>
+                        Room Type
+                    </th>
+                    <td>
+                        {{ room.get_roomType_display }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Capacity
+                    </th>
+                    <td>
+                        {{ room.capacity }} person
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Size
+                    </th>
+                    <td>
+                        {{ room.size }} sq. ft.
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Status
+                    </th>
+                    <td>
+                        {{ room.get_status_display| capfirst }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        Balcony
+                    </th>
+                    <td>
+                        {{room.balcony}} sq. ft.
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Parking
+                    </th>
+                    <td>
+                        {% if room.parking %} Available {% else %} Not Available {% endif %}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        Bed Type
+                    </th>
+                    <td>
+                        {{room.bedType}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Tv
+                    </th>
+                    <td>
+                        {{room.tv}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Ac
+                    </th>
+                    <td>
+                        {{room.ac}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Refrigerator
+                    </th>
+                    <td>
+                        {{room.refrigerator}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Status
+                    </th>
+                    <td>
+                        {{room.status}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    {% endblock body %}
