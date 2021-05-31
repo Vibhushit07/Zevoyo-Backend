@@ -1,6 +1,7 @@
 from django.urls import path,include
 
 from . import views
+from .views import editProfile
 
 from chat import urls as chat_urls
 from location import urls as location_urls
@@ -13,6 +14,9 @@ urlpatterns = [
     path('user/', views.user_log_sign_page, name = "userlogin"),
     path('user/login/', views.user_log_sign_page, name = "userlogin"),
     path('user/signup/', views.user_sign_up,name = "usersignup"),
+    path('user/editProfile/', views.editProfile,name = "editProfile"),
+    #path('user/editProfile/', editProfile.as_view(),name = "editProfile"),
+
     path('user/book-room/', views.bookRoomPage, name = "bookRoomPage"),
     path('user/book-room/book/', views.bookRoom, name = "bookRoom"),
     path('user/bookings/', views.user_bookings,name="dashboard"),

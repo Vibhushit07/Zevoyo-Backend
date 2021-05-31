@@ -4,13 +4,17 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserChangeForm
+from .forms import EditProfileform
 from zevoyo.settings import EMAIL_HOST_USER
-
+from django.urls import reverse_lazy
+from django.views import generic
 from .models import Hotels, Reservation, Rooms
 
 import datetime
 import json
+from django.urls import reverse_lazy
 
 def homePage(request):
     all_location = Hotels.objects.values_list('city', flat=True).distinct().order_by()
@@ -100,9 +104,13 @@ def staffLogin(request):
 
 def user_sign_up(request):
     if request.method=="POST":
+        #firstname = request.POST['fname']
+        #lastname = request.POST['lname']
+        #email = request.POST['email']
         userName = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
+
        # contactNumber = request.POST['contactNumber']
 
         if password1 != password2:
@@ -151,6 +159,39 @@ def logoutUser(request):
     logout(request)
     return redirect('/myApp/user/')
 
+
+
+
+def editProfile(request):
+    print(request.user)
+    if request.method == 'POST':
+        userName = request.user
+        firstname = request.POST['fname']
+        lastname = request.POST['lname']
+        email= request.POST['email']
+        phoneNumber=request.POST['phonenumber']
+        print(userName,firstname,lastname,email)
+        existingUser = User.objects.all().get(username = userName)
+        # print(request.username,"fff")
+        existingUser.first_name=request.POST['fname']
+        existingUser.last_name=request.POST['lname']
+        existingUser.email=request.POST['email']
+        existingUser.phone_number=request.POST['phonenumber']
+
+
+
+      
+
+        existingUser.save()
+
+        messages.success(request, "User details updated successfully")
+
+        return redirect('editProfile')
+    else:
+        return render(request, 'user/editProfile.html')
+
+
+@login_required(login_url = "/staff")
 def dashboard(request):
 
     if request.user.is_staff == False:
