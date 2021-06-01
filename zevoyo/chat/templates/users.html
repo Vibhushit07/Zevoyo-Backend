@@ -1,21 +1,13 @@
 {% extends 'basic.html' %} {% load static %} {% block title %} Chat {% endblock title %} {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'chat/css/users.css'%}"> {% endblock css %} {% block body %} {% if user.is_staff %}
+<link rel="stylesheet" type="text/css" href="{% static 'style/users.css'%}"> {% endblock css %} {% block body %} {% if user.is_staff %}
 
 <div class="container">
     {% for user in users %}
     <form action="/myApp/chat/all/?userid={{user.id}}/" method="POST" class="ul">
         {% csrf_token %}
         <button style="width: 100%;height: 25px;background-color: blueviolet;" class="list" name="user">
-
-           
-                {{user.username}}
-            
-
+            {{user.username}}
         </button>
-            
-        <!-- </button> -->
-
-        
     </form>
     <br> {% endfor %}
 </div>
