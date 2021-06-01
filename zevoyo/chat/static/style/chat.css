@@ -1,13 +1,13 @@
 .body {
     position: absolute;
     top: 11vh;
-    left: 12vw;
+    left: 32vw;
 }
 
 .chats {
     border: 2px black solid;
     width: 40vw;
-    margin-left: 32vw;
+    /* margin-left: 32vw; */
     padding: 1vw;
     display: table;
 }
@@ -43,5 +43,4 @@
 .heading {
     font-family: 'Pacifico', cursive;
     letter-spacing: 2px;
-    margin-left: 500px;
 }
