@@ -4,6 +4,11 @@
     left: 32vw;
 }
 
+.new {
+    position: absolute;
+    left: 17vw;
+}
+
 .chats {
     border: 2px black solid;
     width: 40vw;
