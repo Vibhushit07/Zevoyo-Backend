@@ -54,9 +54,6 @@ def chatList(request):
         user = User.objects.all().get(id = request.GET['userid'].split('/')[0])   
     elif request.user.is_staff:
         admin = 1
-        # user = User.objects.all().get(id = request.user.id)
-    # else:
-        # user = User.objects.all().get(id = request.user.id)
 
     for c in Chat.objects.filter(user = user):
         chat.append(c)
