@@ -7,16 +7,22 @@
         Refresh For Any New Chats
     </button>
 </a>
-<br><br><br> {% for chat in chatAll %}
-<div class="chat" id="chat">
-    {% if chat.user.is_superuser %}
-    <small class=" chat-user-special "> {{ chat.user }}- Admin </small> {% else %}
-    <small class="chat-user "> {{ chat.user }} </small> {% endif %}
-    <p><b class="chat-content ">{{ chat|linebreaks }}</b></p>
-    <small class="chat-date ">{{ chat.posted_at }}</small>
+<br><br><br>
+<div class="body" id="chat">
+    {% for chat in chatAll %} {% if chat.user == user %}
+    <div class="chat chat1">
+        <p><b class="chat-content ">{{ chat|linebreaks }}</b></p>
+        <small class="chat-date ">{{ chat.posted_at }}</small>
+    </div>
+    {% else %}
+    <div class="chat chat2">
+        <p><b class="chat-content ">{{ chat|linebreaks }}</b></p>
+        <small class="chat-date ">{{ chat.posted_at }}</small>
+    </div>
+    {% endif %}
+    <br><br> {% empty %}
+    <h1 class="heading ">No Chats Yet Be The First To Message!</h1><br> {% endfor %}
 </div>
-<br><br> {% empty %}
-<h1 class="heading " style="margin-left: 500px; ">No Chats Yet Be The First To Message!</h1><br> {% endfor %}
 <br> {% if user.is_staff %}
 <a href='/myApp/chat/new/?userid={{chatAll.0.user.id}}/'><button class="btn btn-outline-primary " style=" margin-left: 500px; ">New Message</button></a> {% else %}
 <a href='/myApp/chat/new/'><button class="btn btn-outline-primary " style=" margin-left: 500px; ">New Message</button></a> {% endif %} {% endblock body %}

@@ -1,37 +1,41 @@
 .body {
-    background-color: black;
+    border: 2px black solid;
+    width: 40vw;
+    margin-left: 32vw;
+    padding: 1vw;
+    display: table;
 }
 
 .chat {
     border-radius: 10px;
     padding: 10px;
-    width: 50%;
-    background: rgb(220, 20, 60);
-    box-shadow: 2px 0px 25px 20px #111;
+    width: 30vw;
     border-radius: 5px;
-    margin-left: 500px;
+    margin: 10px 0 10px 0;
+    overflow: hidden;
+    max-height: 13vh;
+}
+
+.chat1 {
+    background: rgba(240, 108, 108);
+    float: left;
+}
+
+.chat2 {
+    background: rgba(250, 108, 108, 0.8);
+    float: right;
 }
 
 .chat-content {
     font-family: 'Ubuntu', cursive;
 }
 
-.chat-user-special {
-    color: yellow;
-    font-size: 12px;
-}
-
 .chat-date {
     font-size: 10px;
-}
-
-.chat-user {
-    font-size: 12px;
-    margin-left: 10px;
 }
 
 .heading {
     font-family: 'Pacifico', cursive;
     letter-spacing: 2px;
-    margin-left: 10px;
+    margin-left: 500px;
 }
