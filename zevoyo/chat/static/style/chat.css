@@ -1,4 +1,10 @@
 .body {
+    position: absolute;
+    top: 11vh;
+    left: 12vw;
+}
+
+.chats {
     border: 2px black solid;
     width: 40vw;
     margin-left: 32vw;
@@ -11,7 +17,7 @@
     padding: 10px;
     width: 30vw;
     border-radius: 5px;
-    margin: 10px 0 10px 0;
+    margin: 0 0 10px 0;
     overflow: hidden;
     max-height: 13vh;
 }
