@@ -28,12 +28,12 @@
 
 .chat1 {
     background: rgba(240, 108, 108);
-    float: left;
+    float: right;
 }
 
 .chat2 {
     background: rgba(250, 108, 108, 0.8);
-    float: right;
+    float: left;
 }
 
 .chat-content {
