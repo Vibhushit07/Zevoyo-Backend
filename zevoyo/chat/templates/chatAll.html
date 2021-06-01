@@ -1,6 +1,5 @@
 {% include "users.html" %} {% load static %} {% block body %} {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'style/chat.css'%}"> {% endblock css %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'style/chat.css'%}"> {% endblock css %} {% if admin == 0 %}
 <div class="body">
     <a href="/myApp/chat/all">
         <button class="btn btn-primary refresh">
@@ -28,4 +27,4 @@
     <a href='/myApp/chat/new/?userid={{chatAll.0.user.id}}/'><button class="btn btn-outline-primary new">New Message</button></a> {% else %}
     <a href='/myApp/chat/new/'><button class="btn btn-outline-primary new">New Message</button></a> {% endif %}
 </div>
-{% endblock body %}
+{% endif %} {% endblock body %}

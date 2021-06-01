@@ -12,7 +12,6 @@
 .chats {
     border: 2px black solid;
     width: 40vw;
-    /* margin-left: 32vw; */
     padding: 1vw;
     display: table;
 }
