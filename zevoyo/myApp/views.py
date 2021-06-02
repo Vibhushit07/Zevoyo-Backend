@@ -23,9 +23,10 @@ def homePage(request):
             
             #for finding the reserved rooms on this time period for excluding from the query set
             for reservation in Reservation.objects.all():
-                if (str(reservation.checkIn) < str(request.POST['cin']) and str(reservation.checkOut) < str(request.POST['cout'])) or reservation.status == '2':
+
+                if (str(reservation.checkIn) > str(request.POST['cout']) or str(reservation.checkOut) < str(request.POST['cin'])) or reservation.status == '2':
                     pass
-                elif str(reservation.checkIn) > str(request.POST['cin']) and str(reservation.checkOut) > str(request.POST['cout']) or reservation.status == '2':
+                elif (str(reservation.checkIn) < str(request.POST['cout']) or str(reservation.checkOut) > str(request.POST['cin'])) or reservation.status == '2':
                     pass
                 else:
                     rr.append(reservation.room.id)
@@ -301,10 +302,10 @@ def bookRoom(request):
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
-            if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']) or reservation.status == '2':
-                pass
-            elif str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']) or reservation.status == '2':
-                pass
+            if (str(reservation.checkIn) > str(request.POST['cout']) or str(reservation.checkOut) < str(request.POST['cin'])) or reservation.status == '2':
+                    pass
+            elif (str(reservation.checkIn) < str(request.POST['cout']) or str(reservation.checkOut) > str(request.POST['cin'])) or reservation.status == '2':
+                    pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
                 return redirect("homePage")
