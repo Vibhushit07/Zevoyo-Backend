@@ -14,7 +14,7 @@ urlpatterns = [
     path('user/', views.user_log_sign_page, name = "userlogin"),
     path('user/login/', views.user_log_sign_page, name = "userlogin"),
     path('user/signup/', views.user_sign_up,name = "usersignup"),
-    path('user/editProfile/', views.editProfile,name = "editProfile"),\
+    path('user/editProfile/', views.editProfile,name = "editProfile"),
 
     path('user/book-room/', views.bookRoomPage, name = "bookRoomPage"),
     path('user/book-room/book/', views.bookRoom, name = "bookRoom"),
