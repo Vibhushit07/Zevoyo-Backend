@@ -401,16 +401,25 @@ def filter(request):
     records = []
 
     if(fil == "city"):
-        records = Hotels.objects.values_list(fil, flat = True).distinct().order_by()
+        records = Hotels.objects.values_list(fil, flat = True).distinct().order_by(fil)
     
     elif(fil == "guest"):
-        records = User.objects.values_list("username", flat = True).distinct().order_by()
+        records = User.objects.values_list("username", flat = True).distinct().order_by("guest")
     
     elif(fil == "hotel"):
-        records = Hotels.objects.values_list("name", flat = True).distinct().order_by()
+        records = Hotels.objects.values_list("name", flat = True).distinct().order_by("name")
 
     elif(fil == "capacity"):
-        records = Rooms.objects.values_list("capacity", flat = True).distinct().order_by()
+        records = Rooms.objects.values_list(fil, flat = True).distinct().order_by(fil)
+    
+    elif(fil == "price"):
+        records = Rooms.objects.values_list(fil, flat = True).distinct().order_by(fil)
+    
+    # elif(fil == "roomType"):
+    #     re = Rooms.objects.values_list(fil, flat = True).distinct().order_by(fil)
+    #     for r in re:
+    #         records.append(r.get_roomType())
+    #     print(records)
 
     json_res = [] 
 
