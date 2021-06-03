@@ -35,7 +35,7 @@ function getDetails(c) {
     } else {
 
         $.ajax({
-            url: '/myApp/staff/allbookings/filter/',
+            url: '/myApp/staff/filter/',
             data: {
                 'filter': filter
             },
