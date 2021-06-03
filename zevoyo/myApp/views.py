@@ -5,16 +5,13 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserChangeForm
-from .forms import EditProfileform
+
 from zevoyo.settings import EMAIL_HOST_USER
-from django.urls import reverse_lazy
-from django.views import generic
+
 from .models import Hotels, Reservation, Rooms
 
 import datetime
 import json
-from django.urls import reverse_lazy
 
 def homePage(request):
     all_location = Hotels.objects.values_list('city', flat=True).distinct().order_by()
@@ -159,28 +156,16 @@ def logoutUser(request):
     logout(request)
     return redirect('/myApp/user/')
 
-
-
-
 def editProfile(request):
-    print(request.user)
+    
     if request.method == 'POST':
-        userName = request.user
-        firstname = request.POST['fname']
-        lastname = request.POST['lname']
-        email= request.POST['email']
-        phoneNumber=request.POST['phonenumber']
-        print(userName,firstname,lastname,email)
-        existingUser = User.objects.all().get(username = userName)
-        # print(request.username,"fff")
+
+        existingUser = User.objects.all().get(username = request.user)
+
         existingUser.first_name=request.POST['fname']
         existingUser.last_name=request.POST['lname']
         existingUser.email=request.POST['email']
         existingUser.phone_number=request.POST['phonenumber']
-
-
-
-      
 
         existingUser.save()
 
