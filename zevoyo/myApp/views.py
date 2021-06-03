@@ -437,6 +437,9 @@ def filter(request):
     
     elif(fil == "price"):
         records = Rooms.objects.values_list(fil, flat = True).distinct().order_by(fil)
+
+    elif(fil == "hotelType"):
+        records = Hotels.objects.values_list("type", flat = True).distinct().order_by("type")
     
     # elif(fil == "roomType"):
     #     re = Rooms.objects.values_list(fil, flat = True).distinct().order_by(fil)
