@@ -56,6 +56,25 @@ $("#filter").click(function() {
 
         parent.append(select);
 
+    } else if (filter === 'roomType') {
+
+        let select = document.createElement("select");
+        select.setAttribute("class", "form-control");
+        select.setAttribute("id", "data");
+        select.setAttribute("name", "data");
+
+        let res = ['Premium', 'Deluxe', 'Basic']
+
+        for (let i = 0; i < res.length; i++) {
+
+            let child = document.createElement("option");
+            child.innerHTML = res[i];
+            child.setAttribute("value", i + 1)
+            select.append(child)
+        }
+
+        parent.append(select);
+
     } else {
 
         $.ajax({
