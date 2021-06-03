@@ -12,6 +12,8 @@
             <option value="city">City</option>
             <option value="guest">Guest</option>
             <option value="hotel">Hotel</option>
+            <option value="hotelType">Hotel Type</option>
+            <option value="roomType">Room Type</option>
             <option value="statusB">Status</option>
         </select>
     </div>
@@ -28,8 +30,10 @@
 <table class="table">
     <thead>
         <th>Guest</th>
-        <th>Hotel</th>
         <th>City</th>
+        <th>Hotel</th>
+        <th>Hotel Type</th>
+        <th>Room Type</th>
         <th>Person</th>
         <th>Check In</th>
         <th>Check Out</th>
@@ -41,8 +45,10 @@
     {% for booking in bookings %}
     <tr>
         <td> {{ booking.guest.username| capfirst }} </td>
-        <td> {{ booking.room.hotel.name }} </td>
         <td> {{ booking.room.hotel.city }} </td>
+        <td> {{ booking.room.hotel.name }} </td>
+        <td> {{ booking.room.hotel.type }} </td>
+        <td> {{ booking.room.get_roomType_display }} </td>
         <td> {{ booking.room.capacity }} </td>
         <td> {{ booking.checkIn }} </td>
         <td> {{ booking.checkOut }} </td>
