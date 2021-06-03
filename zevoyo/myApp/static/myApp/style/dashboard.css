@@ -74,3 +74,12 @@
 .submit-btn {
     text-align: center;
 }
+
+.all-booking {
+    display: flex;
+    padding: 20px;
+}
+
+.form-group {
+    margin: 0 5px 0 5px;
+}
