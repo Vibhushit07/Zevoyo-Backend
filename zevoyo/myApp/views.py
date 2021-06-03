@@ -199,6 +199,9 @@ def dashboard(request):
 
         if(filter == "capacity"):
             rooms = Rooms.objects.filter(capacity = data).order_by("hotel__city")
+        
+        elif(filter == "city"):
+            rooms = Rooms.objects.filter(hotel__city = data).order_by("hotel__city")
       
     response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms, 'bookings': bookings})
     return HttpResponse(response)
