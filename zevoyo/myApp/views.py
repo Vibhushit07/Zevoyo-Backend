@@ -183,7 +183,9 @@ def dashboard(request):
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
 
-    rooms = Rooms.objects.all()
+    if request.method == "GET":
+        rooms = Rooms.objects.all().order_by("hotel__city")
+
     totalRooms = len(rooms)
     availableRooms = len(rooms.filter(status = '1'))
     unavailableRooms = len(rooms.filter(status = '2'))
