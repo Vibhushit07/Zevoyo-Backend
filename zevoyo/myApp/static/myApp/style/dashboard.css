@@ -71,6 +71,15 @@
     border-radius: 1rem;
 }
 
-.btn {
-    background-color: #df293a;
+.submit-btn {
+    text-align: center;
+}
+
+.all-booking {
+    display: flex;
+    padding: 20px;
+}
+
+.form-group {
+    margin: 0 5px 0 5px;
 }
