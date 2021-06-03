@@ -406,8 +406,11 @@ def filter(request):
     elif(fil == "guest"):
         records = User.objects.values_list("username", flat = True).distinct().order_by()
     
-    else:
+    elif(fil == "hotel"):
         records = Hotels.objects.values_list("name", flat = True).distinct().order_by()
+
+    elif(fil == "capacity"):
+        records = Rooms.objects.values_list("capacity", flat = True).distinct().order_by()
 
     json_res = [] 
 
