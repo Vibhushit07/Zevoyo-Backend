@@ -1,5 +1,8 @@
-{% extends 'basic.html' %} {% block title %}Dashboard {% endblock title %} {% block body %} {% load app_tags %}
+{% extends 'basic.html' %} {% block title %}Dashboard {% endblock title %} {% load static %} {% load app_tags %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/common.css'%}"> {% endblock css %} {% block body %}
+<br>
 <h3 class="text-center  text-success">My Bookings </h3>
+<br>
 <table class="table">
     <thead>
         <th>City</th>
