@@ -183,7 +183,7 @@ def dashboard(request):
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
 
-    rooms = Rooms.objects.all().order_by("hotel__city")
+    rooms = Rooms.objects.all().order_by("hotel__city", "hotel__name")
 
     totalRooms = len(rooms)
     availableRooms = len(rooms.filter(status = '1'))
@@ -198,10 +198,12 @@ def dashboard(request):
         data = request.POST['data']
 
         if(filter == "capacity"):
-            rooms = Rooms.objects.filter(capacity = data).order_by("hotel__city")
+            rooms = Rooms.objects.filter(capacity = data).order_by("hotel__city", "hotel__name")
         
         elif(filter == "city"):
-            rooms = Rooms.objects.filter(hotel__city = data).order_by("hotel__city")
+            rooms = Rooms.objects.filter(hotel__city = data).order_by("hotel__city", "hotel__name")
+        
+        
       
     response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms, 'bookings': bookings})
     return HttpResponse(response)
