@@ -309,7 +309,7 @@ def user_bookings(request):
 
     user=User.objects.all().get(id=request.user.id)
     
-    bookings = Reservation.objects.all().filter(guest=user)
+    bookings = Reservation.objects.all().filter(guest=user).order_by("checkIn")
 
     bookings = updateBookings(bookings)
 
