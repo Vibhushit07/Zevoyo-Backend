@@ -1,5 +1,6 @@
 {% extends 'basic.html' %} {% block title %} staff panel {% endblock title %} {% load static %} {% block body %} {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/dashboard.css'%}"> {% endblock css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/dashboard.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/allBookings.css'%}"> {% endblock css %}
 
 <!--Staff section -->
 
@@ -104,16 +105,16 @@
 <button class="btn btn-group btn-primary" data-toggle="modal" data-target="#new-room">Add New Room</button>
 <button class="btn btn-group btn-primary" data-toggle="modal" data-target="#new-location">Add New Location</button>
 
-<form action="/myApp/staff/allbookings/filter/data/" method="POST" class="all-booking">
+<form action="/myApp/staff/dashboard/" method="POST" class="all-booking">
     {% csrf_token %}
     <label for="filter">Filter:</label>
     <div class="form-group">
         <select class="form-control" id="filter" name="filter" onclick="getDetails(this)">
-            <option value="checkIn">Check-In</option>
-            <option value="checkOut">Check-Out</option>
+            <option value="capacity">Capacity</option>
             <option value="city">City</option>
-            <option value="guest">Guest</option>
             <option value="hotel">Hotel</option>
+            <option value="price">Price</option>
+            <option value="roomType">Room Type</option>
             <option value="status">Status</option>
         </select>
     </div>
