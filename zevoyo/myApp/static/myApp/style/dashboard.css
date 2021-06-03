@@ -70,3 +70,7 @@
 .rounded-lg {
     border-radius: 1rem;
 }
+
+.submit-btn {
+    text-align: center;
+}
