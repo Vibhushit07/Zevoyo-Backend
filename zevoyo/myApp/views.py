@@ -430,7 +430,7 @@ def filter(request):
         records = Hotels.objects.values_list(fil, flat = True).distinct().order_by(fil)
     
     elif(fil == "guest"):
-        records = User.objects.values_list("username", flat = True).distinct().order_by("guest")
+        records = User.objects.values_list("username", flat = True).distinct().order_by("username")
     
     elif(fil == "hotel"):
         records = Hotels.objects.values_list("name", flat = True).distinct().order_by("name")
