@@ -5,16 +5,13 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserChangeForm
-from .forms import EditProfileform
 from zevoyo.settings import EMAIL_HOST_USER
 from django.urls import reverse_lazy
 from django.views import generic
 from .models import Hotels, Reservation, Rooms, Pnumber
-
+from .models import Hotels, Reservation, Rooms
 import datetime
 import json
-from django.urls import reverse_lazy
 
 def homePage(request):
     all_location = Hotels.objects.values_list('city', flat=True).distinct().order_by()
@@ -26,9 +23,10 @@ def homePage(request):
             
             #for finding the reserved rooms on this time period for excluding from the query set
             for reservation in Reservation.objects.all():
-                if (str(reservation.checkIn) < str(request.POST['cin']) and str(reservation.checkOut) < str(request.POST['cout'])) or reservation.status == '2':
+
+                if (str(reservation.checkIn) > str(request.POST['cout']) or str(reservation.checkOut) < str(request.POST['cin'])) or reservation.status == '2':
                     pass
-                elif str(reservation.checkIn) > str(request.POST['cin']) and str(reservation.checkOut) > str(request.POST['cout']) or reservation.status == '2':
+                elif (str(reservation.checkIn) < str(request.POST['cout']) or str(reservation.checkOut) > str(request.POST['cin'])) or reservation.status == '2':
                     pass
                 else:
                     rr.append(reservation.room.id)
@@ -172,9 +170,6 @@ def logoutUser(request):
     logout(request)
     return redirect('/myApp/user/')
 
-
-
-
 def editProfile(request):
     print(request.user)
     existingUser = User.objects.all().get(username = request.user)
@@ -202,6 +197,16 @@ def editProfile(request):
 
 
         Pnumber1.save()
+    
+    if request.method == 'POST':
+
+        existingUser = User.objects.all().get(username = request.user)
+
+        existingUser.first_name=request.POST['fname']
+        existingUser.last_name=request.POST['lname']
+        existingUser.email=request.POST['email']
+        existingUser.phone_number=request.POST['phonenumber']
+
         existingUser.save()
 
         messages.success(request, "User details updated successfully")
@@ -219,7 +224,8 @@ def dashboard(request):
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
 
-    rooms = Rooms.objects.all()
+    rooms = Rooms.objects.all().order_by("hotel__city", "hotel__name")
+
     totalRooms = len(rooms)
     availableRooms = len(rooms.filter(status = '1'))
     unavailableRooms = len(rooms.filter(status = '2'))
@@ -227,6 +233,31 @@ def dashboard(request):
     bookings = len(Reservation.objects.filter(status = '1'))
 
     cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
+
+    if request.method == "POST":
+        filter = request.POST['filter']
+        data = request.POST['data']
+
+        if(filter == "capacity"):
+            rooms = Rooms.objects.filter(capacity = data).order_by("hotel__city", "hotel__name")
+        
+        elif(filter == "city"):
+            rooms = Rooms.objects.filter(hotel__city = data).order_by("hotel__city", "hotel__name")
+        
+        elif(filter == "hotel"):
+            rooms = Rooms.objects.filter(hotel__name = data).order_by("hotel__city", "hotel__name")
+
+        elif(filter == "hotelType"):
+            rooms = Rooms.objects.filter(hotel__type = data).order_by("hotel__city", "hotel__name")
+
+        elif(filter == "price"):
+            rooms = Rooms.objects.filter(price = data).order_by("hotel__city", "hotel__name")
+        
+        elif(filter == "roomType"):
+            rooms = Rooms.objects.filter(roomType = data).order_by("hotel__city", "hotel__name")
+        
+        elif(filter == "status"):
+            rooms = Rooms.objects.filter(status = data).order_by("hotel__city", "hotel__name")
       
     response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms, 'bookings': bookings})
     return HttpResponse(response)
@@ -319,7 +350,7 @@ def user_bookings(request):
 
     user=User.objects.all().get(id=request.user.id)
     
-    bookings = Reservation.objects.all().filter(guest=user)
+    bookings = Reservation.objects.all().filter(guest=user).order_by("checkIn")
 
     bookings = updateBookings(bookings)
 
@@ -338,10 +369,10 @@ def bookRoom(request):
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
-            if str(reservation.checkIn) < str(request.POST['checkIn']) and str(reservation.checkOut) < str(request.POST['checkOut']) or reservation.status == '2':
-                pass
-            elif str(reservation.checkIn) > str(request.POST['checkIn']) and str(reservation.checkOut) > str(request.POST['checkOut']) or reservation.status == '2':
-                pass
+            if (str(reservation.checkIn) > str(request.POST['cout']) or str(reservation.checkOut) < str(request.POST['cin'])) or reservation.status == '2':
+                    pass
+            elif (str(reservation.checkIn) < str(request.POST['cout']) or str(reservation.checkOut) > str(request.POST['cin'])) or reservation.status == '2':
+                    pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
                 return redirect("homePage")
@@ -437,13 +468,28 @@ def filter(request):
     records = []
 
     if(fil == "city"):
-        records = Hotels.objects.values_list(fil, flat = True).distinct().order_by()
+        records = Hotels.objects.values_list(fil, flat = True).distinct().order_by(fil)
     
     elif(fil == "guest"):
-        records = User.objects.values_list("username", flat = True).distinct().order_by()
+        records = User.objects.values_list("username", flat = True).distinct().order_by("username")
     
-    else:
-        records = Hotels.objects.values_list("name", flat = True).distinct().order_by()
+    elif(fil == "hotel"):
+        records = Hotels.objects.values_list("name", flat = True).distinct().order_by("name")
+
+    elif(fil == "capacity"):
+        records = Rooms.objects.values_list(fil, flat = True).distinct().order_by(fil)
+    
+    elif(fil == "price"):
+        records = Rooms.objects.values_list(fil, flat = True).distinct().order_by(fil)
+
+    elif(fil == "hotelType"):
+        records = Hotels.objects.values_list("type", flat = True).distinct().order_by("type")
+    
+    # elif(fil == "roomType"):
+    #     re = Rooms.objects.values_list(fil, flat = True).distinct().order_by(fil)
+    #     for r in re:
+    #         records.append(r.get_roomType())
+    #     print(records)
 
     json_res = [] 
 

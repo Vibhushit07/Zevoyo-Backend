@@ -1,18 +1,21 @@
 {% extends 'basic.html' %} {% block title %} All Bookings {% endblock title %} {% load static %} {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/allBookings.css'%}"> {% endblock css %} {% block body %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/dashboard.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/common.css'%}"> {% endblock css %} {% block body %}
 <h3 class="text-center text-success">All Bookings</h3>
 
 <form action="/myApp/staff/allbookings/filter/data/" method="POST" class="all-booking">
     {% csrf_token %}
     <label for="filter">Filter:</label>
     <div class="form-group">
-        <select class="form-control" id="filter" name="filter" onclick="getDetails(this)">
+        <select class="form-control" id="filter" name="filter">
             <option value="checkIn">Check-In</option>
             <option value="checkOut">Check-Out</option>
             <option value="city">City</option>
             <option value="guest">Guest</option>
             <option value="hotel">Hotel</option>
-            <option value="status">Status</option>
+            <option value="hotelType">Hotel Type</option>
+            <option value="roomType">Room Type</option>
+            <option value="statusB">Status</option>
         </select>
     </div>
 
@@ -28,8 +31,10 @@
 <table class="table">
     <thead>
         <th>Guest</th>
-        <th>Hotel</th>
         <th>City</th>
+        <th>Hotel</th>
+        <th>Hotel Type</th>
+        <th>Room Type</th>
         <th>Person</th>
         <th>Check In</th>
         <th>Check Out</th>
@@ -41,8 +46,10 @@
     {% for booking in bookings %}
     <tr>
         <td> {{ booking.guest.username| capfirst }} </td>
-        <td> {{ booking.room.hotel.name }} </td>
         <td> {{ booking.room.hotel.city }} </td>
+        <td> {{ booking.room.hotel.name }} </td>
+        <td> {{ booking.room.hotel.type }} </td>
+        <td> {{ booking.room.get_roomType_display }} </td>
         <td> {{ booking.room.capacity }} </td>
         <td> {{ booking.checkIn }} </td>
         <td> {{ booking.checkOut }} </td>
@@ -61,5 +68,5 @@
 </table>
 
 {% endblock body %} {% block js %}
-<script src="{% static '/myApp/script/filterBookings.js' %}"></script>
+<script src="{% static '/myApp/script/filter.js' %}"></script>
 {% endblock js %}

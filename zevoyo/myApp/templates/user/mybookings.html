@@ -1,10 +1,14 @@
-{% extends 'basic.html' %} {% block title %}Dashboard {% endblock title %} {% block body %} {% load app_tags %}
+{% extends 'basic.html' %} {% block title %}Dashboard {% endblock title %} {% load static %} {% load app_tags %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/common.css'%}"> {% endblock css %} {% block body %}
+<br>
 <h3 class="text-center  text-success">My Bookings </h3>
+<br>
 <table class="table">
     <thead>
-        <th>Hotel</th>
         <th>City</th>
-        <th>Person</th>
+        <th>Hotel</th>
+        <th>Hotel Type</th>
+        <th>Room Type</th>
         <th>Check in</th>
         <th>Check out</th>
         <th>Price</th>
@@ -13,9 +17,10 @@
     </thead>
     {% for booking in bookings %}
     <tr>
-        <td>{{booking.room.hotel.name}}</td>
         <td>{{booking.room.hotel.city}}</td>
-        <td>{{booking.room.capacity}}</td>
+        <td>{{booking.room.hotel.name}}</td>
+        <td> {{ booking.room.hotel.type }} </td>
+        <td> {{ booking.room.get_roomType_display }} </td>
         <td>{{booking.checkIn}}</td>
         <td>{{booking.checkOut}}</td>
         <td>{{booking.room.price}}</td>
