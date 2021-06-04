@@ -64,3 +64,13 @@ class Reservation(models.Model):
 
     def __str__(self):
         return self.guest.username
+
+class Pnumber(models.Model):
+    phone_no = models.IntegerField(validators=[MaxLengthValidator(10),MinLengthValidator(10)])
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    
+   
+
+    
+
+

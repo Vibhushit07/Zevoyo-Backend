@@ -5,11 +5,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
 from zevoyo.settings import EMAIL_HOST_USER
-
+from django.urls import reverse_lazy
+from django.views import generic
+from .models import Hotels, Reservation, Rooms, Pnumber
 from .models import Hotels, Reservation, Rooms
-
 import datetime
 import json
 
@@ -59,6 +59,7 @@ def description(request):
 def staffSignup(request):
     if request.method == 'POST':
         userName = request.POST['username']
+        email = request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
 
@@ -70,9 +71,13 @@ def staffSignup(request):
                 messages.warning(request, "Username already exist")
                 return redirect('stafflogin')
         except:
-            pass
-            
-        newUser = User.objects.create_user(username = userName, password = password1)
+            try:
+                if User.objects.all().get(email=email):
+                 messages.warning(request,"email is not available")
+                 return redirect('userlogin')
+            except:
+                pass   
+        newUser = User.objects.create_user(username = userName, password = password1, email=email)
         newUser.is_superuser = True
         newUser.is_staff = True
         newUser.save()
@@ -104,23 +109,31 @@ def user_sign_up(request):
     if request.method=="POST":
         #firstname = request.POST['fname']
         #lastname = request.POST['lname']
-        #email = request.POST['email']
+        email = request.POST['email']
         userName = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
 
        # contactNumber = request.POST['contactNumber']
+        # print(User.objects.all().get(email=email))
+        
 
         if password1 != password2:
             messages.warning(request,"Password didn't matched")
             return redirect('userlogin')
         try:
             if User.objects.all().get(username=userName):
-                messages.warning(request,"Username Not Available")
+                messages.warning(request,"username is not available")
                 return redirect('userlogin')
+            
         except:
-            pass
-        new_user = User.objects.create_user(username = userName, password = password1)
+            try:
+                if User.objects.all().get(email=email):
+                 messages.warning(request,"email is not available")
+                 return redirect('userlogin')
+            except:
+                pass
+        new_user = User.objects.create_user(username = userName, password = password1, email=email)
         new_user.is_superuser=False
         new_user.is_staff=False
         new_user.save()
@@ -158,6 +171,32 @@ def logoutUser(request):
     return redirect('/myApp/user/')
 
 def editProfile(request):
+    print(request.user)
+    existingUser = User.objects.all().get(username = request.user)
+    Pnumber1 =  Pnumber.objects.all().get(user = existingUser)
+    if request.method == 'POST':
+        userName = request.user
+        firstname = request.POST['fname']
+        lastname = request.POST['lname']
+        email= request.POST['email']
+        #phone_no=request.POST['phonenumber']
+        print(userName,firstname,lastname,email)
+        # existingUser = User.objects.all().get(username = userName)
+        print(existingUser.id,"xxxx ")
+        if Pnumber.objects.all().get(user = existingUser):
+           Pnumber1 =  Pnumber.objects.all().get(user = existingUser)
+           Pnumber1.phone_no=request.POST['phonenumber']
+        else:
+             Pnumber1 = Pnumber.objects.create(user = existingUser, phone_no=request.POST['phonenumber'])
+        # print(request.username,"fff")
+        existingUser.first_name=request.POST['fname']
+        existingUser.last_name=request.POST['lname']
+        existingUser.email=request.POST['email']
+        #Pnumber1.phone_no=request.POST['phonenumber']
+
+
+
+        Pnumber1.save()
     
     if request.method == 'POST':
 
@@ -172,9 +211,11 @@ def editProfile(request):
 
         messages.success(request, "User details updated successfully")
 
-        return redirect('editProfile')
-    else:
-        return render(request, 'user/editProfile.html')
+        # return redirect('editProfile')
+    return render(request, 'user/editProfile.html', {"phone_no": Pnumber1})
+
+    # else:
+    #     return render(request, 'user/editProfile.html')
 
 
 @login_required(login_url = "/staff")
