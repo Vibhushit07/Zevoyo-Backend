@@ -58,6 +58,10 @@
                                     <form action="/myApp/staff/signup/" method="POST">
                                         {% csrf_token %}
                                         <div class="form-group">
+                                            <label for="username">Email:</label>
+                                            <input type="text" class="form-control " id="email" placeholder="email" name="email">
+                                        </div>
+                                        <div class="form-group">
                                             <label for="username">Username:</label>
                                             <input type="text" class="form-control " id="username" placeholder="Username" name="username">
                                         </div>
