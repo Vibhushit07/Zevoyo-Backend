@@ -17,7 +17,6 @@ $("#filter").click(function() {
     } else if (filter === 'allBookings') {
 
         var input = document.createElement("input");
-        // input.setAttribute("id", "data");
         input.setAttribute("type", "hidden");
         input.setAttribute("name", "data");
         input.setAttribute("value", "allBookings");
@@ -26,7 +25,6 @@ $("#filter").click(function() {
     } else if (filter === 'allRooms') {
 
         var input = document.createElement("input");
-        // input.setAttribute("id", "data");
         input.setAttribute("type", "hidden");
         input.setAttribute("name", "data");
         input.setAttribute("value", "allRooms");
