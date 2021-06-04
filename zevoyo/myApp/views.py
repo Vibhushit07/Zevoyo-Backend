@@ -191,11 +191,11 @@ def editProfile(request):
 
     if request.method == 'POST':
         
-        if Pnumber.objects.all().get(user = existingUser):
+        try:
            Pnumber1 =  Pnumber.objects.all().get(user = existingUser)
            Pnumber1.phone_no = request.POST['phonenumber']
 
-        else:
+        except Pnumber.DoesNotExist:
             Pnumber1 = Pnumber.objects.create(user = existingUser, phone_no=request.POST['phonenumber'])
 
         existingUser.first_name = request.POST['fname']
