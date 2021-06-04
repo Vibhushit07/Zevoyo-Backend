@@ -7,12 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, follow">
     <link rel="stylesheet" type="text/css" href="{% static 'myApp/css/style.css'%}">
-    <!-- <link rel="stylesheet" href="{% static 'myApp/css/font-awesome.min.css'%}"> -->
     <script src="{% static 'myApp/js/jquery.min.js'%}"></script>
-
     <link href="{% static 'myApp/css/google-font.css'%}" rel="stylesheet" type="text/css">
-    <!-- {#
-    <style type="text/css" style="display: none !important;"></style>#} -->
 
     <script type="application/x-javascript">
         addEventListener("load", function() {
@@ -86,7 +82,7 @@
                     <li class="nav-item active">
                         <a class="nav-link text-bold" href="/myApp/staff/allbookings">All Bookings</a>
                     </li>
-                    {% endif %} {% if user.is_authenticated %}
+                    {% endif %} {% if user.is_staff == False %}
                     <li class="nav-item active">
                         <a class="nav-link text-bold" href="/myApp/user/bookings">My Bookings</a>
                     </li>

@@ -1,0 +1,50 @@
+.body {
+    position: absolute;
+    top: 11vh;
+    left: 32vw;
+}
+
+.new {
+    position: absolute;
+    left: 17vw;
+}
+
+.chats {
+    border: 2px black solid;
+    width: 40vw;
+    padding: 1vw;
+    display: table;
+}
+
+.chat {
+    border-radius: 10px;
+    padding: 10px;
+    width: 30vw;
+    border-radius: 5px;
+    margin: 0 0 10px 0;
+    overflow: hidden;
+    max-height: 13vh;
+}
+
+.chat1 {
+    background: rgba(240, 108, 108);
+    float: right;
+}
+
+.chat2 {
+    background: rgba(250, 108, 108, 0.8);
+    float: left;
+}
+
+.chat-content {
+    font-family: 'Ubuntu', cursive;
+}
+
+.chat-date {
+    font-size: 10px;
+}
+
+.heading {
+    font-family: 'Pacifico', cursive;
+    letter-spacing: 2px;
+}

@@ -19,4 +19,30 @@ $(function() {
         return percentage / 100 * 360
 
     }
+
+})
+
+$("#city-2").click(function() {
+
+    $.ajax({
+        url: '/myApp/staff/searchDashboard/',
+        data: {
+            'city': $("#city-2").val()
+
+        },
+        dataType: 'json',
+        success: function(res) {
+
+            let parent = document.getElementById("hotel");
+            parent.innerHTML = "";
+
+            for (let i = 0; i < res.length; i++) {
+
+                let child = document.createElement("option");
+                child.innerHTML = res[i].name;
+                parent.appendChild(child)
+            }
+
+        }
+    });
 })
