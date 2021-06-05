@@ -44,25 +44,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/myApp/">Home</a>
-                    </li>
-
-                    <li class="nav-item active">
                         <a class="nav-link text-bold" href="/myApp/about/">About</a>
                     </li>
-                    {% if user.is_staff %}
-                    <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/myApp/staff/dashboard/">Dashboard</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/myApp/staff/allbookings/">All Bookings</a>
-                    </li>
 
-                    {% endif %} {% if user.is_staff == 'False' %}
-                    <li class="nav-item active">
-                        <a class="nav-link text-bold" href="/myApp/user/bookings">My Bookings</a>
-                    </li>
-                    {% endif %} {% if user.is_authenticated %}
+                    {% if user.is_authenticated %}
                     <li class="nav-item active">
                         <a class="nav-link text-bold" href="/myApp/chat/all/">Chat</a>
                     </li>
@@ -93,17 +78,6 @@
                         </a>
                     </div>
                 </div>
-
-                <a href="/myApp/user/editProfile/" class="nav-link">
-                    <button class="btn btn-group bg-warning" data-toggle="modal" data-target="#forlogin">
-                        Edit Profile
-                    </button>
-                </a>
-                <a href="/myApp/logout/" class="nav-link">
-                    <button class="btn btn-group bg-warning" data-toggle="modal" data-target="#forlogin">
-                        Logout
-                    </button>
-                </a>
 
                 {% else %}
                 <a href="/myApp/user/login/" class="nav-link">

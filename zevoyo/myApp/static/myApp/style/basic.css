@@ -10,6 +10,7 @@
 .dropdown {
     position: relative;
     display: inline-block;
+    margin-right: 1vw;
 }
 
 .dropdown-content {
