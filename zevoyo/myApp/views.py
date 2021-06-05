@@ -245,8 +245,6 @@ def dashboard(request):
         filter = request.POST['filter']
         data = request.POST['data']
 
-        # if(filter == "allRooms"):
-        #     rooms = Rooms.objects.all().order_by("hotel__city", "hotel__name")
         if(filter == "capacity"):
             rooms = Rooms.objects.filter(capacity = data).order_by("hotel__city", "hotel__name")
         
