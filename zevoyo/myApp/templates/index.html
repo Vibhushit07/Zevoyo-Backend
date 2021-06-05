@@ -1,4 +1,5 @@
-{% extends 'basic.html' %} {% block title %}Zevoyo {% endblock title %} {% block body %}
+{% extends 'basic.html' %} {% block title %}Zevoyo {% endblock title %} {% load static %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/index.css'%}"> {% endblock css %} {% block body %}
 <!--Booking Section starts here-->
 <section>
     <div class="container-fluid py-5 px-5 ">
@@ -53,13 +54,13 @@
             <th>Type</th>
             <th>Location</th>
             <th>Person</th>
-            <th>price</th>
+            <th>Price</th>
             <th colspan="2">Action</th>
         </thead>
         {% for room in rooms %}
         <tr class="">
             <td>
-                <a href="/myApp/user/description?roomid={{room.id}}"> <b> {{ room.hotel.name }} </b> </a>{{ room.hotel.type }} </td>
+                <a href="/myApp/user/description?roomid={{room.id}}" target="_blank"> <b> {{ room.hotel.name }} </b> </a>{{ room.hotel.type }} </td>
             <td>{{ room.get_roomType_display }}</td>
             <td>{{ room.hotel.city }}</td>
             <td>{{ room.capacity }}</td>
