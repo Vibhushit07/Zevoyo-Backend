@@ -243,28 +243,30 @@ def dashboard(request):
 
     if request.method == "POST":
         filter = request.POST['filter']
-        data = request.POST['data']
 
-        if(filter == "capacity"):
-            rooms = Rooms.objects.filter(capacity = data).order_by("hotel__city", "hotel__name")
-        
-        elif(filter == "city"):
-            rooms = Rooms.objects.filter(hotel__city = data).order_by("hotel__city", "hotel__name")
-        
-        elif(filter == "hotel"):
-            rooms = Rooms.objects.filter(hotel__name = data).order_by("hotel__city", "hotel__name")
+        if filter != "allRooms":
+            data = request.POST['data']
 
-        elif(filter == "hotelType"):
-            rooms = Rooms.objects.filter(hotel__type = data).order_by("hotel__city", "hotel__name")
+            if(filter == "capacity"):
+                rooms = Rooms.objects.filter(capacity = data).order_by("hotel__city", "hotel__name")
+            
+            elif(filter == "city"):
+                rooms = Rooms.objects.filter(hotel__city = data).order_by("hotel__city", "hotel__name")
+            
+            elif(filter == "hotel"):
+                rooms = Rooms.objects.filter(hotel__name = data).order_by("hotel__city", "hotel__name")
 
-        elif(filter == "price"):
-            rooms = Rooms.objects.filter(price = data).order_by("hotel__city", "hotel__name")
-        
-        elif(filter == "roomType"):
-            rooms = Rooms.objects.filter(roomType = data).order_by("hotel__city", "hotel__name")
-        
-        elif(filter == "status"):
-            rooms = Rooms.objects.filter(status = data).order_by("hotel__city", "hotel__name")
+            elif(filter == "hotelType"):
+                rooms = Rooms.objects.filter(hotel__type = data).order_by("hotel__city", "hotel__name")
+
+            elif(filter == "price"):
+                rooms = Rooms.objects.filter(price = data).order_by("hotel__city", "hotel__name")
+            
+            elif(filter == "roomType"):
+                rooms = Rooms.objects.filter(roomType = data).order_by("hotel__city", "hotel__name")
+            
+            elif(filter == "status"):
+                rooms = Rooms.objects.filter(status = data).order_by("hotel__city", "hotel__name")
       
     response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms, 'bookings': bookings})
     return HttpResponse(response)
@@ -463,28 +465,27 @@ def allBookings(request):
     if request.method == "POST":
 
         filter = request.POST['filter']
-        data = request.POST['data']
 
-        if(filter == "allBookings"):
-            bookings = Reservation.objects.all()
+        if(filter != "allBookings"):
+            data = request.POST['data']
 
-        elif(filter == "checkIn"):
-            bookings = Reservation.objects.all().filter(checkIn = data) 
+            if(filter == "checkIn"):
+                bookings = Reservation.objects.all().filter(checkIn = data) 
 
-        elif(filter == "checkOut"):
-            bookings = Reservation.objects.all().filter(checkOut = data) 
+            elif(filter == "checkOut"):
+                bookings = Reservation.objects.all().filter(checkOut = data) 
 
-        elif(filter == "city"):
-            bookings = Reservation.objects.filter(room__hotel__city = data)  
-        
-        elif(filter == "guest"):
-            bookings = Reservation.objects.all().filter(guest__username = data) 
-        
-        elif(filter == "hotel"):
-            bookings = Reservation.objects.all().filter(room__hotel__name = data)
-        
-        else:
-            bookings = Reservation.objects.filter(status = data)
+            elif(filter == "city"):
+                bookings = Reservation.objects.filter(room__hotel__city = data)  
+            
+            elif(filter == "guest"):
+                bookings = Reservation.objects.all().filter(guest__username = data) 
+            
+            elif(filter == "hotel"):
+                bookings = Reservation.objects.all().filter(room__hotel__name = data)
+            
+            else:
+                bookings = Reservation.objects.filter(status = data)
 
     if not bookings:
         messages.warning(request, "No bookings found")
