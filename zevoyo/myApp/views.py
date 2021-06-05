@@ -514,6 +514,9 @@ def allBookings(request):
             
             elif(filter == "hotelType"):
                 bookings = Reservation.objects.filter(room__hotel__type = data)
+
+            elif(filter == "roomType"):
+                bookings = Reservation.objects.filter(room__roomType = data)
             
             else:
                 bookings = Reservation.objects.filter(status = data)
