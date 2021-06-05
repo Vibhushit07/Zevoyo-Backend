@@ -38,3 +38,12 @@
 .table tr:nth-child(even) {
     background-color: rgb(255, 240, 240);
 }
+
+.location-1 {
+    margin-left: 1vw;
+}
+
+.location,
+.location-1 {
+    display: inline-block;
+}

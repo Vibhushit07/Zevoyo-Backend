@@ -1,10 +1,6 @@
-from django.db.models.fields import AutoField
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView
 from django.http import HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
 from django.contrib.auth.models import User
 
 from .forms import ChatForm

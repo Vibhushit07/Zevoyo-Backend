@@ -1,13 +1,16 @@
 {% extends 'basic.html' %} {% block title %} All Bookings {% endblock title %} {% load static %} {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'myApp/style/dashboard.css'%}">
 <link rel="stylesheet" type="text/css" href="{% static 'myApp/style/common.css'%}"> {% endblock css %} {% block body %}
+
+<br>
 <h3 class="text-center text-success">All Bookings</h3>
 
-<form action="/myApp/staff/allbookings/filter/data/" method="POST" class="all-booking">
+<form action="/myApp/staff/allbookings/" method="POST" class="all-booking">
     {% csrf_token %}
     <label for="filter">Filter:</label>
     <div class="form-group">
         <select class="form-control" id="filter" name="filter">
+            <option value="allBookings">All Bookings</option>
             <option value="checkIn">Check-In</option>
             <option value="checkOut">Check-Out</option>
             <option value="city">City</option>
@@ -15,7 +18,7 @@
             <option value="hotel">Hotel</option>
             <option value="hotelType">Hotel Type</option>
             <option value="roomType">Room Type</option>
-            <option value="statusB">Status</option>
+            <option value="statusBookings">Booking Status</option>
         </select>
     </div>
 
@@ -39,7 +42,7 @@
         <th>Check In</th>
         <th>Check Out</th>
         <th>Price</th>
-        <th>Status</th>
+        <th>Booking Status</th>
         <th>Cancel Booking</th>
     </thead>
 

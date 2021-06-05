@@ -20,14 +20,14 @@ class Hotels(models.Model):
 
 class Rooms(models.Model):
     ROOM_STATUS = (
-        ('1', 'Available'),
-        ('2', 'Not Available')
+        ('Available', 'Available'),
+        ('Not Available', 'Not Available')
     )
 
     ROOM_TYPE = (
-        ('1', 'Premium'),
-        ('2', 'Deluxe'),
-        ('3', 'Basic')
+        ('Premium', 'Premium'),
+        ('Deluxe', 'Deluxe'),
+        ('Basic', 'Basic')
     )
 
     roomType = models.CharField(max_length = 50, choices = ROOM_TYPE)
@@ -50,8 +50,8 @@ class Rooms(models.Model):
 
 class Reservation(models.Model):
     RESERVATION_STATUS = (
-        ('1', 'Booked'),
-        ('2', 'Cancelled')
+        ('Booked', 'Booked'),
+        ('Cancelled', 'Cancelled')
     )
 
     checkIn = models.DateField(auto_now = False)
@@ -68,9 +68,3 @@ class Reservation(models.Model):
 class Pnumber(models.Model):
     phone_no = models.IntegerField(validators=[MaxLengthValidator(10),MinLengthValidator(10)])
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    
-   
-
-    
-
-
