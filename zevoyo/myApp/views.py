@@ -178,10 +178,14 @@ def logoutUser(request):
     return redirect('/myApp/user/')
 
 def editProfile(request):
-    existingUser = User.objects.all().get(user = request.user)
 
     try:
-        Pnumber1 =  Pnumber.objects.get(userid = existingUser)
+        existingUser = User.objects.get(id = request.user.id)
+    except User.DoesNotExist:
+        existingUser = ""
+
+    try:
+        Pnumber1 =  Pnumber.objects.get(user = existingUser)
     except Pnumber.DoesNotExist:
         Pnumber1 = ""
 
