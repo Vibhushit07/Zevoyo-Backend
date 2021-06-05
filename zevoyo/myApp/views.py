@@ -572,6 +572,10 @@ def cancelBooking(request):
         if booking.guest.id == request.user.id or User.objects.get(id = request.user.id).is_staff:
             booking.status = '2'
             booking.save()
+
+            subject = 'Hotel Booking Cancellation Confirmation.'
+            message = 'Your hotel room is booking is cancelled. \nBookings Details are mentioned below: \nBooking Id-' + booking.bookingId +'\nGuest name- ' + booking.guest.username + '\nCheck In- ' + booking.checkIn + '\nCheck Out-' + booking.checkOut + '\nHotel Name- ' + booking.room.hotel.name + '\nContact Number- ' + booking.room.hotel.contactNumber
+            sendEmail(booking.guest.email, subject, message)
         
         if User.objects.get(id = request.user.id).is_staff:
             return redirect('allBookings')
