@@ -80,14 +80,19 @@ def staffSignup(request):
         except:
             try:
                 if User.objects.all().get(email=email):
-                 messages.warning(request,"email is not available")
-                 return redirect('userlogin')
+                    messages.warning(request,"email is not available")
+                    return redirect('userlogin')
             except:
                 pass   
-        newUser = User.objects.create_user(username = userName, password = password1, email=email)
+        newUser = User.objects.create_user(username = userName, password = password1, email = email)
         newUser.is_superuser = True
         newUser.is_staff = True
         newUser.save()
+
+        subject = 'Staff Account Confirmation'
+        message = 'Your account has been created successfully.\nUsername: ' + userName + '\nEmail: ' + email
+        sendEmail(email, subject, message)
+
         messages.success(request, 'Staff Registration Successfull')
 
         return redirect('stafflogin')
