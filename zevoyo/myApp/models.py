@@ -48,10 +48,10 @@ class Rooms(models.Model):
     def __str__(self):
         return self.hotel.name
 
-    def get_roomType_name(self):
+    def get_roomType(self):
         return ['Premium', 'Deluxe', 'Basic']
 
-    def get_roomStatus_name(self):
+    def get_roomStatus(self):
         return ['Available', 'Not Available']
 
 class Reservation(models.Model):

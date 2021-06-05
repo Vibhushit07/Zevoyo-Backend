@@ -493,7 +493,7 @@ def filter(request):
         records = Hotels.objects.values_list("type", flat = True).distinct().order_by("type")
     
     elif(fil == "roomType"):
-        records = Rooms.get_roomType_name(request)
+        records = Rooms.get_roomType(request)
 
     json_res = [] 
 
