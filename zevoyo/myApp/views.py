@@ -202,7 +202,7 @@ def editProfile(request):
            Pnumber1.phone_no = request.POST['phonenumber']
 
         except Pnumber.DoesNotExist:
-            Pnumber1 = Pnumber.objects.create(user = existingUser, phone_no=request.POST['phonenumber'])
+            Pnumber1 = Pnumber.objects.create(user = existingUser, phone_no = request.POST['phonenumber'])
 
         existingUser.first_name = request.POST['fname']
         existingUser.last_name = request.POST['lname']
@@ -210,6 +210,10 @@ def editProfile(request):
 
         Pnumber1.save()
         existingUser.save()
+
+        subject = 'Details Updated.'
+        message = 'Your account details has been updated successfully.\nFirst Name: ' + existingUser.first_name + '\nLast Name: ' + existingUser.last_name + '\nEmail: ' + existingUser.email + '\nPhone Number: ' + Pnumber1.phone_no
+        sendEmail(existingUser.email, subject, message)
 
         messages.success(request, "User details updated successfully")
 
