@@ -552,13 +552,13 @@ def filter(request):
         records = Hotels.objects.values_list("type", flat = True).distinct().order_by("type")
     
     elif(fil == "roomType"):
-        records = Rooms.get_roomType(request)
+        records = Rooms.objects.values_list("roomType", flat = True).distinct().order_by("roomType")
     
-    elif(fil == "statusR"):
-        records = Rooms.get_roomStatus(request)
+    elif(fil == "statusRoom"):
+        records = Rooms.objects.values_list("status", flat = True).distinct().order_by("status")
 
-    elif(fil == "statusB"):
-        records = Reservation.get_reservationStatus(request)
+    elif(fil == "statusBookings"):
+        records = Reservation.objects.values_list("status", flat = True).distinct().order_by("status")
 
     json_res = [] 
 
