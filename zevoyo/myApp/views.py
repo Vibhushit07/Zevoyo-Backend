@@ -265,7 +265,7 @@ def dashboard(request):
             elif(filter == "roomType"):
                 rooms = Rooms.objects.filter(roomType = data).order_by("hotel__city", "hotel__name")
             
-            elif(filter == "status"):
+            elif(filter == "statusRoom"):
                 rooms = Rooms.objects.filter(status = data).order_by("hotel__city", "hotel__name")
       
     response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms, 'bookings': bookings})
