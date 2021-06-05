@@ -162,7 +162,7 @@ def user_log_sign_page(request):
                 return redirect('stafflogin')
         except:
             pass
-        
+            
         if user is not None:
             login(request,user)
             messages.success(request,"successful logged in")
