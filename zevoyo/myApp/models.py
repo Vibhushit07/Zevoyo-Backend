@@ -51,6 +51,9 @@ class Rooms(models.Model):
     def get_roomType_display(self):
         return ['Premium', 'Deluxe', 'Basic']
 
+    def get_roomStatus_display(self):
+        return ['Available', 'Not Available']
+
 class Reservation(models.Model):
     RESERVATION_STATUS = (
         ('1', 'Booked'),
