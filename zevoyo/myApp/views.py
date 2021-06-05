@@ -363,17 +363,12 @@ def user_bookings(request):
 
     bookings = updateBookings(bookings)
 
-    print(bookings)
-
     if request.method == "POST":
 
         filter = request.POST['filter']
 
         if(filter != "allUserBookings"):
             data = request.POST['data']
-
-            print(filter)
-            print(data)
 
             if(filter == "checkIn"):
                 bookings = bookings.filter(checkIn = data) 
@@ -395,8 +390,6 @@ def user_bookings(request):
             
             else:
                 bookings = bookings.filter(status = data)
-
-    print(bookings)
 
     if not bookings:
         messages.warning(request,"No Bookings Found")
