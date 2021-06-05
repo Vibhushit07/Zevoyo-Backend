@@ -14,6 +14,15 @@ $("#filter").click(function() {
         input.setAttribute("class", "form-control");
         parent.append(input);
 
+    } else if (filter === 'allBookings') {
+
+        var input = document.createElement("input");
+        // input.setAttribute("id", "data");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("name", "data");
+        input.setAttribute("value", "allBookings");
+        parent.append(input);
+
     } else {
 
         $.ajax({

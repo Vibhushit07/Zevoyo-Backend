@@ -517,7 +517,10 @@ def filterBookings(request):
     filter = request.POST['filter']
     data = request.POST['data']
 
-    if(filter == "checkIn"):
+    if(filter == "allBookings"):
+        bookings = Reservation.objects.all()
+
+    elif(filter == "checkIn"):
         bookings = Reservation.objects.all().filter(checkIn = data) 
 
     elif(filter == "checkOut"):
