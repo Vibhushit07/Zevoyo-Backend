@@ -234,10 +234,10 @@ def dashboard(request):
     rooms = Rooms.objects.all().order_by("hotel__city", "hotel__name")
 
     totalRooms = len(rooms)
-    availableRooms = len(rooms.filter(status = '1'))
-    unavailableRooms = len(rooms.filter(status = '2'))
+    availableRooms = len(rooms.filter(status = 'Available'))
+    unavailableRooms = len(rooms.filter(status = 'Not Available'))
     reserved = len(Reservation.objects.all())
-    bookings = len(Reservation.objects.filter(status = '1'))
+    bookings = len(Reservation.objects.filter(status = 'Booked'))
 
     cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
 
