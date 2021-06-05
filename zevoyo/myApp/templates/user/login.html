@@ -61,41 +61,40 @@
                                 <div class="col-md-12 col-lg-12 col-xlg-12 col-sm-12">
 
                                     <form action="/myApp/user/signup/" method="post">
-                                        {%csrf_token%} e="text" class="form-control " id="lname" placeholder="Last Name" name="lname">
-                                </div> -->
-                                <div class="form-group">
-                                    <label for="email">Email:</label>
-                                    <input type="text" class="form-control " id="email" placeholder="Enter email id" name="email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="username">Username:</label>
-                                    <input type="text" class="form-control " id="username" placeholder="Enter Username" name="username">
-                                </div>
+                                        {%csrf_token%}
+                                        <div class="form-group">
+                                            <label for="email">Email:</label>
+                                            <input type="text" class="form-control " id="email" placeholder="Enter email id" name="email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username">Username:</label>
+                                            <input type="text" class="form-control " id="username" placeholder="Enter Username" name="username">
+                                        </div>
 
-                                <div class="form-group">
-                                    <label for="pwd">Password:</label>
-                                    <input type="password" class="form-control" id="password1" placeholder="Enter password" name="password1">
-                                    <span toggle="#password1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pwd">Confirm Password:</label>
-                                    <input type="password" class="form-control " id="password2" placeholder="Confirm password" name="password2">
-                                    <span toggle="#password2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                </div>
+                                        <div class="form-group">
+                                            <label for="pwd">Password:</label>
+                                            <input type="password" class="form-control" id="password1" placeholder="Enter password" name="password1">
+                                            <span toggle="#password1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pwd">Confirm Password:</label>
+                                            <input type="password" class="form-control " id="password2" placeholder="Confirm password" name="password2">
+                                            <span toggle="#password2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                        </div>
 
-                                <button type="submit" class="btn btn-primary">Sign Up</button>
-                                </form>
+                                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     <!--Login and logout tab ends here-->
-</div>
+    </div>
 
-<!--Cards ends here-->
-{% endblock body %} {% block js %}
-<script src="{% static '/myApp/script/togglePassword.js' %}"></script>
-{% endblock js %}
+    <!--Cards ends here-->
+    {% endblock body %} {% block js %}
+    <script src="{% static '/myApp/script/togglePassword.js' %}"></script>
+    {% endblock js %}
