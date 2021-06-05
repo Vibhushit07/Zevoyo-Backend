@@ -51,24 +51,24 @@ $("#filter").click(function() {
 
         //     parent.append(select);
 
-    } else if (filter === 'statusB') {
+        // } else if (filter === 'statusB') {
 
-        let select = document.createElement("select");
-        select.setAttribute("class", "form-control");
-        select.setAttribute("id", "data");
-        select.setAttribute("name", "data");
+        //     let select = document.createElement("select");
+        //     select.setAttribute("class", "form-control");
+        //     select.setAttribute("id", "data");
+        //     select.setAttribute("name", "data");
 
-        let res = ['Booked', 'Cancelled']
+        //     let res = ['Booked', 'Cancelled']
 
-        for (let i = 0; i < res.length; i++) {
+        //     for (let i = 0; i < res.length; i++) {
 
-            let child = document.createElement("option");
-            child.innerHTML = res[i];
-            child.setAttribute("value", i + 1)
-            select.appendChild(child)
-        }
+        //         let child = document.createElement("option");
+        //         child.innerHTML = res[i];
+        //         child.setAttribute("value", i + 1)
+        //         select.appendChild(child)
+        //     }
 
-        parent.appendChild(select);
+        //     parent.appendChild(select);
 
     } else {
 

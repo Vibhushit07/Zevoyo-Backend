@@ -498,8 +498,8 @@ def filter(request):
     elif(fil == "statusR"):
         records = Rooms.get_roomStatus(request)
 
-    # elif(fil == "statusB"):
-    #     records = Rooms.get_roomStatus(request)
+    elif(fil == "statusB"):
+        records = Reservation.get_reservationStatus(request)
 
     json_res = [] 
 
