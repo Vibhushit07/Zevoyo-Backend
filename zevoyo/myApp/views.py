@@ -5,11 +5,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from zevoyo.settings import EMAIL_HOST_USER
-from django.urls import reverse_lazy
-from django.views import generic
+
 from .models import Hotels, Reservation, Rooms, Pnumber
-from .models import Hotels, Reservation, Rooms
+
+from zevoyo.settings import EMAIL_HOST_USER
+
 import datetime
 import json
 
@@ -472,6 +472,9 @@ def filter(request):
 
     fil = request.GET.get('filter')
 
+    print(Rooms.get_roomType_display(request))
+    # print(models.IntegerChoices('roomType').choices)
+
     records = []
 
     if(fil == "city"):
@@ -492,11 +495,8 @@ def filter(request):
     elif(fil == "hotelType"):
         records = Hotels.objects.values_list("type", flat = True).distinct().order_by("type")
     
-    # elif(fil == "roomType"):
-    #     re = Rooms.objects.values_list(fil, flat = True).distinct().order_by(fil)
-    #     for r in re:
-    #         records.append(r.get_roomType())
-    #     print(records)
+    elif(fil == "roomType"):
+        records = Rooms.get_roomType_display(request)
 
     json_res = [] 
 

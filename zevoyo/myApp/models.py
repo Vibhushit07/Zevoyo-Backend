@@ -48,6 +48,9 @@ class Rooms(models.Model):
     def __str__(self):
         return self.hotel.name
 
+    def get_roomType_display(self):
+        return ['Premium', 'Deluxe', 'Basic']
+
 class Reservation(models.Model):
     RESERVATION_STATUS = (
         ('1', 'Booked'),
