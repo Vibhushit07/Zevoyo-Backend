@@ -84,6 +84,7 @@ def staffSignup(request):
                     return redirect('userlogin')
             except:
                 pass   
+
         newUser = User.objects.create_user(username = userName, password = password1, email = email)
         newUser.is_superuser = True
         newUser.is_staff = True
@@ -144,6 +145,11 @@ def user_sign_up(request):
         new_user.is_superuser=False
         new_user.is_staff=False
         new_user.save()
+
+        subject = 'Account Confirmation'
+        message = 'Your account has been created successfully.\nUsername: ' + userName + '\nEmail: ' + email
+        sendEmail(email, subject, message)
+
         messages.success(request,"Registration Successfull")
         return redirect("userlogin")
     else:
