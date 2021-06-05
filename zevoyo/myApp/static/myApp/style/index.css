@@ -5,3 +5,8 @@ a:active {
     text-decoration: none;
     color: inherit;
 }
+
+.img {
+    width: 282px;
+    height: 203px;
+}
