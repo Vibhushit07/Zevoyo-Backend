@@ -86,7 +86,7 @@ def staffSignup(request):
                 pass   
 
         newUser = User.objects.create_user(username = userName, password = password1, email = email)
-        newUser.is_superuser = True
+        newUser.is_superuser = False
         newUser.is_staff = True
         newUser.save()
 
