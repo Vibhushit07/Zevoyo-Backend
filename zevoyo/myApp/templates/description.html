@@ -57,15 +57,6 @@
                 </tr>
                 <tr>
                     <th>
-                        Status
-                    </th>
-                    <td>
-                        {{ room.get_status_display| capfirst }}
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>
                         Balcony
                     </th>
                     <td>
@@ -91,7 +82,7 @@
                 </tr>
                 <tr>
                     <th>
-                        Tv
+                        Television
                     </th>
                     <td>
                         {{room.tv}}
@@ -113,23 +104,13 @@
                         {{room.refrigerator}}
                     </td>
                 </tr>
-                <tr>
-                    <th>
-                        Status
-                    </th>
-                    <td>
-                        {{room.status}}
-                    </td>
-                </tr>
             </table>
             {% if user.is_authenticated %}
-            <a href="/myApp/user/book-room?roomid={{room.id}}"><button class="btn btn-warning">Book Now</button></a>
-            {% else %}
+            <a href="/myApp/user/book-room?roomid={{room.id}}"><button class="btn btn-warning">Book Now</button></a> {% else %}
             <a href="/myApp/user/login/" class="nav-link">
                 <button class="btn btn-group bg-warning font-weight-bold" data-toggle="modal" data-target="#forlogin">
                     Login
-                </button>
-                {% endif %}
+                </button> {% endif %}
             </a>
         </div>
     </div>
