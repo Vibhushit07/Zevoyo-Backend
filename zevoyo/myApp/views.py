@@ -354,14 +354,40 @@ def addNewRoom(request):
         return HttpResponse("Access Denied")
 
 def user_bookings(request):
-    if request.user.is_authenticated==False:
+    if request.user.is_authenticated == False:
         return redirect('userlogin')
 
-    user=User.objects.all().get(id=request.user.id)
+    user = User.objects.all().get(id = request.user.id)
     
-    bookings = Reservation.objects.all().filter(guest=user).order_by("checkIn")
+    bookings = Reservation.objects.all().filter(guest = user).order_by("checkIn")
 
     bookings = updateBookings(bookings)
+
+    print(bookings)
+
+    if request.method == "POST":
+
+        filter = request.POST['filter']
+
+        if(filter != "allUserBookings"):
+            data = request.POST['data']
+
+            if(filter == "checkIn"):
+                bookings = bookings.filter(checkIn = data) 
+
+            elif(filter == "checkOut"):
+                bookings = bookings.filter(checkOut = data) 
+
+            elif(filter == "city"):
+                bookings = bookings.filter(room__hotel__city = data)  
+            
+            elif(filter == "hotel"):
+                bookings = bookings.filter(room__hotel__name = data)
+            
+            else:
+                bookings = bookings.filter(status = data)
+
+    print(bookings)
 
     if not bookings:
         messages.warning(request,"No Bookings Found")
