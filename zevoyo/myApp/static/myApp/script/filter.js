@@ -23,6 +23,15 @@ $("#filter").click(function() {
         input.setAttribute("value", "allBookings");
         parent.append(input);
 
+    } else if (filter === 'allRooms') {
+
+        var input = document.createElement("input");
+        // input.setAttribute("id", "data");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("name", "data");
+        input.setAttribute("value", "allRooms");
+        parent.append(input);
+
     } else {
 
         $.ajax({
