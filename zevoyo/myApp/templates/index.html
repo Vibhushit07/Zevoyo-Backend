@@ -55,7 +55,6 @@
             <th>Location</th>
             <th>Person</th>
             <th>Price</th>
-            <th colspan="2">Action</th>
         </thead>
         {% for room in rooms %}
         <tr class="">
@@ -65,17 +64,6 @@
             <td>{{ room.hotel.city }}</td>
             <td>{{ room.capacity }}</td>
             <td>{{ room.price }}</td>
-
-            <td colspan="2">
-
-                <a href="/myApp/user/description?roomid={{room.id}}"><button class="btn btn-warning">View</button></a>
-
-                <a href="https://www.google.com/maps/dir//{{room.hotel.name}} + ' ' + 
-                        {{room.hotel.address}} + ' ' + {{room.hotel.city}} + ' ' + {{room.hotel.state}} + ' ' + 
-                        {{room.hotel.country}} + ' ' + {{room.hotel.pincode}}" target="_blank">
-                    <button class="btn btn-warning">Location</button>
-                </a>
-            </td>
         </tr>
         {% endfor %}
 
