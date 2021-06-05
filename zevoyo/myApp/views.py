@@ -390,6 +390,9 @@ def user_bookings(request):
             elif(filter == "hotelType"):
                 bookings = bookings.filter(room__hotel__type = data)
             
+            elif(filter == "roomType"):
+                bookings = bookings.filter(room__roomType = data)
+            
             else:
                 bookings = bookings.filter(status = data)
 
