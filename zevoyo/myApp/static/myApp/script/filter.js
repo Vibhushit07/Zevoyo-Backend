@@ -14,26 +14,25 @@ $("#filter").click(function() {
         input.setAttribute("class", "form-control");
         parent.append(input);
 
-    } else if (filter === 'allBookings') {
+    } else if (filter === 'allBookings' || filter === 'allUserBookings' || filter === 'allRooms') {
 
         var input = document.createElement("input");
         input.setAttribute("type", "hidden");
         input.setAttribute("name", "data");
-        input.setAttribute("value", "allBookings");
-        parent.append(input);
 
-    } else if (filter === 'allRooms') {
+        if (filter === 'allBookings')
+            input.setAttribute("value", "allBookings");
+        else if (filter === 'allUserBookings')
+            input.setAttribute("value", "allUserbookings");
+        else
+            input.setAttribute("value", "allRooms");
 
-        var input = document.createElement("input");
-        input.setAttribute("type", "hidden");
-        input.setAttribute("name", "data");
-        input.setAttribute("value", "allRooms");
         parent.append(input);
 
     } else {
 
         $.ajax({
-            url: '/myApp/staff/filter/',
+            url: '/myApp/filter/',
             data: {
                 'filter': filter
             },

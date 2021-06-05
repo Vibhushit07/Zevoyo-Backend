@@ -493,9 +493,6 @@ def allBookings(request):
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
 def filter(request):
-    
-    if request.user.is_staff == False:
-        return HttpResponse("Access Denied")
 
     fil = request.GET.get('filter')
 
