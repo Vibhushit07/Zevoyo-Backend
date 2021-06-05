@@ -460,6 +460,32 @@ def allBookings(request):
 
     bookings = updateBookings(bookings)
 
+    if request.method == "POST":
+
+        filter = request.POST['filter']
+        data = request.POST['data']
+
+        if(filter == "allBookings"):
+            bookings = Reservation.objects.all()
+
+        elif(filter == "checkIn"):
+            bookings = Reservation.objects.all().filter(checkIn = data) 
+
+        elif(filter == "checkOut"):
+            bookings = Reservation.objects.all().filter(checkOut = data) 
+
+        elif(filter == "city"):
+            bookings = Reservation.objects.filter(room__hotel__city = data)  
+        
+        elif(filter == "guest"):
+            bookings = Reservation.objects.all().filter(guest__username = data) 
+        
+        elif(filter == "hotel"):
+            bookings = Reservation.objects.all().filter(room__hotel__name = data)
+        
+        else:
+            bookings = Reservation.objects.filter(status = data)
+
     if not bookings:
         messages.warning(request, "No bookings found")
 

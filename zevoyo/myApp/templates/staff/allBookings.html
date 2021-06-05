@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'myApp/style/common.css'%}"> {% endblock css %} {% block body %}
 <h3 class="text-center text-success">All Bookings</h3>
 
-<form action="/myApp/staff/allbookings/filter/data/" method="POST" class="all-booking">
+<form action="/myApp/staff/allbookings/" method="POST" class="all-booking">
     {% csrf_token %}
     <label for="filter">Filter:</label>
     <div class="form-group">
