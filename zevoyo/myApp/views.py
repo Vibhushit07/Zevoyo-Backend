@@ -50,18 +50,10 @@ def homePage(request):
 def contactpage(request):
     return HttpResponse(render(request,'contact.html'))
 
-def hello(request):
-    return HttpResponse(render(request,'hello.html'))
-
-def hello1(request):
-    return HttpResponse(render(request,'hello1.html'))
-
 def aboutpage(request):
     hotels = Hotels.objects.all()
     rooms = Rooms.objects.all()
     cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
-    print(cities)
-    print(hotels)
     response = render(request, 'about.html', {'cities': len(cities), 'rooms': len(rooms), 'hotels': len(hotels)})
     return HttpResponse(response)
     

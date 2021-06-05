@@ -3,7 +3,6 @@
 <!--Cards starts here-->
 <div class="container py-5">
 
-
     <!--login and signup tab starts here -->
     <section>
         <div class="card w-50 mx-auto">
@@ -21,12 +20,11 @@
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#menu1" style="width:158px">Signup</a>
                         </li>
+                    </ul>
 
                 </div>
             </div>
 
-
-            </ul>
             <div class="card-body">
 
                 <!-- Tab panes -->
@@ -49,12 +47,6 @@
                                             <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
                                             <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         </div>
-                                        <!-- <div class="form-group form-check"> -->
-                                        <!-- <label class="form-check-label"> -->
-                                        <!-- <input class="form-check-input " type="checkbox" name="remember"> -->
-                                        <!-- Remember me -->
-                                        <!-- </label> -->
-                                        <!-- </div> -->
                                         <button type="submit" class="btn btn-primary">Login</button>
                                     </form>
                                 </div>
@@ -69,56 +61,41 @@
                                 <div class="col-md-12 col-lg-12 col-xlg-12 col-sm-12">
 
                                     <form action="/myApp/user/signup/" method="post">
-                                        {%csrf_token%}
-                                        <!-- <div class="form-group">
-                                            <label for="fname">First Name:</label>
-                                            <input type="text" class="form-control " id="fname" placeholder="First Name" name="fname">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="lname">Last Name:</label>
-                                            <input type="text" class="form-control " id="lname" placeholder="Last Name" name="lname">
-                                        </div> -->
-                                        <div class="form-group">
-                                            <label for="email">Email:</label>
-                                            <input type="text" class="form-control " id="email" placeholder="Enter email id" name="email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="username">Username:</label>
-                                            <input type="text" class="form-control " id="username" placeholder="Enter Username" name="username">
-                                        </div>
-
-                                        <!-- <div class="form-group"> -->
-                                        <!-- <label for="contact-number">Contact Number:</label> -->
-                                        <!-- <input type="text" class="form-control " id="contact-number" placeholder="Contact Number" name="contactNumber"> -->
-                                        <!-- </div> -->
-
-                                        <div class="form-group">
-                                            <label for="pwd">Password:</label>
-                                            <input type="password" class="form-control" id="password1" placeholder="Enter password" name="password1">
-                                            <span toggle="#password1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pwd">Confirm Password:</label>
-                                            <input type="password" class="form-control " id="password2" placeholder="Confirm password" name="password2">
-                                            <span toggle="#password2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary">Sign Up</button>
-                                    </form>
+                                        {%csrf_token%} e="text" class="form-control " id="lname" placeholder="Last Name" name="lname">
+                                </div> -->
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="text" class="form-control " id="email" placeholder="Enter email id" name="email">
                                 </div>
+                                <div class="form-group">
+                                    <label for="username">Username:</label>
+                                    <input type="text" class="form-control " id="username" placeholder="Enter Username" name="username">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pwd">Password:</label>
+                                    <input type="password" class="form-control" id="password1" placeholder="Enter password" name="password1">
+                                    <span toggle="#password1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd">Confirm Password:</label>
+                                    <input type="password" class="form-control " id="password2" placeholder="Confirm password" name="password2">
+                                    <span toggle="#password2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Sign Up</button>
+                                </form>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
+        </div>
     </section>
     <!--Login and logout tab ends here-->
-    </div>
+</div>
 
-    <!--Cards ends here-->
-    {% endblock body %} {% block js %}
-    <script src="{% static '/myApp/script/togglePassword.js' %}"></script>
-    {% endblock js %}
+<!--Cards ends here-->
+{% endblock body %} {% block js %}
+<script src="{% static '/myApp/script/togglePassword.js' %}"></script>
+{% endblock js %}
