@@ -5,6 +5,10 @@ from . import views
 from chat import urls as chat_urls
 
 urlpatterns = [
+
+    path('hello/', views.hello, name = "hello"),
+    path('hello1/', views.hello1, name = "hello1"), 
+
     path('', views.homePage, name = "homePage"),
     path('home/', views.homePage,name="homepage"),
     path('contact/', views.contactpage, name = "contactpage"),

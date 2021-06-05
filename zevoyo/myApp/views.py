@@ -50,6 +50,12 @@ def homePage(request):
 def contactpage(request):
     return HttpResponse(render(request,'contact.html'))
 
+def hello(request):
+    return HttpResponse(render(request,'hello.html'))
+
+def hello1(request):
+    return HttpResponse(render(request,'hello1.html'))
+
 def aboutpage(request):
     hotels = Hotels.objects.all()
     rooms = Rooms.objects.all()
