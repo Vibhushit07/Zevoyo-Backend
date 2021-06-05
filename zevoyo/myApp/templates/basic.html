@@ -65,16 +65,24 @@
                         <i class="fa fa-caret-down"></i></button>
                     <div class="dropdown-content">
                         {% if user.is_staff %}
-                        <a class="nav-link text-bold" href="/myApp/staff/dashboard/">Dashboard</a>
-                        <a class="nav-link text-bold" href="/myApp/staff/allbookings/">All Bookings</a> {% endif %}
+                        <a class="nav-link text-bold" href="/myApp/staff/dashboard/">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                        <a class="nav-link text-bold" href="/myApp/staff/allbookings/">
+                            <i class="fas fa-hotel"></i> All Bookings
+                        </a>
+                        {% endif %}
 
                         <a href="/myApp/user/editProfile/" class="nav-link">
-                            Edit Profile
+                            <i class="fas fa-user"></i> Edit Profile
                         </a> {% if user.is_staff == False %}
-                        <a class="nav-link text-bold" href="/myApp/user/bookings">My Bookings</a> {% endif %}
+                        <a class="nav-link text-bold" href="/myApp/user/bookings">
+                            <i class="fas fa-hotel"></i> My Bookings
+                        </a>
+                        {% endif %}
 
                         <a href="/myApp/logout/" class="nav-link">
-                            Logout
+                            <i class="fas fa-power-off"></i> Logout
                         </a>
                     </div>
                 </div>
