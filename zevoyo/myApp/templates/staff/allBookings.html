@@ -7,7 +7,6 @@
 
 <form action="/myApp/staff/allbookings/" method="POST" class="all-booking">
     {% csrf_token %}
-    <label for="filter">Filter:</label>
     <div class="form-group">
         <select class="form-control" id="filter" name="filter">
             <option value="allBookings">All Bookings</option>
