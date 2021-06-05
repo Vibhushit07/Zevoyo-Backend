@@ -32,24 +32,24 @@ $("#filter").click(function() {
 
         //     parent.append(select);
 
-    } else if (filter === 'statusD') {
+        // } else if (filter === 'statusD') {
 
-        let select = document.createElement("select");
-        select.setAttribute("class", "form-control");
-        select.setAttribute("id", "data");
-        select.setAttribute("name", "data");
+        //     let select = document.createElement("select");
+        //     select.setAttribute("class", "form-control");
+        //     select.setAttribute("id", "data");
+        //     select.setAttribute("name", "data");
 
-        let res = ['Available', 'Not Available']
+        //     let res = ['Available', 'Not Available']
 
-        for (let i = 0; i < res.length; i++) {
+        //     for (let i = 0; i < res.length; i++) {
 
-            let child = document.createElement("option");
-            child.innerHTML = res[i];
-            child.setAttribute("value", i + 1)
-            select.append(child)
-        }
+        //         let child = document.createElement("option");
+        //         child.innerHTML = res[i];
+        //         child.setAttribute("value", i + 1)
+        //         select.append(child)
+        //     }
 
-        parent.append(select);
+        //     parent.append(select);
 
     } else if (filter === 'statusB') {
 

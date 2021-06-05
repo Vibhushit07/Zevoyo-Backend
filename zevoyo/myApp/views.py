@@ -494,6 +494,9 @@ def filter(request):
     
     elif(fil == "roomType"):
         records = Rooms.get_roomType(request)
+    
+    elif(fil == "statusR"):
+        records = Rooms.get_roomStatus(request)
 
     json_res = [] 
 
