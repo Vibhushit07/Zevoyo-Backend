@@ -114,17 +114,11 @@ def staffLogin(request):
 
 def user_sign_up(request):
     if request.method=="POST":
-        #firstname = request.POST['fname']
-        #lastname = request.POST['lname']
         email = request.POST['email']
         userName = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-
-       # contactNumber = request.POST['contactNumber']
-        # print(User.objects.all().get(email=email))
         
-
         if password1 != password2:
             messages.warning(request,"Password didn't matched")
             return redirect('userlogin')
@@ -135,11 +129,12 @@ def user_sign_up(request):
             
         except:
             try:
-                if User.objects.all().get(email=email):
-                 messages.warning(request,"email is not available")
-                 return redirect('userlogin')
+                if User.objects.all().get(email = email):
+                    messages.warning(request,"email is not available")
+                    return redirect('userlogin')
             except:
                 pass
+
         new_user = User.objects.create_user(username = userName, password = password1, email=email)
         new_user.is_superuser=False
         new_user.is_staff=False
@@ -414,7 +409,12 @@ def bookRoom(request):
 
         reservation.save()
 
-        sendEmail(request, reservation)
+        recepient = request.POST['email']
+        subject = 'Hotel Room Booking Confirmation'
+    
+        message = 'Congratulations. Your hotel room is booked. \n Bookings Details are mentioned below: \nBooking Id-' + reservation.bookingId +'\nGuest name- ' + reservation.guest.username + '\nCheck In- ' + reservation.checkIn + '\nCheck Out-' + reservation.checkOut + '\nHotel Name- ' + reservation.room.hotel.name + '\nContact Number- ' + reservation.room.hotel.contactNumber + '\nAddress- ' + reservation.room.hotel.address + ', ' + reservation.room.hotel.city + ', ' + reservation.room.hotel.state + '- ' + str(reservation.room.hotel.pincode) + '\nCity-' + reservation.room.hotel.city
+
+        sendEmail(recepient, subject, message)
 
         messages.success(request, "Congratulations! Booking Successfull")
 
@@ -566,12 +566,7 @@ def cancelBooking(request):
     else:
         return HttpResponse("Access Denied")
 
-def sendEmail(request, reservation):
-
-    recepient = request.POST['email']
-    subject = 'Hotel Room Booking Confirmation'
-    
-    message = 'Congratulations. Your hotel room is booked. \n Bookings Details are mentioned below: \nBooking Id-' + reservation.bookingId +'\nGuest name- ' + reservation.guest.username + '\nCheck In- ' + reservation.checkIn + '\nCheck Out-' + reservation.checkOut + '\nHotel Name- ' + reservation.room.hotel.name + '\nContact Number- ' + reservation.room.hotel.contactNumber + '\nAddress- ' + reservation.room.hotel.address + ', ' + reservation.room.hotel.city + ', ' + reservation.room.hotel.state + '- ' + str(reservation.room.hotel.pincode) + '\nCity-' + reservation.room.hotel.city
+def sendEmail(recepient, subject, message):
     
     send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
     return HttpResponse('Success email send')
