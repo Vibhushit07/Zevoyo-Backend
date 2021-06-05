@@ -11,6 +11,7 @@ $("#filter").click(function() {
         input.setAttribute("id", "data");
         input.setAttribute("type", "date");
         input.setAttribute("name", "data");
+        input.setAttribute("class", "form-control");
         parent.append(input);
 
     } else {
