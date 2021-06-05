@@ -49,7 +49,14 @@ def contactpage(request):
     return HttpResponse(render(request,'contact.html'))
 
 def aboutpage(request):
-    return HttpResponse(render(request,'about.html'))
+    hotels = Hotels.objects.all()
+    rooms = Rooms.objects.all()
+    cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
+    print(cities)
+    print(hotels)
+    response = render(request, 'about.html', {'cities': len(cities), 'rooms': len(rooms), 'hotels': len(hotels)})
+    return HttpResponse(response)
+    
 
 def description(request):
     room = Rooms.objects.all().get(id = int(request.GET['roomid']))

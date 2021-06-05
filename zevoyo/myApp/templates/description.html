@@ -114,6 +114,15 @@
                     </td>
                 </tr>
             </table>
+            {% if user.is_authenticated %}
+            <a href="/myApp/user/book-room?roomid={{room.id}}"><button class="btn btn-warning">Book Now</button></a>
+            {% else %}
+            <a href="/myApp/user/login/" class="nav-link">
+                <button class="btn btn-group bg-warning font-weight-bold" data-toggle="modal" data-target="#forlogin">
+                    Login
+                </button>
+                {% endif %}
+            </a>
         </div>
     </div>
 
