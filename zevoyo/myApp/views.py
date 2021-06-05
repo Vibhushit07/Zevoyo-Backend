@@ -534,38 +534,6 @@ def filter(request):
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
-def filterBookings(request):
-    if request.user.is_staff == False:
-        return HttpResponse("Access Denied")
-    
-    bookings = []
-
-    filter = request.POST['filter']
-    data = request.POST['data']
-
-    if(filter == "allBookings"):
-        bookings = Reservation.objects.all()
-
-    elif(filter == "checkIn"):
-        bookings = Reservation.objects.all().filter(checkIn = data) 
-
-    elif(filter == "checkOut"):
-        bookings = Reservation.objects.all().filter(checkOut = data) 
-
-    elif(filter == "city"):
-        bookings = Reservation.objects.filter(room__hotel__city = data)  
-    
-    elif(filter == "guest"):
-        bookings = Reservation.objects.all().filter(guest__username = data) 
-    
-    elif(filter == "hotel"):
-        bookings = Reservation.objects.all().filter(room__hotel__name = data)
-    
-    else:
-        bookings = Reservation.objects.filter(status = data)
-    
-    return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
-
 def cancelBooking(request):
     if request.method == "POST":
         booking = Reservation.objects.get(id = request.POST['bookingId'])
