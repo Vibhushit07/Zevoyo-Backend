@@ -58,7 +58,8 @@
         </thead>
         {% for room in rooms %}
         <tr class="">
-            <td> <b> {{ room.hotel.name }} </b> {{ room.hotel.type }} </td>
+            <td>
+                <a href="/myApp/user/description?roomid={{room.id}}"> <b> {{ room.hotel.name }} </b> </a>{{ room.hotel.type }} </td>
             <td>{{ room.get_roomType_display }}</td>
             <td>{{ room.hotel.city }}</td>
             <td>{{ room.capacity }}</td>
