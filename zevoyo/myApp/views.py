@@ -372,6 +372,9 @@ def user_bookings(request):
         if(filter != "allUserBookings"):
             data = request.POST['data']
 
+            print(filter)
+            print(data)
+
             if(filter == "checkIn"):
                 bookings = bookings.filter(checkIn = data) 
 
@@ -383,6 +386,9 @@ def user_bookings(request):
             
             elif(filter == "hotel"):
                 bookings = bookings.filter(room__hotel__name = data)
+
+            elif(filter == "hotelType"):
+                bookings = bookings.filter(room__hotel__type = data)
             
             else:
                 bookings = bookings.filter(status = data)
