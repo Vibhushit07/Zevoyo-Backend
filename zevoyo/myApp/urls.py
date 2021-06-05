@@ -1,10 +1,8 @@
-from django.urls import path,include
+from django.urls import path, include
 
 from . import views
-from .views import editProfile
 
 from chat import urls as chat_urls
-from location import urls as location_urls
 
 urlpatterns = [
     path('', views.homePage, name = "homePage"),
@@ -39,5 +37,4 @@ urlpatterns = [
     path('logout/', views.logoutUser, name = "logout"),
 
     path('chat/', include(chat_urls)),
-    path('location/', include(location_urls)),
 ]
