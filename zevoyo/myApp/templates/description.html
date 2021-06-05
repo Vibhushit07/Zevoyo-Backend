@@ -9,7 +9,15 @@
         <div class="left-container">
             <h1>{{ room.hotel.name }}</h1>
             <h5>{{room.hotel.address| capfirst}}, </h5>
-            <h6> {{room.hotel.city| capfirst}}, {{room.hotel.state| capfirst}}, {{room.hotel.country| capfirst}}- {{room.hotel.pincode}}</h6>
+            <h6 class="location"> {{room.hotel.city| capfirst}}, {{room.hotel.state| capfirst}}, {{room.hotel.country| capfirst}}- {{room.hotel.pincode}}
+                <h5 class="location-1">
+                    <a href="https://www.google.com/maps/dir//{{room.hotel.name}} + ' ' + 
+                        {{room.hotel.address}} + ' ' + {{room.hotel.city}} + ' ' + {{room.hotel.state}} + ' ' + 
+                        {{room.hotel.country}} + ' ' + {{room.hotel.pincode}}" target="_blank">
+                        <i class="fa fa-directions"></i>
+                    </a>
+                </h5>
+            </h6>
             <br>
             <h2>Description</h2>
             <p>
