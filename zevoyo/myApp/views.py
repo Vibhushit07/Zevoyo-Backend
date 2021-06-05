@@ -472,9 +472,6 @@ def filter(request):
 
     fil = request.GET.get('filter')
 
-    print(Rooms.get_roomType_display(request))
-    # print(models.IntegerChoices('roomType').choices)
-
     records = []
 
     if(fil == "city"):
@@ -496,7 +493,7 @@ def filter(request):
         records = Hotels.objects.values_list("type", flat = True).distinct().order_by("type")
     
     elif(fil == "roomType"):
-        records = Rooms.get_roomType_display(request)
+        records = Rooms.get_roomType_name(request)
 
     json_res = [] 
 
