@@ -178,52 +178,32 @@ def logoutUser(request):
     return redirect('/myApp/user/')
 
 def editProfile(request):
-    print(request.user)
-    existingUser = User.objects.all().get(username = request.user)
-    Pnumber1 =  Pnumber.objects.all().get(user = existingUser)
+    existingUser = User.objects.all().get(user = request.user)
+
+    try:
+        Pnumber1 =  Pnumber.objects.get(userid = existingUser)
+    except Pnumber.DoesNotExist:
+        Pnumber1 = ""
+
     if request.method == 'POST':
-        userName = request.user
-        firstname = request.POST['fname']
-        lastname = request.POST['lname']
-        email= request.POST['email']
-        #phone_no=request.POST['phonenumber']
-        print(userName,firstname,lastname,email)
-        # existingUser = User.objects.all().get(username = userName)
-        print(existingUser.id,"xxxx ")
+        
         if Pnumber.objects.all().get(user = existingUser):
            Pnumber1 =  Pnumber.objects.all().get(user = existingUser)
-           Pnumber1.phone_no=request.POST['phonenumber']
+           Pnumber1.phone_no = request.POST['phonenumber']
+
         else:
-             Pnumber1 = Pnumber.objects.create(user = existingUser, phone_no=request.POST['phonenumber'])
-        # print(request.username,"fff")
-        existingUser.first_name=request.POST['fname']
-        existingUser.last_name=request.POST['lname']
-        existingUser.email=request.POST['email']
-        #Pnumber1.phone_no=request.POST['phonenumber']
+            Pnumber1 = Pnumber.objects.create(user = existingUser, phone_no=request.POST['phonenumber'])
 
-
+        existingUser.first_name = request.POST['fname']
+        existingUser.last_name = request.POST['lname']
+        existingUser.email = request.POST['email']
 
         Pnumber1.save()
-    
-    if request.method == 'POST':
-
-        existingUser = User.objects.all().get(username = request.user)
-
-        existingUser.first_name=request.POST['fname']
-        existingUser.last_name=request.POST['lname']
-        existingUser.email=request.POST['email']
-        existingUser.phone_number=request.POST['phonenumber']
-
         existingUser.save()
 
         messages.success(request, "User details updated successfully")
 
-        # return redirect('editProfile')
     return render(request, 'user/editProfile.html', {"phone_no": Pnumber1})
-
-    # else:
-    #     return render(request, 'user/editProfile.html')
-
 
 @login_required(login_url = "/staff")
 def dashboard(request):
