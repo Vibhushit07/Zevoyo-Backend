@@ -1,0 +1,46 @@
+{% extends 'basic.html' %} {% block title %} All Users {% endblock title %} {% load static %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/dashboard.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/common.css'%}"> {% endblock css %} {% block body %}
+
+<br>
+<h3 class="text-center text-success">All Users</h3>
+
+<form action="/myApp/staff/users/" method="POST" class="all-booking">
+    {% csrf_token %}
+    <div class="form-group">
+        <select class="form-control" id="filter" name="filter">
+            <option value="allUsers">All Users</option>
+            {% for user in users %}
+            <option value="{{user.id}}"> {{ user.username| capfirst }} </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Filter" class="form-control btn btn-warning">
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+    </thead>
+
+    {% for user in userList %}
+    <tr>
+        <td> {{ user.username| capfirst }} </td>
+        <td> {{ user.first_name| capfirst }} </td>
+        <td> {{ user.last_name| capfirst }} </td>
+        <td> {{ user.email }} </td>
+        <td> {{ user.phone }} </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock body %} {% block js %}
+<script src="{% static '/myApp/script/filter.js' %}"></script>
+{% endblock js %}

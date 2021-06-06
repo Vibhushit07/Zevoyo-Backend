@@ -196,6 +196,14 @@ def editProfile(request):
         Pnumber1 = ""
 
     if request.method == 'POST':
+
+        if (existingUser.email != request.POST['email']):
+            try:
+                user = User.objects.get(email = request.POST['email'])
+                messages.warning(request, 'Email address already exist')
+                return redirect("editProfile")
+            except User.DoesNotExist:
+                existingUser.email = request.POST['email']
         
         try:
            Pnumber1 =  Pnumber.objects.all().get(user = existingUser)
@@ -206,7 +214,6 @@ def editProfile(request):
 
         existingUser.first_name = request.POST['fname']
         existingUser.last_name = request.POST['lname']
-        existingUser.email = request.POST['email']
 
         Pnumber1.save()
         existingUser.save()
@@ -217,7 +224,7 @@ def editProfile(request):
 
         messages.success(request, "User details updated successfully")
 
-    return render(request, 'user/editProfile.html', {"phone_no": Pnumber1})
+    return render(request, 'user/editProfile.html', {"user": existingUser, "phone_no": Pnumber1})
 
 @login_required(login_url = "/staff")
 def dashboard(request):
@@ -597,3 +604,62 @@ def updateBookings(bookings):
             booking.cancel = False
             booking.save()
     return bookings
+
+def allUsers(request):
+    if request.user.is_authenticated == False and request.user.is_staff:
+        return redirect('userlogin')
+
+    user = User.objects.all().filter(is_staff = False)
+    phone = Pnumber.objects.all()
+    
+    userList = user
+
+    if request.method == "POST":
+
+        filter = request.POST['filter']
+
+        if(filter != "allUsers"):
+            userList = User.objects.all().filter(id = filter)
+            try:
+                phone =  Pnumber.objects.filter(user = filter)
+            except Pnumber.DoesNotExist:
+                phone = ""
+        
+    userList = updateUserList(userList, phone)
+
+    if not userList:
+        messages.warning(request,"No User Found")
+
+    return HttpResponse(render(request,'staff/users.html', {'users': user, 'userList': userList, 'phoneNumbers': phone }))
+
+def updateUserList(users, phone):
+    userList = []
+
+    if(phone != ""):
+
+        for user in users:
+
+            phoneNumber =  Pnumber.objects.filter(user = user)
+
+            if(phoneNumber):
+                phoneNumber = phoneNumber[0].phone_no
+            else:
+                phoneNumber = ""
+        
+            userList.append({
+                "username": user.username,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "email": user.email,
+                "phone": phoneNumber
+            })
+    else:
+        userList.append({
+                "username": users.username,
+                "first_name": users.first_name,
+                "last_name": users.last_name,
+                "email": users.email,
+                "phone": ""
+            })
+    
+    return userList
