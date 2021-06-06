@@ -189,22 +189,6 @@ def editProfile(request):
         existingUser = User.objects.get(id = request.user.id)
     except User.DoesNotExist:
         existingUser = ""
-    
-    # if existingUser:
-
-    #     if (existingUser.email != request.POST['email']):
-    #         print('Hello')
-    #         print(existingUser.email)
-    #         print(request.POST['email'])
-    #         print(existingUser.email != request.POST['email'])
-    #         try:
-    #             user = User.objects.get(email = request.POST['email'])
-    #             print(user)
-    #             messages.error(request, 'Email address already exist')
-    #             return redirect("editProfile")
-    #         except User.DoesNotExist:
-    #             print('email')
-    #             existingUser.email = request.POST['email']
 
     try:
         Pnumber1 =  Pnumber.objects.get(user = existingUser)
@@ -214,17 +198,11 @@ def editProfile(request):
     if request.method == 'POST':
 
         if (existingUser.email != request.POST['email']):
-            print('Hello')
-            print(existingUser.email)
-            print(request.POST['email'])
-            print(existingUser.email != request.POST['email'])
             try:
                 user = User.objects.get(email = request.POST['email'])
-                print(user)
                 messages.warning(request, 'Email address already exist')
                 return redirect("editProfile")
             except User.DoesNotExist:
-                print('email')
                 existingUser.email = request.POST['email']
         
         try:
@@ -628,43 +606,59 @@ def updateBookings(bookings):
     return bookings
 
 def allUsers(request):
-    if request.user.is_authenticated == False:
+    if request.user.is_authenticated == False and request.user.is_staff:
         return redirect('userlogin')
 
-    user = User.objects.all().get(id = request.user.id)
+    user = User.objects.all()
+    phone = Pnumber.objects.all()
     
-    bookings = Reservation.objects.all().filter(guest = user).order_by("checkIn")
-
-    bookings = updateBookings(bookings)
+    userList = user
 
     if request.method == "POST":
 
         filter = request.POST['filter']
 
-        if(filter != "allUserBookings"):
-            data = request.POST['data']
+        if(filter != "allUsers"):
+            userList = User.objects.all().filter(id = filter)
+            try:
+                phone =  Pnumber.objects.filter(user = filter)
+            except Pnumber.DoesNotExist:
+                phone = ""
+        
+        userList = updateUserList(userList, phone)
 
-            if(filter == "checkIn"):
-                bookings = bookings.filter(checkIn = data) 
+    if not userList:
+        messages.warning(request,"No User Found")
 
-            elif(filter == "checkOut"):
-                bookings = bookings.filter(checkOut = data) 
+    return HttpResponse(render(request,'staff/users.html', {'users': user, 'userList': userList, 'phoneNumbers': phone }))
 
-            elif(filter == "city"):
-                bookings = bookings.filter(room__hotel__city = data)  
+def updateUserList(users, phone):
+    userList = []
+
+    if(phone):
+        for user in users:
             
-            elif(filter == "hotel"):
-                bookings = bookings.filter(room__hotel__name = data)
-
-            elif(filter == "hotelType"):
-                bookings = bookings.filter(room__hotel__type = data)
+            phone = ""
             
-            elif(filter == "roomType"):
-                bookings = bookings.filter(room__roomType = data)
-            
-            else:
-                bookings = bookings.filter(status = data)
+            try:
+                phone =  Pnumber.objects.filter(user = user)
+            except Pnumber.DoesNotExist:
+                phone = ""
 
-    if not bookings:
-        messages.warning(request,"No Bookings Found")
-    return HttpResponse(render(request,'user/.html', {'bookings': bookings}))
+            userList.append({
+                "username": user.username,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "email": user.email,
+                "phone": phone
+            })
+    else:
+        userList.append({
+                "username": users.username,
+                "first_name": users.first_name,
+                "last_name": users.last_name,
+                "email": users.email,
+                "phone": ""
+            })
+    
+    return userList
