@@ -625,7 +625,7 @@ def allUsers(request):
             except Pnumber.DoesNotExist:
                 phone = ""
         
-        userList = updateUserList(userList, phone)
+    userList = updateUserList(userList, phone)
 
     if not userList:
         messages.warning(request,"No User Found")
@@ -635,22 +635,23 @@ def allUsers(request):
 def updateUserList(users, phone):
     userList = []
 
-    if(phone):
-        for user in users:
-            
-            phone = ""
-            
-            try:
-                phone =  Pnumber.objects.filter(user = user)
-            except Pnumber.DoesNotExist:
-                phone = ""
+    if(phone != ""):
 
+        for user in users:
+
+            phoneNumber =  Pnumber.objects.filter(user = user)
+
+            if(phoneNumber):
+                phoneNumber = phoneNumber[0].phone_no
+            else:
+                phoneNumber = ""
+        
             userList.append({
                 "username": user.username,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "email": user.email,
-                "phone": phone
+                "phone": phoneNumber
             })
     else:
         userList.append({
