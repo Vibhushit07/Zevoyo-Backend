@@ -642,7 +642,6 @@ def allUsers(request):
 
     return HttpResponse(render(request,'staff/users.html', {'users': user, 'userList': userList, 'phoneNumbers': phone }))
 
-@login_required(login_url= '/staff/')
 def updateUserList(users, phone):
     userList = []
 
