@@ -57,11 +57,9 @@ def aboutpage(request):
     response = render(request, 'about.html', {'cities': len(cities), 'rooms': len(rooms), 'hotels': len(hotels)})
     return HttpResponse(response)
     
-
 def description(request):
     room = Rooms.objects.all().get(id = int(request.GET['roomid']))
     return HttpResponse(render(request, "description.html", {"room": room}))
-
 
 def staffSignup(request):
     if request.method == 'POST':
@@ -226,7 +224,7 @@ def editProfile(request):
 
     return render(request, 'user/editProfile.html', {"user": existingUser, "phone_no": Pnumber1})
 
-@login_required(login_url = "/staff")
+@login_required(login_url = "/staff/")
 def dashboard(request):
 
     if request.user.is_staff == False:
@@ -272,6 +270,7 @@ def dashboard(request):
     response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms, 'bookings': bookings})
     return HttpResponse(response)
 
+@login_required(login_url= '/staff/')
 def searchDashboard(request):
 
     if request.user.is_staff == False:
@@ -288,6 +287,7 @@ def searchDashboard(request):
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
+@login_required(login_url= '/staff/')
 def addNewLocation(request):
     if request.method == "POST" and request.user.is_staff:
         name = request.POST['hotelName']
@@ -316,6 +316,7 @@ def addNewLocation(request):
     else:
         return HttpResponse("Access Denied")
 
+@login_required(login_url= '/staff/')
 def addNewRoom(request):
     if request.method == "POST" and request.user.is_staff:
         totalRooms = len(Rooms.objects.all())
@@ -354,6 +355,7 @@ def addNewRoom(request):
     else:
         return HttpResponse("Access Denied")
 
+@login_required(login_url= '/user/')
 def user_bookings(request):
     if request.user.is_authenticated == False:
         return redirect('userlogin')
@@ -396,10 +398,14 @@ def user_bookings(request):
         messages.warning(request,"No Bookings Found")
     return HttpResponse(render(request,'user/mybookings.html', {'bookings': bookings}))
 
+
+@login_required
 def bookRoomPage(request):
     room = Rooms.objects.all().get(id = int(request.GET['roomid']))
     return HttpResponse(render(request, "user/bookRoom.html", {"room": room}))
 
+
+@login_required
 def bookRoom(request):
     if request.method == 'POST':
         roomId = request.POST['roomId']
@@ -444,6 +450,7 @@ def bookRoom(request):
     else:
         return HttpResponse("Access Denied")
 
+@login_required(login_url= '/staff/')
 def editRoom(request):
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
@@ -485,12 +492,14 @@ def editRoom(request):
         room = Rooms.objects.all().get(id = request.GET['roomid'])
         return HttpResponse(render(request, 'staff/editRoom.html', {'room': room}))
 
+@login_required(login_url= '/staff/')
 def viewRoom(request):
     room = Rooms.objects.all().get(id = request.GET['roomid'])
     reservations = Reservation.objects.all().filter(room = room)
 
     return HttpResponse(render(request, 'staff/viewRoom.html', {'room': room, 'reservations': reservations}))
 
+@login_required(login_url= '/staff/')
 def allBookings(request):
     bookings = Reservation.objects.all()
 
@@ -605,6 +614,7 @@ def updateBookings(bookings):
             booking.save()
     return bookings
 
+@login_required(login_url= '/staff/')
 def allUsers(request):
     if request.user.is_authenticated == False and request.user.is_staff:
         return redirect('userlogin')
@@ -632,6 +642,7 @@ def allUsers(request):
 
     return HttpResponse(render(request,'staff/users.html', {'users': user, 'userList': userList, 'phoneNumbers': phone }))
 
+@login_required(login_url= '/staff/')
 def updateUserList(users, phone):
     userList = []
 
