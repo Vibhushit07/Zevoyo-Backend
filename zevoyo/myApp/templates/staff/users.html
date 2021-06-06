@@ -3,26 +3,17 @@
 <link rel="stylesheet" type="text/css" href="{% static 'myApp/style/common.css'%}"> {% endblock css %} {% block body %}
 
 <br>
-<h3 class="text-center text-success">All Bookings</h3>
+<h3 class="text-center text-success">All Users</h3>
 
-<form action="/myApp/staff/allbookings/" method="POST" class="all-booking">
+<form action="/myApp/staff/users/" method="POST" class="all-booking">
     {% csrf_token %}
     <div class="form-group">
         <select class="form-control" id="filter" name="filter">
-            <option value="allBookings">All Bookings</option>
-            <option value="checkIn">Check-In</option>
-            <option value="checkOut">Check-Out</option>
-            <option value="city">City</option>
-            <option value="guest">Guest</option>
-            <option value="hotel">Hotel</option>
-            <option value="hotelType">Hotel Type</option>
-            <option value="roomType">Room Type</option>
-            <option value="statusBookings">Booking Status</option>
+            <option value="allUsers">All Users</option>
+            {% for user in users %}
+            <option value="{{user.id}}"></option>
+            {% endfor %}
         </select>
-    </div>
-
-    <div class="form-group" id="div-data">
-
     </div>
 
     <div class="form-group">
@@ -32,39 +23,20 @@
 
 <table class="table">
     <thead>
-        <th>Guest</th>
-        <th>City</th>
-        <th>Hotel</th>
-        <th>Hotel Type</th>
-        <th>Room Type</th>
-        <th>Person</th>
-        <th>Check In</th>
-        <th>Check Out</th>
-        <th>Price</th>
-        <th>Booking Status</th>
-        <th>Cancel Booking</th>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
     </thead>
 
-    {% for booking in bookings %}
+    {% for user in userList %}
     <tr>
-        <td> {{ booking.guest.username| capfirst }} </td>
-        <td> {{ booking.room.hotel.city }} </td>
-        <td> {{ booking.room.hotel.name }} </td>
-        <td> {{ booking.room.hotel.type }} </td>
-        <td> {{ booking.room.get_roomType_display }} </td>
-        <td> {{ booking.room.capacity }} </td>
-        <td> {{ booking.checkIn }} </td>
-        <td> {{ booking.checkOut }} </td>
-        <td>Rs. {{ booking.room.price }} </td>
-        <td>{{booking.get_status_display}}</td>
-        <td>
-            <form action="/myApp/booking/cancel/" method="POST">
-                {% csrf_token %} {% if booking.cancel and booking.status == 'Booked' %}
-                <button type="submit" class="btn btn-danger">Cancel</button> {% else %}
-                <button type="submit" class="btn btn-danger" disabled>Cancel</button> {% endif %}
-                <input type="hidden" name="bookingId" value="{{booking.id}}">
-            </form>
-        </td>
+        <td> {{ user.username| capfirst }} </td>
+        <td> {{ user.first_name| capfirst }} </td>
+        <td> {{ user.last_name| capfirst }} </td>
+        <td> {{ user.email }} </td>
+        <td> {{ user.phone }} </td>
     </tr>
     {% endfor %}
 </table>
