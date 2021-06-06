@@ -609,7 +609,7 @@ def allUsers(request):
     if request.user.is_authenticated == False and request.user.is_staff:
         return redirect('userlogin')
 
-    user = User.objects.all()
+    user = User.objects.all().filter(is_staff = False)
     phone = Pnumber.objects.all()
     
     userList = user
