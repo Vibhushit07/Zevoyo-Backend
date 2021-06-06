@@ -189,6 +189,22 @@ def editProfile(request):
         existingUser = User.objects.get(id = request.user.id)
     except User.DoesNotExist:
         existingUser = ""
+    
+    # if existingUser:
+
+    #     if (existingUser.email != request.POST['email']):
+    #         print('Hello')
+    #         print(existingUser.email)
+    #         print(request.POST['email'])
+    #         print(existingUser.email != request.POST['email'])
+    #         try:
+    #             user = User.objects.get(email = request.POST['email'])
+    #             print(user)
+    #             messages.error(request, 'Email address already exist')
+    #             return redirect("editProfile")
+    #         except User.DoesNotExist:
+    #             print('email')
+    #             existingUser.email = request.POST['email']
 
     try:
         Pnumber1 =  Pnumber.objects.get(user = existingUser)
@@ -196,6 +212,20 @@ def editProfile(request):
         Pnumber1 = ""
 
     if request.method == 'POST':
+
+        if (existingUser.email != request.POST['email']):
+            print('Hello')
+            print(existingUser.email)
+            print(request.POST['email'])
+            print(existingUser.email != request.POST['email'])
+            try:
+                user = User.objects.get(email = request.POST['email'])
+                print(user)
+                messages.warning(request, 'Email address already exist')
+                return redirect("editProfile")
+            except User.DoesNotExist:
+                print('email')
+                existingUser.email = request.POST['email']
         
         try:
            Pnumber1 =  Pnumber.objects.all().get(user = existingUser)
@@ -206,7 +236,6 @@ def editProfile(request):
 
         existingUser.first_name = request.POST['fname']
         existingUser.last_name = request.POST['lname']
-        existingUser.email = request.POST['email']
 
         Pnumber1.save()
         existingUser.save()
@@ -217,7 +246,7 @@ def editProfile(request):
 
         messages.success(request, "User details updated successfully")
 
-    return render(request, 'user/editProfile.html', {"phone_no": Pnumber1})
+    return render(request, 'user/editProfile.html', {"user": existingUser, "phone_no": Pnumber1})
 
 @login_required(login_url = "/staff")
 def dashboard(request):
