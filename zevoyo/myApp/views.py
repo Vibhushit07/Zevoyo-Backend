@@ -626,3 +626,45 @@ def updateBookings(bookings):
             booking.cancel = False
             booking.save()
     return bookings
+
+def allUsers(request):
+    if request.user.is_authenticated == False:
+        return redirect('userlogin')
+
+    user = User.objects.all().get(id = request.user.id)
+    
+    bookings = Reservation.objects.all().filter(guest = user).order_by("checkIn")
+
+    bookings = updateBookings(bookings)
+
+    if request.method == "POST":
+
+        filter = request.POST['filter']
+
+        if(filter != "allUserBookings"):
+            data = request.POST['data']
+
+            if(filter == "checkIn"):
+                bookings = bookings.filter(checkIn = data) 
+
+            elif(filter == "checkOut"):
+                bookings = bookings.filter(checkOut = data) 
+
+            elif(filter == "city"):
+                bookings = bookings.filter(room__hotel__city = data)  
+            
+            elif(filter == "hotel"):
+                bookings = bookings.filter(room__hotel__name = data)
+
+            elif(filter == "hotelType"):
+                bookings = bookings.filter(room__hotel__type = data)
+            
+            elif(filter == "roomType"):
+                bookings = bookings.filter(room__roomType = data)
+            
+            else:
+                bookings = bookings.filter(status = data)
+
+    if not bookings:
+        messages.warning(request,"No Bookings Found")
+    return HttpResponse(render(request,'user/.html', {'bookings': bookings}))
