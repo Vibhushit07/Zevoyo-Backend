@@ -57,11 +57,9 @@ def aboutpage(request):
     response = render(request, 'about.html', {'cities': len(cities), 'rooms': len(rooms), 'hotels': len(hotels)})
     return HttpResponse(response)
     
-
 def description(request):
     room = Rooms.objects.all().get(id = int(request.GET['roomid']))
     return HttpResponse(render(request, "description.html", {"room": room}))
-
 
 def staffSignup(request):
     if request.method == 'POST':
@@ -196,6 +194,14 @@ def editProfile(request):
         Pnumber1 = ""
 
     if request.method == 'POST':
+
+        if (existingUser.email != request.POST['email']):
+            try:
+                user = User.objects.get(email = request.POST['email'])
+                messages.warning(request, 'Email address already exist')
+                return redirect("editProfile")
+            except User.DoesNotExist:
+                existingUser.email = request.POST['email']
         
         try:
            Pnumber1 =  Pnumber.objects.all().get(user = existingUser)
@@ -206,7 +212,6 @@ def editProfile(request):
 
         existingUser.first_name = request.POST['fname']
         existingUser.last_name = request.POST['lname']
-        existingUser.email = request.POST['email']
 
         Pnumber1.save()
         existingUser.save()
@@ -217,9 +222,9 @@ def editProfile(request):
 
         messages.success(request, "User details updated successfully")
 
-    return render(request, 'user/editProfile.html', {"phone_no": Pnumber1})
+    return render(request, 'user/editProfile.html', {"user": existingUser, "phone_no": Pnumber1})
 
-@login_required(login_url = "/staff")
+@login_required(login_url = "/staff/")
 def dashboard(request):
 
     if request.user.is_staff == False:
@@ -265,6 +270,7 @@ def dashboard(request):
     response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms, 'bookings': bookings})
     return HttpResponse(response)
 
+@login_required(login_url= '/staff/')
 def searchDashboard(request):
 
     if request.user.is_staff == False:
@@ -281,6 +287,7 @@ def searchDashboard(request):
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
+@login_required(login_url= '/staff/')
 def addNewLocation(request):
     if request.method == "POST" and request.user.is_staff:
         name = request.POST['hotelName']
@@ -309,6 +316,7 @@ def addNewLocation(request):
     else:
         return HttpResponse("Access Denied")
 
+@login_required(login_url= '/staff/')
 def addNewRoom(request):
     if request.method == "POST" and request.user.is_staff:
         totalRooms = len(Rooms.objects.all())
@@ -347,6 +355,7 @@ def addNewRoom(request):
     else:
         return HttpResponse("Access Denied")
 
+@login_required(login_url= '/user/')
 def user_bookings(request):
     if request.user.is_authenticated == False:
         return redirect('userlogin')
@@ -389,10 +398,14 @@ def user_bookings(request):
         messages.warning(request,"No Bookings Found")
     return HttpResponse(render(request,'user/mybookings.html', {'bookings': bookings}))
 
+
+@login_required
 def bookRoomPage(request):
     room = Rooms.objects.all().get(id = int(request.GET['roomid']))
     return HttpResponse(render(request, "user/bookRoom.html", {"room": room}))
 
+
+@login_required
 def bookRoom(request):
     if request.method == 'POST':
         roomId = request.POST['roomId']
@@ -437,6 +450,7 @@ def bookRoom(request):
     else:
         return HttpResponse("Access Denied")
 
+@login_required(login_url= '/staff/')
 def editRoom(request):
     if request.user.is_staff == False:
         return HttpResponse("Access Denied")
@@ -478,12 +492,14 @@ def editRoom(request):
         room = Rooms.objects.all().get(id = request.GET['roomid'])
         return HttpResponse(render(request, 'staff/editRoom.html', {'room': room}))
 
+@login_required(login_url= '/staff/')
 def viewRoom(request):
     room = Rooms.objects.all().get(id = request.GET['roomid'])
     reservations = Reservation.objects.all().filter(room = room)
 
     return HttpResponse(render(request, 'staff/viewRoom.html', {'room': room, 'reservations': reservations}))
 
+@login_required(login_url= '/staff/')
 def allBookings(request):
     bookings = Reservation.objects.all()
 
@@ -597,3 +613,63 @@ def updateBookings(bookings):
             booking.cancel = False
             booking.save()
     return bookings
+
+@login_required(login_url= '/staff/')
+def allUsers(request):
+    if request.user.is_authenticated == False and request.user.is_staff:
+        return redirect('userlogin')
+
+    user = User.objects.all().filter(is_staff = False)
+    phone = Pnumber.objects.all()
+    
+    userList = user
+
+    if request.method == "POST":
+
+        filter = request.POST['filter']
+
+        if(filter != "allUsers"):
+            userList = User.objects.all().filter(id = filter)
+            try:
+                phone =  Pnumber.objects.filter(user = filter)
+            except Pnumber.DoesNotExist:
+                phone = ""
+        
+    userList = updateUserList(userList, phone)
+
+    if not userList:
+        messages.warning(request,"No User Found")
+
+    return HttpResponse(render(request,'staff/users.html', {'users': user, 'userList': userList, 'phoneNumbers': phone }))
+
+def updateUserList(users, phone):
+    userList = []
+
+    if(phone != ""):
+
+        for user in users:
+
+            phoneNumber =  Pnumber.objects.filter(user = user)
+
+            if(phoneNumber):
+                phoneNumber = phoneNumber[0].phone_no
+            else:
+                phoneNumber = ""
+        
+            userList.append({
+                "username": user.username,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "email": user.email,
+                "phone": phoneNumber
+            })
+    else:
+        userList.append({
+                "username": users.username,
+                "first_name": users.first_name,
+                "last_name": users.last_name,
+                "email": users.email,
+                "phone": ""
+            })
+    
+    return userList

@@ -71,10 +71,13 @@
                         <a class="nav-link text-bold" href="/myApp/staff/allbookings/">
                             <i class="fas fa-hotel"></i> All Bookings
                         </a>
+                        <a class="nav-link text-bold" href="/myApp/staff/users/">
+                            <i class="fas fa-user"></i> Users
+                        </a>
                         {% endif %}
 
                         <a href="/myApp/user/editProfile/" class="nav-link">
-                            <i class="fas fa-user"></i> Edit Profile
+                            <i class="fas fa-user-cog"></i> Edit Profile
                         </a> {% if user.is_staff == False %}
                         <a class="nav-link text-bold" href="/myApp/user/bookings">
                             <i class="fas fa-hotel"></i> My Bookings

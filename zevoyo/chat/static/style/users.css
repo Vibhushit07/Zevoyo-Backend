@@ -16,10 +16,8 @@
 .form {
     padding-top: 2px;
     display: flex;
-    width: 100vw;
     background-color: #f1f1f1;
-    position: absolute;
-    height: 100%;
+    height: 90vh;
     overflow: auto;
     align-items: center;
     flex-direction: column;

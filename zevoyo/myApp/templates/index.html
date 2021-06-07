@@ -55,15 +55,22 @@
             <th>Location</th>
             <th>Person</th>
             <th>Price</th>
+            <td>Action</td>
         </thead>
         {% for room in rooms %}
         <tr class="">
             <td>
-                <a href="/myApp/user/description?roomid={{room.id}}" target="_blank"> <b> {{ room.hotel.name }} </b> </a>{{ room.hotel.type }} </td>
+                <b> {{ room.hotel.name }} </b>{{ room.hotel.type }}
+            </td>
             <td>{{ room.get_roomType_display }}</td>
             <td>{{ room.hotel.city }}</td>
             <td>{{ room.capacity }}</td>
             <td>{{ room.price }}</td>
+            <td>
+                <a href="/myApp/user/description?roomid={{room.id}}" target="_blank">
+                    <button class="btn btn-warning">View</button>
+                </a>
+            </td>
         </tr>
         {% endfor %}
 

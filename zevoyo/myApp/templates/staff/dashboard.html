@@ -1,4 +1,4 @@
-{% extends 'basic.html' %} {% block title %} staff panel {% endblock title %} {% load static %} {% block body %} {% block css %}
+{% extends 'basic.html' %} {% block title %} Dashboard {% endblock title %} {% load static %} {% block body %} {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'myApp/style/dashboard.css'%}">
 <link rel="stylesheet" type="text/css" href="{% static 'myApp/style/common.css'%}"> {% endblock css %}
 
@@ -107,7 +107,6 @@
 
 <form action="/myApp/staff/dashboard/" method="POST" class="all-booking">
     {% csrf_token %}
-    <label for="filter">Filter:</label>
     <div class="form-group">
         <select class="form-control" id="filter" name="filter">
             <option value="allRooms">All Rooms</option>

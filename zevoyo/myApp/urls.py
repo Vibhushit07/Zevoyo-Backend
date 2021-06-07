@@ -31,6 +31,7 @@ urlpatterns = [
     path('staff/dashboard/edit-room/edit/', views.editRoom, name = "editRoom"),
     path('staff/dashboard/view-room/', views.viewRoom, name = 'viewRoom'),
     path('staff/allbookings/', views.allBookings, name = 'allBookings'),
+    path('staff/users/', views.allUsers, name = 'users'),
 
     path('filter/', views.filter, name = 'filter'),
     path('booking/cancel/', views.cancelBooking, name = 'cancelBookig'),
