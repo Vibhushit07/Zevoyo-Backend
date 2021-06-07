@@ -110,13 +110,14 @@
     <label for="filter">Filter:</label>
     <div class="form-group">
         <select class="form-control" id="filter" name="filter">
+            <option value="allRooms">All Rooms</option>
             <option value="capacity">Capacity</option>
             <option value="city">City</option>
             <option value="hotel">Hotel</option>
             <option value="hotelType">Hotel Type</option>
             <option value="price">Price</option>
             <option value="roomType">Room Type</option>
-            <option value="statusD">Status</option>
+            <option value="statusRoom">Room Status</option>
         </select>
     </div>
 
@@ -135,7 +136,7 @@
         <th>Hotel</th>
         <th>Hotel Type</th>
         <th>Room Type</th>
-        <th>Status</th>
+        <th>Room Status</th>
         <th>Price</th>
         <th>Capacity</th>
         <th>Size</th>
@@ -272,9 +273,9 @@
                                 <div class="form-group">
                                     <label for="room-type">Room Type:</label>
                                     <select class="form-control" name="roomtype" id="room-type">
-                                        <option value="1">Premium</option>
-                                        <option value="2">Deluxe</option>
-                                        <option value="3">Basic</option>
+                                        <option value="Premium">Premium</option>
+                                        <option value="Deluxe">Deluxe</option>
+                                        <option value="Basic">Basic</option>
                                     </select>
                                 </div>
 
@@ -321,8 +322,8 @@
                                 <div class="form-group">
                                     <label for="parking">Parking:</label>
                                     <select class="form-control" name="parking" id="parking">
-                                        <option value="True">Yes</option>
-                                        <option value="False">No</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                     </select>
                                 </div>
 
@@ -334,8 +335,8 @@
                                 <div class="form-group">
                                     <label for="room-status">Status:</label>
                                     <select class="form-control" name="status" id="room-status">
-                                        <option value="1">Available</option>
-                                        <option value="2">Not Available</option>
+                                        <option value="Available">Available</option>
+                                        <option value="Not Available">Not Available</option>
                                     </select>
                                 </div>
 

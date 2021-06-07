@@ -1,4 +1,5 @@
-{% extends 'basic.html' %} {% block title %} staff {% endblock title %} {% block body %}
+{% extends 'basic.html' %} {% load static %} {% block title %} staff {% endblock title %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/login.css'%}">{% endblock css %} {% block body %}
 
 <div class="container py-5">
     <section>
@@ -37,12 +38,8 @@
                                         <div class="form-group">
                                             <label for="password">Password: </label>
                                             <input type="password" class="form-control" id="password" placeholder="password" name="password">
+                                            <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         </div>
-                                        <!-- <div class="form-group form-check"> -->
-                                            <!-- <label class="form-check-label"> -->
-                                                <!-- <input type="checkbox" class="form-check-input" name="remember"> Remember me -->
-                                            <!-- </label> -->
-                                        <!-- </div> -->
                                         <button type="submit" class="btn btn-primary">Login</button>
                                     </form>
                                 </div>
@@ -58,16 +55,22 @@
                                     <form action="/myApp/staff/signup/" method="POST">
                                         {% csrf_token %}
                                         <div class="form-group">
+                                            <label for="username">Email:</label>
+                                            <input type="text" class="form-control " id="email" placeholder="email" name="email">
+                                        </div>
+                                        <div class="form-group">
                                             <label for="username">Username:</label>
                                             <input type="text" class="form-control " id="username" placeholder="Username" name="username">
                                         </div>
                                         <div class="form-group">
                                             <label for="password1">Password:</label>
                                             <input type="password" class="form-control " id="password1" placeholder="password" name="password1">
+                                            <span toggle="#password1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="password2">Confirm Password:</label>
                                             <input type="password" class="form-control " id="password2" placeholder="Confirm Password" name="password2">
+                                            <span toggle="#password2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Sign Up</button>
                                     </form>
@@ -81,4 +84,6 @@
     </section>
 </div>
 
-{% endblock body %}
+{% endblock body %} {% block js %}
+<script src="{% static '/myApp/script/togglePassword.js' %}"></script>
+{% endblock js %}

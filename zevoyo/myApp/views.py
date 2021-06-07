@@ -6,9 +6,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from zevoyo.settings import EMAIL_HOST_USER
+from .models import Hotels, Reservation, Rooms, Pnumber
 
-from .models import Hotels, Reservation, Rooms
+from zevoyo.settings import EMAIL_HOST_USER
 
 import datetime
 import json
@@ -24,14 +24,16 @@ def homePage(request):
             #for finding the reserved rooms on this time period for excluding from the query set
             for reservation in Reservation.objects.all():
 
-                if (str(reservation.checkIn) > str(request.POST['cout']) or str(reservation.checkOut) < str(request.POST['cin'])) or reservation.status == '2':
+                if (str(reservation.checkIn) > str(request.POST['cout']) or str(reservation.checkOut) < str(request.POST['cin'])) or reservation.status == 'Cancelled':
                     pass
-                elif (str(reservation.checkIn) < str(request.POST['cout']) or str(reservation.checkOut) > str(request.POST['cin'])) or reservation.status == '2':
+                elif (str(reservation.checkIn) < str(request.POST['cout']) or str(reservation.checkOut) > str(request.POST['cin'])) or reservation.status == 'Cancelled':
                     pass
                 else:
                     rr.append(reservation.room.id)
                 
             room = Rooms.objects.all().filter(hotel__city=hotel[0].city,capacity__gte = int(request.POST['capacity'])).exclude(id__in=rr)
+            room = room.filter(status = 'Available')
+
             if len(room) == 0:
                 messages.warning(request,"Sorry No Rooms Are Available on this time period")
             data = {'rooms':room,'all_location':all_location,'flag':True}
@@ -49,7 +51,12 @@ def contactpage(request):
     return HttpResponse(render(request,'contact.html'))
 
 def aboutpage(request):
-    return HttpResponse(render(request,'about.html'))
+    hotels = Hotels.objects.all()
+    rooms = Rooms.objects.all()
+    cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
+    response = render(request, 'about.html', {'cities': len(cities), 'rooms': len(rooms), 'hotels': len(hotels)})
+    return HttpResponse(response)
+    
 
 def description(request):
     room = Rooms.objects.all().get(id = int(request.GET['roomid']))
@@ -59,6 +66,7 @@ def description(request):
 def staffSignup(request):
     if request.method == 'POST':
         userName = request.POST['username']
+        email = request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
 
@@ -70,12 +78,22 @@ def staffSignup(request):
                 messages.warning(request, "Username already exist")
                 return redirect('stafflogin')
         except:
-            pass
-            
-        newUser = User.objects.create_user(username = userName, password = password1)
-        newUser.is_superuser = True
+            try:
+                if User.objects.all().get(email=email):
+                    messages.warning(request,"email is not available")
+                    return redirect('userlogin')
+            except:
+                pass   
+
+        newUser = User.objects.create_user(username = userName, password = password1, email = email)
+        newUser.is_superuser = False
         newUser.is_staff = True
         newUser.save()
+
+        subject = 'Staff Account Confirmation'
+        message = 'Your account has been created successfully.\nUsername: ' + userName + '\nEmail: ' + email
+        sendEmail(email, subject, message)
+
         messages.success(request, 'Staff Registration Successfull')
 
         return redirect('stafflogin')
@@ -102,28 +120,36 @@ def staffLogin(request):
 
 def user_sign_up(request):
     if request.method=="POST":
-        #firstname = request.POST['fname']
-        #lastname = request.POST['lname']
-        #email = request.POST['email']
+        email = request.POST['email']
         userName = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-
-       # contactNumber = request.POST['contactNumber']
-
+        
         if password1 != password2:
             messages.warning(request,"Password didn't matched")
             return redirect('userlogin')
         try:
             if User.objects.all().get(username=userName):
-                messages.warning(request,"Username Not Available")
+                messages.warning(request,"username is not available")
                 return redirect('userlogin')
+            
         except:
-            pass
-        new_user = User.objects.create_user(username = userName, password = password1)
+            try:
+                if User.objects.all().get(email = email):
+                    messages.warning(request,"email is not available")
+                    return redirect('userlogin')
+            except:
+                pass
+
+        new_user = User.objects.create_user(username = userName, password = password1, email=email)
         new_user.is_superuser=False
         new_user.is_staff=False
         new_user.save()
+
+        subject = 'Account Confirmation'
+        message = 'Your account has been created successfully.\nUsername: ' + userName + '\nEmail: ' + email
+        sendEmail(email, subject, message)
+
         messages.success(request,"Registration Successfull")
         return redirect("userlogin")
     else:
@@ -142,7 +168,7 @@ def user_log_sign_page(request):
                 return redirect('stafflogin')
         except:
             pass
-        
+            
         if user is not None:
             login(request,user)
             messages.success(request,"successful logged in")
@@ -158,24 +184,40 @@ def logoutUser(request):
     return redirect('/myApp/user/')
 
 def editProfile(request):
-    
+
+    try:
+        existingUser = User.objects.get(id = request.user.id)
+    except User.DoesNotExist:
+        existingUser = ""
+
+    try:
+        Pnumber1 =  Pnumber.objects.get(user = existingUser)
+    except Pnumber.DoesNotExist:
+        Pnumber1 = ""
+
     if request.method == 'POST':
+        
+        try:
+           Pnumber1 =  Pnumber.objects.all().get(user = existingUser)
+           Pnumber1.phone_no = request.POST['phonenumber']
 
-        existingUser = User.objects.all().get(username = request.user)
+        except Pnumber.DoesNotExist:
+            Pnumber1 = Pnumber.objects.create(user = existingUser, phone_no = request.POST['phonenumber'])
 
-        existingUser.first_name=request.POST['fname']
-        existingUser.last_name=request.POST['lname']
-        existingUser.email=request.POST['email']
-        existingUser.phone_number=request.POST['phonenumber']
+        existingUser.first_name = request.POST['fname']
+        existingUser.last_name = request.POST['lname']
+        existingUser.email = request.POST['email']
 
+        Pnumber1.save()
         existingUser.save()
+
+        subject = 'Details Updated.'
+        message = 'Your account details has been updated successfully.\nFirst Name: ' + existingUser.first_name + '\nLast Name: ' + existingUser.last_name + '\nEmail: ' + existingUser.email + '\nPhone Number: ' + Pnumber1.phone_no
+        sendEmail(existingUser.email, subject, message)
 
         messages.success(request, "User details updated successfully")
 
-        return redirect('editProfile')
-    else:
-        return render(request, 'user/editProfile.html')
-
+    return render(request, 'user/editProfile.html', {"phone_no": Pnumber1})
 
 @login_required(login_url = "/staff")
 def dashboard(request):
@@ -186,37 +228,39 @@ def dashboard(request):
     rooms = Rooms.objects.all().order_by("hotel__city", "hotel__name")
 
     totalRooms = len(rooms)
-    availableRooms = len(rooms.filter(status = '1'))
-    unavailableRooms = len(rooms.filter(status = '2'))
+    availableRooms = len(rooms.filter(status = 'Available'))
+    unavailableRooms = len(rooms.filter(status = 'Not Available'))
     reserved = len(Reservation.objects.all())
-    bookings = len(Reservation.objects.filter(status = '1'))
+    bookings = len(Reservation.objects.filter(status = 'Booked'))
 
     cities = Hotels.objects.values_list('city', flat = True).distinct().order_by()
 
     if request.method == "POST":
         filter = request.POST['filter']
-        data = request.POST['data']
 
-        if(filter == "capacity"):
-            rooms = Rooms.objects.filter(capacity = data).order_by("hotel__city", "hotel__name")
-        
-        elif(filter == "city"):
-            rooms = Rooms.objects.filter(hotel__city = data).order_by("hotel__city", "hotel__name")
-        
-        elif(filter == "hotel"):
-            rooms = Rooms.objects.filter(hotel__name = data).order_by("hotel__city", "hotel__name")
+        if filter != "allRooms":
+            data = request.POST['data']
 
-        elif(filter == "hotelType"):
-            rooms = Rooms.objects.filter(hotel__type = data).order_by("hotel__city", "hotel__name")
+            if(filter == "capacity"):
+                rooms = Rooms.objects.filter(capacity = data).order_by("hotel__city", "hotel__name")
+            
+            elif(filter == "city"):
+                rooms = Rooms.objects.filter(hotel__city = data).order_by("hotel__city", "hotel__name")
+            
+            elif(filter == "hotel"):
+                rooms = Rooms.objects.filter(hotel__name = data).order_by("hotel__city", "hotel__name")
 
-        elif(filter == "price"):
-            rooms = Rooms.objects.filter(price = data).order_by("hotel__city", "hotel__name")
-        
-        elif(filter == "roomType"):
-            rooms = Rooms.objects.filter(roomType = data).order_by("hotel__city", "hotel__name")
-        
-        elif(filter == "status"):
-            rooms = Rooms.objects.filter(status = data).order_by("hotel__city", "hotel__name")
+            elif(filter == "hotelType"):
+                rooms = Rooms.objects.filter(hotel__type = data).order_by("hotel__city", "hotel__name")
+
+            elif(filter == "price"):
+                rooms = Rooms.objects.filter(price = data).order_by("hotel__city", "hotel__name")
+            
+            elif(filter == "roomType"):
+                rooms = Rooms.objects.filter(roomType = data).order_by("hotel__city", "hotel__name")
+            
+            elif(filter == "statusRoom"):
+                rooms = Rooms.objects.filter(status = data).order_by("hotel__city", "hotel__name")
       
     response = render(request, 'staff/dashboard.html', {'cities': cities, 'reserved': reserved, 'rooms': rooms, 'totalRooms': totalRooms, 'available': availableRooms, 'unavailable': unavailableRooms, 'bookings': bookings})
     return HttpResponse(response)
@@ -304,14 +348,42 @@ def addNewRoom(request):
         return HttpResponse("Access Denied")
 
 def user_bookings(request):
-    if request.user.is_authenticated==False:
+    if request.user.is_authenticated == False:
         return redirect('userlogin')
 
-    user=User.objects.all().get(id=request.user.id)
+    user = User.objects.all().get(id = request.user.id)
     
-    bookings = Reservation.objects.all().filter(guest=user).order_by("checkIn")
+    bookings = Reservation.objects.all().filter(guest = user).order_by("checkIn")
 
     bookings = updateBookings(bookings)
+
+    if request.method == "POST":
+
+        filter = request.POST['filter']
+
+        if(filter != "allUserBookings"):
+            data = request.POST['data']
+
+            if(filter == "checkIn"):
+                bookings = bookings.filter(checkIn = data) 
+
+            elif(filter == "checkOut"):
+                bookings = bookings.filter(checkOut = data) 
+
+            elif(filter == "city"):
+                bookings = bookings.filter(room__hotel__city = data)  
+            
+            elif(filter == "hotel"):
+                bookings = bookings.filter(room__hotel__name = data)
+
+            elif(filter == "hotelType"):
+                bookings = bookings.filter(room__hotel__type = data)
+            
+            elif(filter == "roomType"):
+                bookings = bookings.filter(room__roomType = data)
+            
+            else:
+                bookings = bookings.filter(status = data)
 
     if not bookings:
         messages.warning(request,"No Bookings Found")
@@ -328,9 +400,9 @@ def bookRoom(request):
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
-            if (str(reservation.checkIn) > str(request.POST['cout']) or str(reservation.checkOut) < str(request.POST['cin'])) or reservation.status == '2':
+            if (str(reservation.checkIn) > str(request.POST['checkOut']) or str(reservation.checkOut) < str(request.POST['checkIn'])) or reservation.status == '2':
                     pass
-            elif (str(reservation.checkIn) < str(request.POST['cout']) or str(reservation.checkOut) > str(request.POST['cin'])) or reservation.status == '2':
+            elif (str(reservation.checkIn) < str(request.POST['checkOut']) or str(reservation.checkOut) > str(request.POST['checkIn'])) or reservation.status == '2':
                     pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
@@ -348,11 +420,16 @@ def bookRoom(request):
         reservation.checkOut = request.POST["checkOut"]
         reservation.bookingId = str(roomId) + str(datetime.datetime.now())
         reservation.cancel = True
-        reservation.status = '1'
+        reservation.status = 'Booked'
 
         reservation.save()
 
-        sendEmail(request, reservation)
+        recepient = request.POST['email']
+        subject = 'Hotel Booking Confirmation'
+    
+        message = 'Congratulations. Your hotel room is booked. \n Bookings Details are mentioned below: \nBooking Id-' + reservation.bookingId +'\nGuest name- ' + reservation.guest.username + '\nCheck In- ' + reservation.checkIn + '\nCheck Out-' + reservation.checkOut + '\nHotel Name- ' + reservation.room.hotel.name + '\nContact Number- ' + reservation.room.hotel.contactNumber + '\nAddress- ' + reservation.room.hotel.address + ', ' + reservation.room.hotel.city + ', ' + reservation.room.hotel.state + '- ' + str(reservation.room.hotel.pincode) + '\nCity-' + reservation.room.hotel.city
+
+        sendEmail(recepient, subject, message)
 
         messages.success(request, "Congratulations! Booking Successfull")
 
@@ -412,15 +489,43 @@ def allBookings(request):
 
     bookings = updateBookings(bookings)
 
+    if request.method == "POST":
+
+        filter = request.POST['filter']
+
+        if(filter != "allBookings"):
+            data = request.POST['data']
+
+            if(filter == "checkIn"):
+                bookings = Reservation.objects.all().filter(checkIn = data) 
+
+            elif(filter == "checkOut"):
+                bookings = Reservation.objects.all().filter(checkOut = data) 
+
+            elif(filter == "city"):
+                bookings = Reservation.objects.filter(room__hotel__city = data)  
+            
+            elif(filter == "guest"):
+                bookings = Reservation.objects.all().filter(guest__username = data) 
+            
+            elif(filter == "hotel"):
+                bookings = Reservation.objects.all().filter(room__hotel__name = data)
+            
+            elif(filter == "hotelType"):
+                bookings = Reservation.objects.filter(room__hotel__type = data)
+
+            elif(filter == "roomType"):
+                bookings = Reservation.objects.filter(room__roomType = data)
+            
+            else:
+                bookings = Reservation.objects.filter(status = data)
+
     if not bookings:
         messages.warning(request, "No bookings found")
 
     return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
 
 def filter(request):
-    
-    if request.user.is_staff == False:
-        return HttpResponse("Access Denied")
 
     fil = request.GET.get('filter')
 
@@ -444,11 +549,14 @@ def filter(request):
     elif(fil == "hotelType"):
         records = Hotels.objects.values_list("type", flat = True).distinct().order_by("type")
     
-    # elif(fil == "roomType"):
-    #     re = Rooms.objects.values_list(fil, flat = True).distinct().order_by(fil)
-    #     for r in re:
-    #         records.append(r.get_roomType())
-    #     print(records)
+    elif(fil == "roomType"):
+        records = Rooms.objects.values_list("roomType", flat = True).distinct().order_by("roomType")
+    
+    elif(fil == "statusRoom"):
+        records = Rooms.objects.values_list("status", flat = True).distinct().order_by("status")
+
+    elif(fil == "statusBookings"):
+        records = Reservation.objects.values_list("status", flat = True).distinct().order_by("status")
 
     json_res = [] 
 
@@ -457,42 +565,17 @@ def filter(request):
 
     return HttpResponse(json.dumps(json_res), content_type="application/json")
 
-def filterBookings(request):
-    if request.user.is_staff == False:
-        return HttpResponse("Access Denied")
-    
-    bookings = []
-
-    filter = request.POST['filter']
-    data = request.POST['data']
-
-    if(filter == "checkIn"):
-        bookings = Reservation.objects.all().filter(checkIn = data) 
-
-    elif(filter == "checkOut"):
-        bookings = Reservation.objects.all().filter(checkOut = data) 
-
-    elif(filter == "city"):
-        bookings = Reservation.objects.filter(room__hotel__city = data)  
-    
-    elif(filter == "guest"):
-        bookings = Reservation.objects.all().filter(guest__username = data) 
-    
-    elif(filter == "hotel"):
-        bookings = Reservation.objects.all().filter(room__hotel__name = data)
-    
-    else:
-        bookings = Reservation.objects.filter(status = data)
-    
-    return HttpResponse(render(request, "staff/allBookings.html", {"bookings": bookings}))
-
 def cancelBooking(request):
     if request.method == "POST":
         booking = Reservation.objects.get(id = request.POST['bookingId'])
         
         if booking.guest.id == request.user.id or User.objects.get(id = request.user.id).is_staff:
-            booking.status = '2'
+            booking.status = 'Cancelled'
             booking.save()
+
+            subject = 'Hotel Booking Cancellation Confirmation.'
+            message = 'Your hotel room is booking is cancelled. \nBookings Details are mentioned below: \nBooking Id-' + booking.bookingId +'\nGuest name- ' + booking.guest.username + '\nCheck In- ' + str(booking.checkIn) + '\nCheck Out-' + str(booking.checkOut) + '\nHotel Name- ' + booking.room.hotel.name + '\nContact Number- ' + booking.room.hotel.contactNumber
+            sendEmail(booking.guest.email, subject, message)
         
         if User.objects.get(id = request.user.id).is_staff:
             return redirect('allBookings')
@@ -502,12 +585,7 @@ def cancelBooking(request):
     else:
         return HttpResponse("Access Denied")
 
-def sendEmail(request, reservation):
-
-    recepient = request.POST['email']
-    subject = 'Hotel Room Booking Confirmation'
-    
-    message = 'Congratulations. Your hotel room is booked. \n Bookings Details are mentioned below: \nBooking Id-' + reservation.bookingId +'\nGuest name- ' + reservation.guest.username + '\nCheck In- ' + reservation.checkIn + '\nCheck Out-' + reservation.checkOut + '\nHotel Name- ' + reservation.room.hotel.name + '\nContact Number- ' + reservation.room.hotel.contactNumber + '\nAddress- ' + reservation.room.hotel.address + ', ' + reservation.room.hotel.city + ', ' + reservation.room.hotel.state + '- ' + str(reservation.room.hotel.pincode) + '\nCity-' + reservation.room.hotel.city
+def sendEmail(recepient, subject, message):
     
     send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
     return HttpResponse('Success email send')

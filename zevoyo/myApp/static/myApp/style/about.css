@@ -1,0 +1,51 @@
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+.flexbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.heading {
+    text-align: center;
+    font-size: 24px;
+}
+
+.box {
+    width: 50%;
+    text-align: center;
+    margin: 30px;
+    background-color: rgb(254, 231, 231);
+    padding: 20px;
+    border-radius: 10px;
+    opacity: .6;
+}
+
+.box p {
+    font-size: 24px;
+}
+
+.box h2 {
+    font-size: 30px;
+}
+
+.bigbox {
+    text-align: center;
+    font-size: 20px;
+}
+
+.bigbox h2 {
+    color: rgb(218, 54, 42);
+}
+
+.bigbox p {
+    color: rgb(206, 43, 43);
+}
+
+.footerbox {
+    color: white;
+    text-align: center;
+    margin: auto;
+}

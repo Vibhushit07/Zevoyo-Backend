@@ -11,69 +11,28 @@ $("#filter").click(function() {
         input.setAttribute("id", "data");
         input.setAttribute("type", "date");
         input.setAttribute("name", "data");
+        input.setAttribute("class", "form-control");
         parent.append(input);
 
-    } else if (filter === 'roomType') {
+    } else if (filter === 'allBookings' || filter === 'allUserBookings' || filter === 'allRooms') {
 
-        let select = document.createElement("select");
-        select.setAttribute("class", "form-control");
-        select.setAttribute("id", "data");
-        select.setAttribute("name", "data");
+        var input = document.createElement("input");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("name", "data");
 
-        let res = ['Premium', 'Deluxe', 'Basic']
+        if (filter === 'allBookings')
+            input.setAttribute("value", "allBookings");
+        else if (filter === 'allUserBookings')
+            input.setAttribute("value", "allUserbookings");
+        else
+            input.setAttribute("value", "allRooms");
 
-        for (let i = 0; i < res.length; i++) {
-
-            let child = document.createElement("option");
-            child.innerHTML = res[i];
-            child.setAttribute("value", i + 1)
-            select.append(child)
-        }
-
-        parent.append(select);
-
-    } else if (filter === 'statusD') {
-
-        let select = document.createElement("select");
-        select.setAttribute("class", "form-control");
-        select.setAttribute("id", "data");
-        select.setAttribute("name", "data");
-
-        let res = ['Available', 'Not Available']
-
-        for (let i = 0; i < res.length; i++) {
-
-            let child = document.createElement("option");
-            child.innerHTML = res[i];
-            child.setAttribute("value", i + 1)
-            select.append(child)
-        }
-
-        parent.append(select);
-
-    } else if (filter === 'statusB') {
-
-        let select = document.createElement("select");
-        select.setAttribute("class", "form-control");
-        select.setAttribute("id", "data");
-        select.setAttribute("name", "data");
-
-        let res = ['Booked', 'Cancelled']
-
-        for (let i = 0; i < res.length; i++) {
-
-            let child = document.createElement("option");
-            child.innerHTML = res[i];
-            child.setAttribute("value", i + 1)
-            select.appendChild(child)
-        }
-
-        parent.appendChild(select);
+        parent.append(input);
 
     } else {
 
         $.ajax({
-            url: '/myApp/staff/filter/',
+            url: '/myApp/filter/',
             data: {
                 'filter': filter
             },

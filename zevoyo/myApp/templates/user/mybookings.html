@@ -1,8 +1,37 @@
 {% extends 'basic.html' %} {% block title %}Dashboard {% endblock title %} {% load static %} {% load app_tags %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myApp/style/dashboard.css'%}">
 <link rel="stylesheet" type="text/css" href="{% static 'myApp/style/common.css'%}"> {% endblock css %} {% block body %}
 <br>
 <h3 class="text-center  text-success">My Bookings </h3>
 <br>
+
+<form action="/myApp/user/bookings/" method="POST" class="all-booking">
+    {% csrf_token %}
+    <label for="filter">Filter:</label>
+    <div class="form-group">
+        <select class="form-control" id="filter" name="filter">
+            <option value="allUserBookings">All Bookings</option>
+            <option value="checkIn">Check-In</option>
+            <option value="checkOut">Check-Out</option>
+            <option value="city">City</option>
+            <option value="hotel">Hotel</option>
+            <option value="hotelType">Hotel Type</option>
+            <option value="roomType">Room Type</option>
+            <option value="statusBookings">Booking Status</option>
+        </select>
+    </div>
+
+    <div class="form-group" id="div-data">
+
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Filter" class="form-control btn btn-warning">
+    </div>
+</form>
+
+<br>
+
 <table class="table">
     <thead>
         <th>City</th>
@@ -27,7 +56,7 @@
         <td>{{booking.get_status_display}}</td>
         <td>
             <form action="/myApp/booking/cancel/" method="POST">
-                {% csrf_token %} {% if booking.cancel and booking.status == '1' %}
+                {% csrf_token %} {% if booking.cancel and booking.status == 'Booked' %}
                 <button type="submit" class="btn btn-danger">Cancel</button> {% else %}
                 <button type="submit" class="btn btn-danger" disabled>Cancel</button> {% endif %}
                 <input type="hidden" name="bookingId" value="{{booking.id}}">
@@ -38,4 +67,6 @@
 
 
 </table>
-{% endblock body %}
+{% endblock body %} {% block js %}
+<script src="{% static '/myApp/script/filter.js' %}"></script>
+{% endblock js %}
