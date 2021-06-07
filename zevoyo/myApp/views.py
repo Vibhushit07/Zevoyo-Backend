@@ -419,8 +419,6 @@ def bookRoom(request):
             
         reservation = Reservation()
 
-        room.status = '2'
-
         user = User.objects.all().get(username = request.user)
 
         reservation.guest = user
