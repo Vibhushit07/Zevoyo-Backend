@@ -581,6 +581,7 @@ def cancelBooking(request):
         
         if booking.guest.id == request.user.id or User.objects.get(id = request.user.id).is_staff:
             booking.status = 'Cancelled'
+            booking.cancel = False
             booking.save()
 
             subject = 'Hotel Booking Cancellation Confirmation.'
