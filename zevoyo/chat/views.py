@@ -10,7 +10,7 @@ import datetime
 
 # Create your views here.
 
-@login_required(login_url = "/user")
+@login_required(login_url = "/user/")
 def newChat(request):
     if request.method == "POST":
 
@@ -38,7 +38,7 @@ def newChat(request):
     
     return HttpResponse(render(request, 'chat.html', { 'form': ChatForm }))
 
-@login_required(login_url = "/staff")
+@login_required(login_url = "/staff/")
 def chatList(request):
 
     user = User.objects.all().get(id = request.user.id)
@@ -61,7 +61,10 @@ def chatList(request):
 
     userList = User.objects.all().filter(is_staff = False)
 
-    return HttpResponse(render(request, 'chatAll.html', { 'chatAll': chat, 'users': userList, 'admin': admin }))
+    print(user)
+    print(user.id)
+
+    return HttpResponse(render(request, 'chatAll.html', { 'chatAll': chat, 'users': userList, 'admin': admin, 'userChat': user }))
 
 def posted_at(e):
   return e.posted_at

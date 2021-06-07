@@ -24,7 +24,7 @@
         <h1 class="heading ">No Chats Yet Be The First To Message!</h1><br> {% endfor %}
     </div>
     <br> {% if user.is_staff %}
-    <a href='/myApp/chat/new/?userid={{chatAll.0.user.id}}/'><button class="btn btn-outline-primary new">New Message</button></a> {% else %}
+    <a href='/myApp/chat/new/?userid={{userChat.id}}/'><button class="btn btn-outline-primary new">New Message</button></a> {% else %}
     <a href='/myApp/chat/new/'><button class="btn btn-outline-primary new">New Message</button></a> {% endif %}
 </div>
 {% endif %} {% endblock body %}
