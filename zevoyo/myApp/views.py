@@ -26,8 +26,6 @@ def homePage(request):
 
                 if (str(reservation.checkIn) > str(request.POST['cout']) or str(reservation.checkOut) < str(request.POST['cin'])) or reservation.status == 'Cancelled':
                     pass
-                elif (str(reservation.checkIn) < str(request.POST['cout']) or str(reservation.checkOut) > str(request.POST['cin'])) or reservation.status == 'Cancelled':
-                    pass
                 else:
                     rr.append(reservation.room.id)
                 
@@ -415,15 +413,11 @@ def bookRoom(request):
         for reservation in Reservation.objects.all().filter(room = room):
             if (str(reservation.checkIn) > str(request.POST['checkOut']) or str(reservation.checkOut) < str(request.POST['checkIn'])) or reservation.status == '2':
                     pass
-            elif (str(reservation.checkIn) < str(request.POST['checkOut']) or str(reservation.checkOut) > str(request.POST['checkIn'])) or reservation.status == '2':
-                    pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
                 return redirect("homePage")
             
         reservation = Reservation()
-
-        room.status = '2'
 
         user = User.objects.all().get(username = request.user)
 
@@ -587,6 +581,7 @@ def cancelBooking(request):
         
         if booking.guest.id == request.user.id or User.objects.get(id = request.user.id).is_staff:
             booking.status = 'Cancelled'
+            booking.cancel = False
             booking.save()
 
             subject = 'Hotel Booking Cancellation Confirmation.'
