@@ -1,6 +1,6 @@
 .body {
     position: absolute;
-    top: 11vh;
+    top: 14vh;
     left: 32vw;
 }
 
@@ -23,7 +23,6 @@
     border-radius: 5px;
     margin: 0 0 10px 0;
     overflow: hidden;
-    max-height: 13vh;
 }
 
 .chat1 {
