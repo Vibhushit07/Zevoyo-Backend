@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'style/chat.css'%}"> {% endblock css %} {% if admin == 0 %}
 <div class="body">
     <a href="/myApp/chat/all">
-        <button class="btn btn-primary refresh">
+        <button class="btn btn-primary">
         <i class="fa fa-refresh" aria-hidden="true"></i>
         Refresh For Any New Chats
     </button>
@@ -23,8 +23,10 @@
         <br><br> {% empty %}
         <h1 class="heading ">No Chats Yet Be The First To Message!</h1><br> {% endfor %}
     </div>
-    <br> {% if user.is_staff %}
-    <a href='/myApp/chat/new/?userid={{userChat.id}}/'><button class="btn btn-outline-primary new">New Message</button></a> {% else %}
-    <a href='/myApp/chat/new/'><button class="btn btn-outline-primary new">New Message</button></a> {% endif %}
+    <br>
+    <div class="button"> {% if user.is_staff %}
+        <a href='/myApp/chat/new/?userid={{userChat.id}}/'><button class="btn btn-outline-primary new">New Message</button></a> {% else %}
+        <a href='/myApp/chat/new/'><button class="btn btn-outline-primary new">New Message</button></a> {% endif %}
+    </div>
 </div>
 {% endif %} {% endblock body %}

@@ -4,6 +4,10 @@
     left: 32vw;
 }
 
+.button {
+    padding-bottom: 10vh;
+}
+
 .new {
     position: absolute;
     left: 17vw;
