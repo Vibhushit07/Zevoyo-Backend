@@ -2,9 +2,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'style/users.css'%}"> {% endblock css %} {% block body %}
 
 <div>
-    <form action="/myApp/chat/new/?userid={{userid}}/ " method="post " class="form ">
+    <form action="/myApp/chat/new/?userid={{userid}}/ " method="post" class="form">
         {% csrf_token %} {{ form }}
-        <input type="submit " value="Submit " class="btn btn-lg btn-outline-primary " style="margin-top:1em; width: 15%; align-self: center; align-content: center; ">
+        <input type="submit" value="Submit" class="btn btn-lg btn-outline-primary " style="margin-top:1em; width: 15%; align-self: center; align-content: center; ">
     </form>
 </div>
 
