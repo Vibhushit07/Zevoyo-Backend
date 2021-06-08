@@ -1,7 +1,11 @@
 .body {
     position: absolute;
-    top: 11vh;
+    top: 15vh;
     left: 32vw;
+}
+
+.button {
+    padding-bottom: 10vh;
 }
 
 .new {
