@@ -93,7 +93,7 @@ def staffSignup(request):
 
         subject = 'Staff Account Confirmation'
         message = 'Your account has been created successfully.\nUsername: ' + userName + '\nEmail: ' + email
-        # sendEmail(email, subject, message)
+        sendEmail(email, subject, message)
 
         messages.success(request, 'Staff Registration Successfull')
 
@@ -155,7 +155,7 @@ def user_sign_up(request):
 
         subject = 'Account Confirmation'
         message = 'Your account has been created successfully.\nUsername: ' + userName + '\nEmail: ' + email
-        # sendEmail(email, subject, message)
+        sendEmail(email, subject, message)
 
         messages.success(request,"Registration Successfull")
         return redirect("userlogin")
