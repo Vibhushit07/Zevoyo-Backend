@@ -36,7 +36,7 @@
         <td> {{ phone.user.first_name| capfirst }} </td>
         <td> {{ phone.user.last_name| capfirst }} </td>
         <td> {{ phone.user.email }} </td>
-        <td> {{ phone.phone_no }} </td>
+        <td> {% if phone.phone_no != 0 %} {{ phone.phone_no }} {% endif %} </td>
     </tr>
     {% endfor %}
 </table>

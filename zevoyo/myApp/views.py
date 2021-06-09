@@ -84,11 +84,16 @@ def staffSignup(request):
         newUser = User.objects.create_user(username = userName, password = password1, email = email)
         newUser.is_superuser = False
         newUser.is_staff = True
+
+        phone = Pnumber()
+        phone.user = newUser
+        phone.phone_no = None
+        phone.save()
         newUser.save()
 
         subject = 'Staff Account Confirmation'
         message = 'Your account has been created successfully.\nUsername: ' + userName + '\nEmail: ' + email
-        sendEmail(email, subject, message)
+        # sendEmail(email, subject, message)
 
         messages.success(request, 'Staff Registration Successfull')
 
@@ -140,11 +145,17 @@ def user_sign_up(request):
         new_user = User.objects.create_user(username = userName, password = password1, email=email)
         new_user.is_superuser=False
         new_user.is_staff=False
+        
+
+        phone = Pnumber()
+        phone.user = new_user
+        phone.phone_no = 0
+        phone.save()
         new_user.save()
 
         subject = 'Account Confirmation'
         message = 'Your account has been created successfully.\nUsername: ' + userName + '\nEmail: ' + email
-        sendEmail(email, subject, message)
+        # sendEmail(email, subject, message)
 
         messages.success(request,"Registration Successfull")
         return redirect("userlogin")
