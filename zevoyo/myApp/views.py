@@ -624,47 +624,12 @@ def allUsers(request):
         filter = request.POST['filter']
 
         if(filter != "allUsers"):
-            userList = User.objects.all().filter(id = filter)
             try:
-                phone =  Pnumber.objects.filter(user = filter)
+                phone =  Pnumber.objects.filter(user = User.objects.get(id = filter))
             except Pnumber.DoesNotExist:
                 phone = ""
-        
-    userList = updateUserList(userList, phone)
 
     if not userList:
         messages.warning(request,"No User Found")
 
-    return HttpResponse(render(request,'staff/users.html', {'users': user, 'userList': userList, 'phoneNumbers': phone }))
-
-def updateUserList(users, phone):
-    userList = []
-
-    if(phone != ""):
-
-        for user in users:
-
-            phoneNumber =  Pnumber.objects.filter(user = user)
-
-            if(phoneNumber):
-                phoneNumber = phoneNumber[0].phone_no
-            else:
-                phoneNumber = ""
-        
-            userList.append({
-                "username": user.username,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
-                "email": user.email,
-                "phone": phoneNumber
-            })
-    else:
-        userList.append({
-                "username": users.username,
-                "first_name": users.first_name,
-                "last_name": users.last_name,
-                "email": users.email,
-                "phone": ""
-            })
-    
-    return userList
+    return HttpResponse(render(request,'staff/users.html', {'users': user, 'phoneNumbers': phone }))
