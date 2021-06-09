@@ -422,7 +422,7 @@ def bookRoom(request):
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
-            if (str(reservation.checkIn) > str(request.POST['checkOut']) or str(reservation.checkOut) < str(request.POST['checkIn'])) or reservation.status == '2':
+            if (str(reservation.checkIn) > str(request.POST['checkOut']) or str(reservation.checkOut) < str(request.POST['checkIn'])) or reservation.status == 'Cancelled':
                     pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
