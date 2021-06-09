@@ -84,6 +84,11 @@ def staffSignup(request):
         newUser = User.objects.create_user(username = userName, password = password1, email = email)
         newUser.is_superuser = False
         newUser.is_staff = True
+
+        phone = Pnumber()
+        phone.user = newUser
+        phone.phone_no = None
+        phone.save()
         newUser.save()
 
         subject = 'Staff Account Confirmation'
@@ -140,6 +145,12 @@ def user_sign_up(request):
         new_user = User.objects.create_user(username = userName, password = password1, email=email)
         new_user.is_superuser=False
         new_user.is_staff=False
+        
+
+        phone = Pnumber()
+        phone.user = new_user
+        phone.phone_no = 0
+        phone.save()
         new_user.save()
 
         subject = 'Account Confirmation'
@@ -411,7 +422,7 @@ def bookRoom(request):
 
         # for finding the reserved rooms on this time period for excluding from the query set
         for reservation in Reservation.objects.all().filter(room = room):
-            if (str(reservation.checkIn) > str(request.POST['checkOut']) or str(reservation.checkOut) < str(request.POST['checkIn'])) or reservation.status == '2':
+            if (str(reservation.checkIn) > str(request.POST['checkOut']) or str(reservation.checkOut) < str(request.POST['checkIn'])) or reservation.status == 'Cancelled':
                     pass
             else:
                 messages.warning(request, "Sorry this Room is unavailable for booking")
@@ -624,47 +635,12 @@ def allUsers(request):
         filter = request.POST['filter']
 
         if(filter != "allUsers"):
-            userList = User.objects.all().filter(id = filter)
             try:
-                phone =  Pnumber.objects.filter(user = filter)
+                phone =  Pnumber.objects.filter(user = User.objects.get(id = filter))
             except Pnumber.DoesNotExist:
                 phone = ""
-        
-    userList = updateUserList(userList, phone)
 
     if not userList:
         messages.warning(request,"No User Found")
 
-    return HttpResponse(render(request,'staff/users.html', {'users': user, 'userList': userList, 'phoneNumbers': phone }))
-
-def updateUserList(users, phone):
-    userList = []
-
-    if(phone != ""):
-
-        for user in users:
-
-            phoneNumber =  Pnumber.objects.filter(user = user)
-
-            if(phoneNumber):
-                phoneNumber = phoneNumber[0].phone_no
-            else:
-                phoneNumber = ""
-        
-            userList.append({
-                "username": user.username,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
-                "email": user.email,
-                "phone": phoneNumber
-            })
-    else:
-        userList.append({
-                "username": users.username,
-                "first_name": users.first_name,
-                "last_name": users.last_name,
-                "email": users.email,
-                "phone": ""
-            })
-    
-    return userList
+    return HttpResponse(render(request,'staff/users.html', {'users': user, 'phoneNumbers': phone }))
