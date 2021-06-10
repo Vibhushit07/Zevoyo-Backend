@@ -1,5 +1,16 @@
 # Zevoyo Hotel Booking System
 
+<h2 align="center">Objective</h2>
+
+User Experience (UX) plays a key role in helping visitors use, understand and stay on the website. Creating obvious, logical navigation with clear hierarchy and using consistent layouts and visual cues for functionality across the site.
+
+The website should work quickly, correctly and as expected. Build to web standards, proofread rigorously and test regularly for problems with speed or functionality. Pages should always be fast and functional.
+
+The website will provide numerous functionalities for the user to increase the productivity of the website, like email confirmations on account creation, user profile updation, booking confirmation and booking cancellation.
+
+Chat Support System will provide the user to converse with the admin in a real time environment.
+
+
 ![homepage](https://user-images.githubusercontent.com/41487076/121527008-94890b80-ca17-11eb-8115-aea45707b463.png)
 
 ![dashboard](https://user-images.githubusercontent.com/41487076/121527001-9357de80-ca17-11eb-83b6-beb4b0bf70f1.png)
