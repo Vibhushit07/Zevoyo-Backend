@@ -1,11 +1,16 @@
 # Zevoyo Hotel Booking System
 
+---
+
 <h2 align="center" id="content">Content</h2>
 
 > :paperclip: [Objective](#objective) 
 > :paperclip: [Tech Stack](#tech-stack)
+> :paperclip: [Screenshots](#screenshots) 
 
-<br> <br> <br>
+<br>
+
+---
 
 <h2 align="center" id="objective">Objective</h2>
 
@@ -19,7 +24,9 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
 
-<br> <br> <br>
+<br>
+
+---
 
 <h2 align="center" id="tech-stack">Tech Stack</h2>
 
@@ -32,16 +39,32 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
 
-<br> <br> <br>
+<br>
+
+---
+
+<h2 align="center" id="screenshots">Screenshots</h2>
+
+<h3>Home Page</h3>
 
 ![homepage](https://user-images.githubusercontent.com/41487076/121527008-94890b80-ca17-11eb-8115-aea45707b463.png)
 
+<h3>Dashboard</h3>
+
 ![dashboard](https://user-images.githubusercontent.com/41487076/121527001-9357de80-ca17-11eb-83b6-beb4b0bf70f1.png)
+
+<h3>User Chat</h3>
 
 ![user-chat](https://user-images.githubusercontent.com/41487076/121527011-95ba3880-ca17-11eb-9ac7-affd9c8fe220.png)
 
+<h3>Admin Chat</h3>
+
 ![admin-chat](https://user-images.githubusercontent.com/41487076/121527000-92bf4800-ca17-11eb-9835-d19b386689f7.png)
 
-![about](https://user-images.githubusercontent.com/41487076/121526993-90f58480-ca17-11eb-9df0-8d048a138928.png)
-
 ![email-configuration](https://user-images.githubusercontent.com/41487076/121527004-93f07500-ca17-11eb-8e26-b5986ea55c29.png)
+
+<p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
+
+<br>
+
+---
