@@ -4,11 +4,15 @@
 
 <h2 align="center" id="content">Content</h2>
 
+<h3>
+
 > :paperclip: [Objective](#objective) 
 > :paperclip: [Tech Stack](#tech-stack)
 > :paperclip: [Features](#features)
 > :paperclip: [Screenshots](#screenshots) 
 > :paperclip: [Installation](#installation)
+
+</h3>
 
 <br>
 
@@ -50,6 +54,7 @@ Chat Support System will provide the user to converse with the admin in a real t
 <h2 align="center" id="features">Features</h2>
 
 <h3>
+
 ```diff
 - Email Confirmartion -
 - Chat App Support -
