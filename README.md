@@ -74,9 +74,94 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <br>
 
-<h2 align="center"> Installation </h2>
+<h2 align="center" id="installation"> Installation </h2>
+
+```diff
++ Commands to run django server
+```
+
+- <a href = "https://phoenixnap.com/kb/how-to-install-python-3-windows"> Install Python </a>
+- Run following commands
+
+```diff
+
+ - git clone https://github.com/Vibhushit07/Zevoyo-Backend.git
+ - cd zevoyo-backend
+ - python --version
+ - python -m pip install -U pip
+ - pip install virtualenv
+ - virtualenv venv
+ - venv\Scripts\activate
+ - python -m pip install django
+ - pip install -r requirements.txt
+ - cd zevoyo
+ - python manage.py makemigrations myApp
+ - python manage.py makemigrations chat
+ - python manage.py migrate
+ - python manage.py createsuperuser
+```
+
+```diff
+ - Enter username, email and password for user as shown in image below-
+```
+
+![admin](https://user-images.githubusercontent.com/41487076/121818381-7e43af80-cca4-11eb-91bc-ec5bc752d53c.PNG)
+
+```diff
++ Settings for Sending Emails in django
+```
+
+```diff
+ - Open "settings.py"
+ - Under EMAIL_HOST_USER provide your gmail account
+ - Under EMAIL_HOST_PASSWORD provide your gmail account password as shown in image below-
+```
 
 ![email-configuration](https://user-images.githubusercontent.com/41487076/121800124-a6ec8a80-cc4d-11eb-8adb-f768eef798ad.png)
+
+```diff
++ Setting up Gmail for Django Mail API
+```
+
+We need to make some changes in our Gmail account to send an Email. Visit this link with your account signed in:
+
+<a href="https://myaccount.google.com/security" style="color:blue">
+
+```diff
+
+- Gmail Account Settings
+
+```
+</a>
+
+
+The link contains a specific setting that allows access via Django mail API. Since our web application is not a google registered service, it is a less secured app. Therefore, we allow less secured apps to our settings.
+
+Then scroll down to this section of the page.
+
+![mail-api](https://user-images.githubusercontent.com/41487076/121819875-2c535780-ccad-11eb-9376-bdd1182fd29b.PNG)
+
+Less secure app access option will be present. Turn on the access.
+
+<h4>Note:</h4>
+
+```diff
+
+If you are just testing, then you can temporarily do this setting. For a permanent setup, I would recommend a new account. 
+Since, using your main account will be risky.
+
+```
+
+Now, we are ready to send emails with Django.
+
+- Run following command-
+```diff
+ - python manage.py runserver
+```
+
+- In browser open http://127.0.0.1:8000/myApp/ to run the application.
+- For staff login enter the superuser credentials.
+- Now you are ready to go.
 
 <p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
 
