@@ -8,6 +8,7 @@
 > :paperclip: [Tech Stack](#tech-stack)
 > :paperclip: [Features](#features)
 > :paperclip: [Screenshots](#screenshots) 
+> :paperclip: [Installation](#installation)
 
 <br>
 
@@ -84,4 +85,12 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 ---
 
+<h2 align="center"> Installation </h2>
+
 ![email-configuration](https://user-images.githubusercontent.com/41487076/121800124-a6ec8a80-cc4d-11eb-8adb-f768eef798ad.png)
+
+<p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
+
+<br>
+
+---
