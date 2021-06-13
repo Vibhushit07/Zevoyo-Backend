@@ -31,13 +31,10 @@ Chat Support System will provide the user to converse with the admin in a real t
 ---
 
 <h2 align="center" id="tech-stack">Tech Stack
-
-<!-- <h3> -->
 ```diff
 - Python -
 - SQlite -
 ```
-<!-- </h3> -->
 </h2>
 
 <p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
