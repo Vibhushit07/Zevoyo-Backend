@@ -1,18 +1,14 @@
 # Zevoyo Hotel Booking System
 
----
-
 <h2 align="center" id="content">Content</h2>
 
-> :paperclip: [Objective](#objective) <br>
-> :paperclip: [Tech Stack](#tech-stack) <br>
-> :paperclip: [Features](#features) <br>
-> :paperclip: [Screenshots](#screenshots)  <br>
-> :paperclip: [Installation](#installation) <br>
+> :pushpin: [Objective](#objective) <br>
+> :pushpin: [Tech Stack](#tech-stack) <br>
+> :pushpin: [Features](#features) <br>
+> :pushpin: [Screenshots](#screenshots)  <br>
+> :pushpin: [Installation](#installation) <br>
 
 <br>
-
----
 
 <h2 align="center" id="objective">Objective</h2>
 
@@ -28,8 +24,6 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <br>
 
----
-
 <h2 align="center" id="tech-stack">Tech Stack</h2>
 
 <h3>
@@ -44,9 +38,6 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <br>
 
----
-
-
 <h2 align="center" id="features">Features</h2>
 
 <h3>
@@ -60,8 +51,6 @@ Chat Support System will provide the user to converse with the admin in a real t
 <p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
 
 <br>
-
----
 
 <h2 align="center" id="screenshots">Screenshots</h2>
 
@@ -85,8 +74,6 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <br>
 
----
-
 <h2 align="center"> Installation </h2>
 
 ![email-configuration](https://user-images.githubusercontent.com/41487076/121800124-a6ec8a80-cc4d-11eb-8adb-f768eef798ad.png)
@@ -94,5 +81,3 @@ Chat Support System will provide the user to converse with the admin in a real t
 <p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
 
 <br>
-
----
