@@ -31,6 +31,7 @@ Chat Support System will provide the user to converse with the admin in a real t
 ---
 
 <h2 align="center" id="tech-stack">Tech Stack
+
 ```diff
 - Python -
 - SQlite -
