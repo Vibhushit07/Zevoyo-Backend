@@ -4,6 +4,10 @@
 
 <h2 align="center" id="content">Content</h2>
 
+```diff
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+```
+
 <h3> 
 
 > :paperclip: [Objective](#objective) <br>
@@ -13,6 +17,10 @@
 > :paperclip: [Installation](#installation) <br>
 
 </h3>
+
+```diff
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+```
 
 <br>
 
