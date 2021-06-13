@@ -6,6 +6,7 @@
 
 > :paperclip: [Objective](#objective) 
 > :paperclip: [Tech Stack](#tech-stack)
+> :paperclip: [Features](#features)
 > :paperclip: [Screenshots](#screenshots) 
 
 <br>
@@ -43,6 +44,22 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 ---
 
+
+<h2 align="center" id="features">Features</h2>
+
+<h3>
+```diff
+- Email Confirmartion -
+- Chat App Support -
+```
+</h3>
+
+<p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
+
+<br>
+
+---
+
 <h2 align="center" id="screenshots">Screenshots</h2>
 
 <h3>Home Page</h3>
@@ -67,4 +84,4 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 ---
 
-![email-configuration](https://user-images.githubusercontent.com/41487076/121527004-93f07500-ca17-11eb-8e26-b5986ea55c29.png)
+![email-configuration](https://user-images.githubusercontent.com/41487076/121800124-a6ec8a80-cc4d-11eb-8adb-f768eef798ad.png)
