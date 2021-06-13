@@ -1,6 +1,8 @@
 # Zevoyo Hotel Booking System
 
-<h2 align="center">Objective</h2>
+<br> <br> <br>
+
+<h2 align="center" id="objective">Objective</h2>
 
 User Experience (UX) plays a key role in helping visitors use, understand and stay on the website. Creating obvious, logical navigation with clear hierarchy and using consistent layouts and visual cues for functionality across the site.
 
@@ -10,6 +12,14 @@ The website will provide numerous functionalities for the user to increase the p
 
 Chat Support System will provide the user to converse with the admin in a real time environment.
 
+<br> <br> <br>
+
+<h2 align="center" id="tech-stack">Tech Stack</h2>
+
+```diff
+- Python -
+- SQlite -
+```
 
 ![homepage](https://user-images.githubusercontent.com/41487076/121527008-94890b80-ca17-11eb-8115-aea45707b463.png)
 
