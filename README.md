@@ -17,6 +17,8 @@ The website will provide numerous functionalities for the user to increase the p
 
 Chat Support System will provide the user to converse with the admin in a real time environment.
 
+<p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
+
 <br> <br> <br>
 
 <h2 align="center" id="tech-stack">Tech Stack</h2>
@@ -27,6 +29,10 @@ Chat Support System will provide the user to converse with the admin in a real t
 - SQlite -
 ```
 </h3>
+
+<p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
+
+<br> <br> <br>
 
 ![homepage](https://user-images.githubusercontent.com/41487076/121527008-94890b80-ca17-11eb-8115-aea45707b463.png)
 
