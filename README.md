@@ -1,6 +1,6 @@
 # Zevoyo Hotel Booking System
 
-<h2 align="center" id="content">Content</h2>
+<h2 align="center" id="content">🗂 Content</h2>
 
 > :pushpin: [Objective](#objective) <br>
 > :pushpin: [Tech Stack](#tech-stack) <br>
@@ -10,7 +10,7 @@
 
 <br>
 
-<h2 align="center" id="objective">Objective</h2>
+<h2 align="center" id="objective">🏷️ Objective</h2>
 
 User Experience (UX) plays a key role in helping visitors use, understand and stay on the website. Creating obvious, logical navigation with clear hierarchy and using consistent layouts and visual cues for functionality across the site.
 
@@ -24,7 +24,7 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <br>
 
-<h2 align="center" id="tech-stack">Tech Stack</h2>
+<h2 align="center" id="tech-stack">🏷️ Tech Stack</h2>
 
 <h3>
 
@@ -38,7 +38,7 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <br>
 
-<h2 align="center" id="features">Features</h2>
+<h2 align="center" id="features">🏷️ Features</h2>
 
 <h3>
 
@@ -52,7 +52,7 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <br>
 
-<h2 align="center" id="screenshots">Screenshots</h2>
+<h2 align="center" id="screenshots">🏷️ Screenshots</h2>
 
 <h3>Home Page</h3>
 
@@ -74,7 +74,7 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <br>
 
-<h2 align="center" id="installation"> Installation </h2>
+<h2 align="center" id="installation">🏷️ Installation </h2>
 
 ```diff
 + Commands to run django server
@@ -166,3 +166,16 @@ Now, we are ready to send emails with Django.
 <p align="center"> <i> <a href="#content"> ⬆️ Back To Content </a> <i> </p>
 
 <br>
+
+## Contributors:
+### Credit goes to these wonderful people: ✨
+
+<table>
+	<tr>
+		<td>
+            <a href="https://github.com/vibhushit07/zevoyo-backend/graphs/contributors">
+                <img src="https://contrib.rocks/image?repo=vibhushit07/zevoyo-backend" />
+            </a>
+		</td>
+	</tr>
+</table>
