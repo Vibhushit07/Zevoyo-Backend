@@ -1,5 +1,10 @@
 # Zevoyo Hotel Booking System
 
+<h2 align="center" id="content">Content</h2>
+
+> :paperclip: [Objective](#objective) 
+> :paperclip: [Tech Stack](#tech-stack)
+
 <br> <br> <br>
 
 <h2 align="center" id="objective">Objective</h2>
@@ -16,10 +21,12 @@ Chat Support System will provide the user to converse with the admin in a real t
 
 <h2 align="center" id="tech-stack">Tech Stack</h2>
 
+<h3>
 ```diff
 - Python -
 - SQlite -
 ```
+</h3>
 
 ![homepage](https://user-images.githubusercontent.com/41487076/121527008-94890b80-ca17-11eb-8115-aea45707b463.png)
 
