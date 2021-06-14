@@ -147,7 +147,8 @@ Less secure app access option will be present. Turn on the access.
 
 ```diff
 
-If you are just testing, then you can temporarily do this setting. For a permanent setup, I would recommend a new account. 
+If you are just testing, then you can temporarily do this setting.
+For a permanent setup, I would recommend a new account. 
 Since, using your main account will be risky.
 
 ```
