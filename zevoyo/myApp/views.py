@@ -59,6 +59,8 @@ def description(request):
     room = Rooms.objects.all().get(id = int(request.GET['roomid']))
     return HttpResponse(render(request, "description.html", {"room": room}))
 
+
+
 def staffSignup(request):
     if request.method == 'POST':
         userName = request.POST['username']
