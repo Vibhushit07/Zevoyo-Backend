@@ -68,3 +68,9 @@ class Reservation(models.Model):
 class Pnumber(models.Model):
     phone_no = models.IntegerField(validators=[MaxLengthValidator(10),MinLengthValidator(10)])
     user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+class Review(models.Model):
+    rating = models.FloatField()
+    comment = models.CharField(max_length = 100)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    room = models.ForeignKey(Rooms, on_delete = models.CASCADE)
