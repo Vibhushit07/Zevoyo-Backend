@@ -20,6 +20,8 @@ urlpatterns = [
     path('user/bookings/', views.user_bookings,name="dashboard"),
     path('user/description/', views.description, name = "description"),
 
+    path('user/add-review/', views.review, name = "review"),
+
     path('staff/', views.staffSignup, name="staff"),
     path('staff/login/', views.staffLogin, name = "stafflogin"),
     path('staff/signup/', views.staffSignup, name="staffsignup"),
